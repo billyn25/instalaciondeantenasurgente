@@ -172,6 +172,7 @@ const pages = new Map();
 function add(path, title, description, content, options = {}) {
   if (pages.has(path)) throw new Error('URL duplicada: ' + path);
   const { trail = [], area, type, indexed = true, searchEnabled = false } = options;
+  const seoDescription = indexed ? 'Tel. ' + phone + '. ' + description : description;
   const url = base + path;
   const data = [organization];
   if (trail.length) data.push({
@@ -187,10 +188,10 @@ function add(path, title, description, content, options = {}) {
 
   const html = `<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(title)}</title><meta name="description" content="${esc(description)}">
+<title>${esc(title)}</title><meta name="description" content="${esc(seoDescription)}">
 ${indexed ? '<link rel="canonical" href="' + esc(url) + '">' : '<meta name="robots" content="noindex,follow">'}
 <meta property="og:type" content="website"><meta property="og:site_name" content="${brand}">
-<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}">
+<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(seoDescription)}">
 <meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${base}/assets/trabajos/tdt-en-tejado.webp">
 <meta property="og:image:alt" content="${esc(galleryPhoto[1])}">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg"><link rel="stylesheet" href="/assets/site.css">
@@ -211,7 +212,7 @@ ${searchEnabled ? '<script src="/assets/buscar.js" defer></script>' : ''}
 const homeTrail = ['Inicio', '/'];
 
 add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
-  'Antenista Fuentes. Instalación y reparación de antenas TDT, parabólicas y antenas de comunidades. Busca tu municipio en siete provincias. 641 49 05 36.',
+  'Antenista Fuentes. Instalación y reparación de antenas TDT, parabólicas y antenas de comunidades. Busca tu municipio en siete provincias.',
   `<section class="hero"><div class="wrap hero-grid"><div><p class="kicker dot">Instalación y reparación de antenas</p>
   <h1>Antenista urgente.<br><em>TDT y satélite.</em></h1>
   <p>Instalamos antenas y reparamos fallos de señal en viviendas y comunidades. Cuéntanos en qué pueblo estás y qué falla en tu televisión.</p>
@@ -263,7 +264,7 @@ for (const area of areaMap.values()) {
     const nearbyCenters = area.centers.filter((center) => center !== place)
       .sort((a, b) => distance(place, a) - distance(place, b)).slice(0, 3);
     add(place.url, heading + ' | ' + localService,
-      heading + '. ' + topic.replace(/[?¿]/g, '') + '. Visitas para viviendas y comunidades. 641 49 05 36.',
+      heading + '. ' + topic.replace(/[?¿]/g, '') + '. Visitas para viviendas y comunidades.',
       smallHero(area.name + ' · Servicio de antenista', heading,
         'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.', place.name)
       + '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
