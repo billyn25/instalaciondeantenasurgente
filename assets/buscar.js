@@ -39,19 +39,25 @@ if (form) {
       : 'No encontramos ese nombre. Prueba con el municipio o revisa el listado por provincia.';
   }
 
+  let dataRequest;
   async function search() {
+    if (normalize(field.value).length < 2) {
+      render();
+      return;
+    }
+
     try {
-      index ??= await data;
+      dataRequest ??= fetch('/assets/municipios.json').then((response) => {
+        if (!response.ok) throw new Error('Índice no disponible');
+        return response.json();
+      });
+      index ??= await dataRequest;
       render();
     } catch {
+      dataRequest = undefined;
       status.textContent = 'El buscador no está disponible. Puedes navegar por el listado de provincias.';
     }
   }
-  const data = fetch('/assets/municipios.json').then((response) => {
-    if (!response.ok) throw new Error('Índice no disponible');
-    return response.json();
-  });
-  data.catch(() => {});
   field.addEventListener('input', search);
   province.addEventListener('change', search);
   form.addEventListener('submit', (event) => {

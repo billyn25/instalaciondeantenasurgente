@@ -152,11 +152,19 @@ function diagnosticCards() {
     + link('/ayuda-antenas/#' + key, 'Ver qué comprobar →', 'text-link') + '</p></article>').join('') + '</div>';
 }
 
-function directory() {
-  return '<div class="zones">' + [...areaMap.values()].map((area) => '<article class="zone"><h3>'
-    + link(area.url, area.name) + '</h3><ul>' + area.centers.slice(0, 6).map((place) =>
-      '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('')
-    + '</ul>' + link(area.url, 'Ver municipios de ' + area.name + ' →', 'text-link') + '</article>').join('') + '</div>';
+function directory(showAll = false) {
+  return '<div class="zones">' + [...areaMap.values()].map((area) => {
+    const featuredPlaces = area.centers.slice(0, 6);
+    const highlights = featuredPlaces.map((place) =>
+      '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
+    const remaining = showAll ? area.places.filter((place) => !featuredPlaces.includes(place)).sort(byName) : [];
+    const fullList = remaining.length ? '<details class="zone-all"><summary>Ver todos los municipios (' + area.places.length
+      + ')</summary><ul>' + remaining.map((place) =>
+        '<li>' + link(place.url, place.center ? place.name : 'Antenista en ' + place.name) + '</li>').join('')
+      + '</ul></details>' : '';
+    return '<article class="zone"><h3>' + link(area.url, area.name) + '</h3><ul>' + highlights + '</ul>'
+      + fullList + link(area.url, 'Página de ' + area.name + ' →', 'text-link') + '</article>';
+  }).join('') + '</div>';
 }
 
 const pages = new Map();
@@ -216,7 +224,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   ${workTowns()}${photoGrid([photos[7], photos[1], photos[2], photos[6]])}
   <div class="actions">${link('/trabajos/', 'Ver los trabajos', 'btn dark')}</div></div></section>
   <section class="section wrap" id="zonas"><p class="kicker">Siete provincias</p><h2>Antenas en tu municipio</h2>
-  <p class="intro">Elige una provincia para ver sus municipios o busca directamente tu pueblo. Indica la localidad al pedir cita para que podamos confirmar el desplazamiento.</p>${directory()}</section>
+  <p class="intro">Abre el listado de tu provincia para ver todos sus municipios o usa el buscador de la portada. Indica la localidad al pedir cita para confirmar el desplazamiento.</p>${directory(true)}</section>
   <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
 

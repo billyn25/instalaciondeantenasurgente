@@ -80,6 +80,11 @@ p+p{margin-top:.8em}
 .zone{border:1px solid var(--line);background:#fff;border-radius:12px;padding:1.15rem}
 .zone h3 a{text-decoration:none}
 .zone ul,.places{margin:.65rem 0;padding:0;list-style:none}
+.zones{align-items:start}
+.zone-all{margin:.75rem 0;padding:.6rem 0;border-top:1px solid var(--line)}
+.zone-all summary{color:#274a8a}
+.zone-all ul{padding-left:.8rem;border-left:2px solid var(--line)}
+.zone-all a{overflow-wrap:anywhere}
 .zone li+li{margin-top:.3rem}
 .zone .text-link{display:inline-block;margin-top:.4rem}
 .places{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}
