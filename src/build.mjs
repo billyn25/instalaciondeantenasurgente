@@ -1,12 +1,11 @@
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { fichas, provincias, servicios, trabajos } from './contenido.mjs';
+import { ampliaciones, diagnosticos, fichas, provincias, servicios, trabajos } from './contenido.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL('../' + path, import.meta.url), 'utf8'));
 const output = new URL('../dist/', import.meta.url);
 const base = 'https://instalaciondeantenasurgente.com';
 const brand = 'Antenista Fuentes';
-const owner = 'Roberto Fuentes González';
 const phone = '+34 641 49 05 36';
 const tel = 'tel:+34641490536';
 const wa = (place) => 'https://wa.me/34641490536?text=' + encodeURIComponent(
@@ -94,7 +93,7 @@ function buttons(place = '') {
 }
 
 function callout(place = '') {
-  return '<section class="section wrap"><div class="callout"><p class="kicker dot">Avisos urgentes</p><h2>'
+  return '<section class="section wrap"><div class="callout"><p class="kicker dot">Urgencias 24 horas</p><h2>'
     + esc(place ? '¿Necesitas un antenista en ' + place + '?' : 'Cuéntanos qué le pasa a tu antena')
     + '</h2><p>Indica el municipio, si el fallo afecta a una toma o a varios vecinos y desde cuándo ocurre. Te confirmamos la disponibilidad para el desplazamiento.</p>'
     + buttons(place) + '</div></section>';
@@ -146,9 +145,15 @@ function serviceCards() {
     + link('/servicios/' + key + '/', name) + '</h3><p>' + esc(intro) + '</p></article>').join('') + '</div>';
 }
 
+function diagnosticCards() {
+  return '<div class="cards diagnostic-cards">' + Object.entries(diagnosticos).map(([key, [name]]) =>
+    '<article class="card"><h3>' + link('/ayuda-antenas/#' + key, name) + '</h3><p>'
+    + link('/ayuda-antenas/#' + key, 'Ver qué comprobar →', 'text-link') + '</p></article>').join('') + '</div>';
+}
+
 function directory() {
   return '<div class="zones">' + [...areaMap.values()].map((area) => '<article class="zone"><h3>'
-    + link(area.url, area.name) + '</h3><ul>' + area.centers.slice(0, 4).map((place) =>
+    + link(area.url, area.name) + '</h3><ul>' + area.centers.slice(0, 6).map((place) =>
       '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('')
     + '</ul>' + link(area.url, 'Ver municipios de ' + area.name + ' →', 'text-link') + '</article>').join('') + '</div>';
 }
@@ -183,12 +188,12 @@ ${indexed ? '<link rel="canonical" href="' + esc(url) + '">' : '<meta name="robo
 ${searchEnabled ? '<script src="/assets/buscar.js" defer></script>' : ''}
 <script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@graph':data}).replaceAll('<', '\\u003c')}</script>
 </head><body><a class="skip" href="#contenido">Saltar al contenido</a>
-<header class="site-header"><div class="wrap header-row">${logo()}<nav class="site-nav" aria-label="Principal">
+<header class="site-header"><div class="urgent-bar"><div class="wrap"><span class="urgent-status"><span aria-hidden="true"></span>Urgencias 24 horas</span>${link(tel, 'Llamar al 641 49 05 36')}</div></div><div class="wrap header-row">${logo()}<nav class="site-nav" aria-label="Principal">
 <a href="/servicios/">Servicios</a><a href="/#zonas">Zonas</a><a href="/trabajos/">Trabajos reales</a>
 </nav>${link(tel, '641 49 05 36', 'btn dark')}</div></header>
 <main id="contenido">${trail.length ? crumbs(trail) : ''}${content}</main>
-<footer class="footer"><div class="wrap footer-grid"><div>${logo()}<small>${owner} · ${link(tel, phone)}</small></div>
-<nav class="footer-links" aria-label="Pie de página"><a href="/#zonas">Cobertura</a><a href="/aviso-legal/">Aviso legal</a><a href="/privacidad/">Privacidad</a></nav></div></footer>
+<footer class="footer"><div class="wrap footer-grid"><div>${logo()}<small>${link(tel, phone)}</small></div>
+<nav class="footer-links" aria-label="Pie de página"><a href="/#zonas">Cobertura</a><a href="/ayuda-antenas/">Ayuda con la TDT</a><a href="/aviso-legal/">Aviso legal</a><a href="/privacidad/">Privacidad</a></nav></div></footer>
 <nav class="mobile-actions" aria-label="Contacto rápido">${link(tel, 'Llamar', 'btn')}${link(wa(options.contactPlace), 'WhatsApp', 'btn whatsapp')}</nav>
 </body></html>`;
   pages.set(path, { html, indexed });
@@ -198,10 +203,10 @@ const homeTrail = ['Inicio', '/'];
 
 add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   'Antenista Fuentes. Instalación y reparación de antenas TDT, parabólicas y antenas de comunidades. Busca tu municipio en siete provincias. 641 49 05 36.',
-  `<section class="hero"><div class="wrap hero-grid"><div><p class="kicker dot">Avisos urgentes de antena</p>
-  <h1>Antenista urgente para <em>TDT y satélite</em></h1>
+  `<section class="hero"><div class="wrap hero-grid"><div><p class="kicker dot">Urgencias de antena 24 horas</p>
+  <h1>Antenista urgente.<br><em>TDT y satélite.</em></h1>
   <p>Instalamos antenas y reparamos fallos de señal en viviendas y comunidades. Cuéntanos en qué pueblo estás y qué falla en tu televisión.</p>
-  ${buttons()}</div><figure class="hero-photo">${image(galleryPhoto, true)}<figcaption>Antena en cubierta · Galería de trabajos reales</figcaption></figure>
+  ${buttons()}</div><figure class="hero-photo">${image(galleryPhoto, true)}<figcaption><span>01 / TRABAJOS REALES</span> Antena TDT sobre cubierta de teja</figcaption></figure>
   </div></section>${search()}
   <section class="section wrap"><p class="kicker">Servicios de antenista</p><h2>De la antena a la toma de TV</h2>
   <p class="intro">Si solo falla una habitación, empezamos por su toma. Si varios vecinos pierden los mismos canales, revisamos qué parte de la instalación comparten.</p>${serviceCards()}</section>
@@ -211,6 +216,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <div class="actions">${link('/trabajos/', 'Ver los trabajos', 'btn dark')}</div></div></section>
   <section class="section wrap" id="zonas"><p class="kicker">Siete provincias</p><h2>Antenas en tu municipio</h2>
   <p class="intro">Elige una provincia para ver sus municipios o busca directamente tu pueblo. Indica la localidad al pedir cita para que podamos confirmar el desplazamiento.</p>${directory()}</section>
+  <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
 
 for (const area of areaMap.values()) {
@@ -218,12 +224,12 @@ for (const area of areaMap.values()) {
   const centerLinks = area.centers.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
   const covered = area.centers.filter((place) => place.nearby.length).map((center) =>
     '<section><h3>' + link(center.url + '#pueblos-cercanos', 'Entorno de ' + center.name) + '</h3><ul class="places">'
-    + center.nearby.map((place) => '<li>' + link(place.url, place.name) + '</li>').join('') + '</ul></section>').join('');
+    + center.nearby.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('') + '</ul></section>').join('');
   const localWorks = featured.filter((place) => place.province === area);
   add(area.url, heading + ' | Antenas TDT y parabólicas',
     'Instalación y reparación de antenas en ' + area.name + '. Consulta la cobertura de Antenista Fuentes por municipio y solicita una visita.',
     smallHero('Cobertura provincial', heading, area.intro, area.name)
-    + '<section class="section wrap"><h2>Municipios con página propia</h2><ul class="places">' + centerLinks + '</ul></section>'
+    + '<section class="section wrap"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
     + (localWorks.length ? '<section class="surface"><div class="wrap section"><h2>Trabajos en ' + esc(area.name)
       + '</h2>' + workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
     + '<section class="section wrap region-directory"><h2>Todos los municipios de ' + esc(area.name)
@@ -234,6 +240,9 @@ for (const area of areaMap.values()) {
   for (const place of area.centers) {
     const [topic, advice, service] = fichas[place.code];
     const [serviceName, serviceIntro] = servicios[service];
+    const extra = ampliaciones[place.code];
+    const guideKey = service === 'comunidades' ? 'colectiva' : service === 'reparacion' ? 'pixelacion' : 'sin-senal';
+    const guide = link('/ayuda-antenas/#' + guideKey, diagnosticos[guideKey][0], 'text-link');
     const heading = 'Antenista en ' + place.name;
     const localService = service === 'satelite' ? 'TDT y parabólicas'
       : service === 'comunidades' ? 'TDT y antenas colectivas' : 'Instalación y reparación TDT';
@@ -245,13 +254,14 @@ for (const area of areaMap.values()) {
     const nearbyCenters = area.centers.filter((center) => center !== place)
       .sort((a, b) => distance(place, a) - distance(place, b)).slice(0, 3);
     add(place.url, heading + ' | ' + localService,
-      heading + '. ' + serviceName + ' para viviendas y comunidades. Consulta avisos y cobertura en el municipio y su entorno. 641 49 05 36.',
-      smallHero(area.name + ' · Avisos urgentes', heading,
+      heading + '. ' + topic.replace(/[?¿]/g, '') + '. Visitas para viviendas y comunidades. 641 49 05 36.',
+      smallHero(area.name + ' · Urgencias 24 horas', heading,
         'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.', place.name)
       + '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
       + '</h2><p class="intro">' + esc(advice) + '</p></div><aside class="note"><h3>' + esc(serviceName)
       + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
-      + '</p></aside></section>'
+      + '</p><p>' + guide + '</p></aside></section>'
+      + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
       + (trabajos.includes(place.code) ? '<section class="surface"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>Hemos trabajado en '
         + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p><div class="actions">'
         + link('/trabajos/', 'Ver la galería', 'btn dark') + '</div></div></section>' : '')
@@ -261,11 +271,19 @@ for (const area of areaMap.values()) {
       + '<h3>Otras páginas de la zona</h3><ul class="places">' + nearbyCenters.map((item) =>
         '<li>' + link(item.url, 'Antenista en ' + item.name) + '</li>').join('') + '</ul>'
       + link(area.url, 'Ver todos los municipios de ' + area.name, 'text-link') + '</div></section>'
-      + '<section class="section wrap"><h2>Otros servicios de antenista</h2><ul>' + otherServices + '</ul></section>'
+      + '<section class="section wrap"><h2>Otros servicios de antenista</h2><ul class="places">' + otherServices + '</ul></section>'
       + callout(place.name),
       { trail: [homeTrail, [area.name, area.url], [place.name, place.url]], area: place.name, type: heading, contactPlace: place.name });
   }
 }
+
+add('/ayuda-antenas/', 'TV sin señal y TDT pixelada | Qué comprobar antes de llamar',
+  'Qué revisar cuando la televisión se queda sin señal, la TDT se pixela o varios vecinos pierden canales de la antena comunitaria.',
+  smallHero('Guía de diagnóstico', 'Qué comprobar si falla la TDT', 'Tres averías habituales y las comprobaciones que puedes hacer desde casa.', '', false)
+  + '<section class="section wrap prose guide">' + Object.entries(diagnosticos).map(([key, [title, copy]]) =>
+    '<section id="' + key + '"><h2>' + esc(title) + '</h2><p>' + esc(copy) + '</p></section>').join('')
+  + '</section>' + callout(),
+  { trail: [homeTrail, ['Ayuda con la TDT', '/ayuda-antenas/']] });
 
 add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   'Galería de trabajos reales de Antenista Fuentes. Antenas en cubierta, mástiles, cabeceras de televisión y equipos de distribución.',
@@ -290,14 +308,14 @@ for (const [key, [name, intro, steps]] of Object.entries(servicios)) {
     { trail: [homeTrail, serviceTrail, [name, path]], type: name });
 }
 
-add('/aviso-legal/', 'Aviso legal | Antenista Fuentes', 'Identificación y contacto del titular de Antenista Fuentes.',
-  '<article class="section wrap prose"><h1>Aviso legal</h1><h2>Titular del sitio</h2><p>Roberto Fuentes González, titular de Antenista Fuentes.</p>'
+add('/aviso-legal/', 'Aviso legal | Antenista Fuentes', 'Información y contacto de Antenista Fuentes.',
+  '<article class="section wrap prose"><h1>Aviso legal</h1><h2>Contacto</h2><p>Antenista Fuentes es el nombre comercial del servicio de antenas.</p>'
   + '<p>Domicilio a efectos de este aviso legal: Alameda de Urquijo s/n, Bilbao.</p><p>Teléfono de contacto: '
   + link(tel, phone) + '.</p><h2>Información del servicio</h2><p>La web informa sobre instalación y reparación de antenas. La disponibilidad, el alcance de cada visita y el presupuesto se confirman al contactar.</p></article>',
   { trail: [homeTrail, ['Aviso legal', '/aviso-legal/']], indexed: false });
 
 add('/privacidad/', 'Privacidad | Antenista Fuentes', 'Información sobre el uso de datos al contactar con Antenista Fuentes.',
-  '<article class="section wrap prose"><h1>Privacidad</h1><h2>Responsable</h2><p>Roberto Fuentes González. Puedes contactar en el '
+  '<article class="section wrap prose"><h1>Privacidad</h1><h2>Contacto para consultas de privacidad</h2><p>Puedes contactar con Antenista Fuentes en el '
   + link(tel, phone) + ' o mediante los datos del <a href="/aviso-legal/">aviso legal</a>.</p>'
   + '<h2>Datos de contacto</h2><p>Si nos llamas o escribes, usamos los datos que facilites para responder a tu consulta, preparar un presupuesto o gestionar el servicio solicitado. Se conservan durante el tiempo necesario para atender la solicitud y, si procede, para cumplir las obligaciones aplicables.</p>'
   + '<h2>WhatsApp y cookies</h2><p>Los enlaces de WhatsApp abren un servicio externo sujeto a su propia política de privacidad. La web no incorpora formularios, publicidad, cookies propias ni scripts de analítica.</p>'
