@@ -6,6 +6,7 @@ const read = (path) => JSON.parse(readFileSync(new URL('../' + path, import.meta
 const output = new URL('../dist/', import.meta.url);
 const base = 'https://instalaciondeantenasurgente.com';
 const brand = 'Antenista Fuentes';
+const owner = 'Roberto Fuentes González';
 const phone = '+34 641 49 05 36';
 const tel = 'tel:+34641490536';
 const wa = (place) => 'https://wa.me/34641490536?text=' + encodeURIComponent(
@@ -87,8 +88,8 @@ function logo() {
   return '<a class="brand" href="/"><img src="/assets/logo.svg" width="42" height="42" alt="">Antenista<br>Fuentes</a>';
 }
 
-function buttons(place = '') {
-  return '<div class="actions">' + link(tel, 'Llamar al 641 49 05 36', 'btn')
+function buttons(place = '', callLabel = 'Llamar al 641 49 05 36') {
+  return '<div class="actions desktop-contact">' + link(tel, callLabel, 'btn')
     + link(wa(place), 'WhatsApp', 'btn whatsapp') + '</div>';
 }
 
@@ -96,7 +97,7 @@ function callout(place = '') {
   return '<section class="section wrap"><div class="callout"><p class="kicker dot">Urgencias 24 horas</p><h2>'
     + esc(place ? '¿Necesitas un antenista en ' + place + '?' : 'Cuéntanos qué le pasa a tu antena')
     + '</h2><p>Indica el municipio, si el fallo afecta a una toma o a varios vecinos y desde cuándo ocurre. Te confirmamos la disponibilidad para el desplazamiento.</p>'
-    + buttons(place) + '</div></section>';
+    + buttons(place, 'Llamar') + '</div></section>';
 }
 
 function crumbs(items) {
@@ -188,11 +189,11 @@ ${indexed ? '<link rel="canonical" href="' + esc(url) + '">' : '<meta name="robo
 ${searchEnabled ? '<script src="/assets/buscar.js" defer></script>' : ''}
 <script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@graph':data}).replaceAll('<', '\\u003c')}</script>
 </head><body><a class="skip" href="#contenido">Saltar al contenido</a>
-<header class="site-header"><div class="urgent-bar"><div class="wrap"><span class="urgent-status"><span aria-hidden="true"></span>Urgencias 24 horas</span>${link(tel, 'Llamar al 641 49 05 36')}</div></div><div class="wrap header-row">${logo()}<nav class="site-nav" aria-label="Principal">
+<header class="site-header"><div class="urgent-bar"><div class="wrap"><span class="urgent-status"><span aria-hidden="true"></span>Urgencias 24 horas</span></div></div><div class="wrap header-row">${logo()}<nav class="site-nav" aria-label="Principal">
 <a href="/servicios/">Servicios</a><a href="/#zonas">Zonas</a><a href="/trabajos/">Trabajos reales</a>
-</nav>${link(tel, '641 49 05 36', 'btn dark')}</div></header>
+</nav></div></header>
 <main id="contenido">${trail.length ? crumbs(trail) : ''}${content}</main>
-<footer class="footer"><div class="wrap footer-grid"><div>${logo()}<small>${link(tel, phone)}</small></div>
+<footer class="footer"><div class="wrap footer-grid">${logo()}
 <nav class="footer-links" aria-label="Pie de página"><a href="/#zonas">Cobertura</a><a href="/ayuda-antenas/">Ayuda con la TDT</a><a href="/aviso-legal/">Aviso legal</a><a href="/privacidad/">Privacidad</a></nav></div></footer>
 <nav class="mobile-actions" aria-label="Contacto rápido">${link(tel, 'Llamar', 'btn')}${link(wa(options.contactPlace), 'WhatsApp', 'btn whatsapp')}</nav>
 </body></html>`;
@@ -203,7 +204,7 @@ const homeTrail = ['Inicio', '/'];
 
 add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   'Antenista Fuentes. Instalación y reparación de antenas TDT, parabólicas y antenas de comunidades. Busca tu municipio en siete provincias. 641 49 05 36.',
-  `<section class="hero"><div class="wrap hero-grid"><div><p class="kicker dot">Urgencias de antena 24 horas</p>
+  `<section class="hero"><div class="wrap hero-grid"><div><p class="kicker dot">Instalación y reparación de antenas</p>
   <h1>Antenista urgente.<br><em>TDT y satélite.</em></h1>
   <p>Instalamos antenas y reparamos fallos de señal en viviendas y comunidades. Cuéntanos en qué pueblo estás y qué falla en tu televisión.</p>
   ${buttons()}</div><figure class="hero-photo">${image(galleryPhoto, true)}<figcaption><span>01 / TRABAJOS REALES</span> Antena TDT sobre cubierta de teja</figcaption></figure>
@@ -255,7 +256,7 @@ for (const area of areaMap.values()) {
       .sort((a, b) => distance(place, a) - distance(place, b)).slice(0, 3);
     add(place.url, heading + ' | ' + localService,
       heading + '. ' + topic.replace(/[?¿]/g, '') + '. Visitas para viviendas y comunidades. 641 49 05 36.',
-      smallHero(area.name + ' · Urgencias 24 horas', heading,
+      smallHero(area.name + ' · Servicio de antenista', heading,
         'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.', place.name)
       + '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
       + '</h2><p class="intro">' + esc(advice) + '</p></div><aside class="note"><h3>' + esc(serviceName)
@@ -309,14 +310,13 @@ for (const [key, [name, intro, steps]] of Object.entries(servicios)) {
 }
 
 add('/aviso-legal/', 'Aviso legal | Antenista Fuentes', 'Información y contacto de Antenista Fuentes.',
-  '<article class="section wrap prose"><h1>Aviso legal</h1><h2>Contacto</h2><p>Antenista Fuentes es el nombre comercial del servicio de antenas.</p>'
+  '<article class="section wrap prose"><h1>Aviso legal</h1><h2>Titular del sitio</h2><p>' + owner + ', titular de Antenista Fuentes.</p>'
   + '<p>Domicilio a efectos de este aviso legal: Alameda de Urquijo s/n, Bilbao.</p><p>Teléfono de contacto: '
   + link(tel, phone) + '.</p><h2>Información del servicio</h2><p>La web informa sobre instalación y reparación de antenas. La disponibilidad, el alcance de cada visita y el presupuesto se confirman al contactar.</p></article>',
   { trail: [homeTrail, ['Aviso legal', '/aviso-legal/']], indexed: false });
 
 add('/privacidad/', 'Privacidad | Antenista Fuentes', 'Información sobre el uso de datos al contactar con Antenista Fuentes.',
-  '<article class="section wrap prose"><h1>Privacidad</h1><h2>Contacto para consultas de privacidad</h2><p>Puedes contactar con Antenista Fuentes en el '
-  + link(tel, phone) + ' o mediante los datos del <a href="/aviso-legal/">aviso legal</a>.</p>'
+  '<article class="section wrap prose"><h1>Privacidad</h1><h2>Responsable del tratamiento</h2><p>' + owner + '. Puedes consultar sus datos de contacto en el <a href="/aviso-legal/">aviso legal</a>.</p>'
   + '<h2>Datos de contacto</h2><p>Si nos llamas o escribes, usamos los datos que facilites para responder a tu consulta, preparar un presupuesto o gestionar el servicio solicitado. Se conservan durante el tiempo necesario para atender la solicitud y, si procede, para cumplir las obligaciones aplicables.</p>'
   + '<h2>WhatsApp y cookies</h2><p>Los enlaces de WhatsApp abren un servicio externo sujeto a su propia política de privacidad. La web no incorpora formularios, publicidad, cookies propias ni scripts de analítica.</p>'
   + '<h2>Derechos</h2><p>Puedes solicitar acceso, rectificación, supresión, oposición, limitación o portabilidad mediante los datos de contacto del responsable. También puedes acudir a la Agencia Española de Protección de Datos.</p></article>',
