@@ -76,6 +76,11 @@ p+p{margin-top:.8em}
 .split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(1.3rem,5vw,4rem);align-items:start}
 .note{border-left:4px solid #3b64b8;padding:1.25rem 1.4rem;background:#edf2fc;border-radius:0 10px 10px 0}
 .note p{margin-top:.55rem}
+.split .note{margin-top:1.1rem}
+.service-photo{overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#fff}
+.service-photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 24%;background:var(--navy)}
+.service-photo--satelite img{aspect-ratio:4/3;object-fit:contain}
+.service-photo figcaption{padding:.6rem .85rem;font-size:.88rem;color:var(--muted)}
 .zones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1.6rem}
 .zone{border:1px solid var(--line);background:#fff;border-radius:12px;padding:1.15rem}
 .zone h3 a{text-decoration:none}

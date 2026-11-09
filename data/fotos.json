@@ -46,5 +46,11 @@
     "Antena TDT sobre un tejado de tejas",
     585,
     1040
+  ],
+  [
+    "antena-tdt-y-parabolica",
+    "Antena TDT en un mástil con una parabólica al pie",
+    586,
+    1040
   ]
 ]

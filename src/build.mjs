@@ -31,7 +31,14 @@ const names = {
   '09903': ['Villarcayo', 'villarcayo', 'merindad de castilla la vieja'],
 };
 const photos = read('data/fotos.json');
-const galleryPhoto = photos.find(([file]) => file === 'tdt-en-tejado');
+const photosByName = new Map(photos.map((photo) => [photo[0], photo]));
+const galleryPhoto = photosByName.get('tdt-en-tejado');
+const servicePhotos = {
+  instalacion: ['antena-tdt-y-parabolica', 'tdt-en-tejado', 'antenas-cielo-azul'],
+  reparacion: ['mastil-varias-antenas', 'antena-en-cubierta', 'amplificador-de-senal'],
+  comunidades: ['medidor-y-cabecera', 'amplificador-de-senal'],
+  satelite: ['antena-tdt-y-parabolica'],
+};
 const areaMap = new Map(provincias.map(([code, name, key, intro]) =>
   [code, { name, key, intro, url: '/' + key + '/', places: [] }]));
 const towns = new Map(read('data/municipios.json').map(([code, official, population, lat, lon, capital]) => {
@@ -250,6 +257,8 @@ for (const area of areaMap.values()) {
   for (const place of area.centers) {
     const [topic, advice, service] = fichas[place.code];
     const [serviceName, serviceIntro] = servicios[service];
+    const choices = servicePhotos[service];
+    const servicePhoto = photosByName.get(choices[Number(place.code) % choices.length]);
     const extra = ampliaciones[place.code];
     const guideKey = service === 'comunidades' ? 'colectiva' : service === 'reparacion' ? 'pixelacion' : 'sin-senal';
     const guide = link('/ayuda-antenas/#' + guideKey, diagnosticos[guideKey][0], 'text-link');
@@ -268,9 +277,10 @@ for (const area of areaMap.values()) {
       smallHero(area.name + ' · Servicio de antenista', heading,
         'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.', place.name)
       + '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
-      + '</h2><p class="intro">' + esc(advice) + '</p></div><aside class="note"><h3>' + esc(serviceName)
+      + '</h2><p class="intro">' + esc(advice) + '</p><aside class="note"><h3>' + esc(serviceName)
       + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
-      + '</p><p>' + guide + '</p></aside></section>'
+      + '</p><p>' + guide + '</p></aside></div><figure class="service-photo service-photo--' + service + '">'
+      + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
       + (trabajos.includes(place.code) ? '<section class="surface"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>Hemos trabajado en '
         + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p><div class="actions">'
