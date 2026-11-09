@@ -1,0 +1,50 @@
+[
+  [
+    "antena-en-cubierta",
+    "Antena de televisión en una cubierta de teja",
+    586,
+    1040
+  ],
+  [
+    "medidor-y-cabecera",
+    "Medidor de campo y cabecera de distribución",
+    585,
+    1040
+  ],
+  [
+    "torre-de-antenas",
+    "Torre metálica con antenas de televisión",
+    585,
+    1040
+  ],
+  [
+    "mastil-varias-antenas",
+    "Mástil con varias antenas y cableado exterior",
+    586,
+    1040
+  ],
+  [
+    "antenas-cielo-azul",
+    "Conjunto de antenas de televisión sobre un mástil",
+    586,
+    1040
+  ],
+  [
+    "caja-y-coaxial",
+    "Caja exterior con cable coaxial",
+    585,
+    1040
+  ],
+  [
+    "amplificador-de-senal",
+    "Amplificador y conexiones de distribución de señal",
+    585,
+    1040
+  ],
+  [
+    "tdt-en-tejado",
+    "Antena TDT sobre un tejado de tejas",
+    585,
+    1040
+  ]
+]
