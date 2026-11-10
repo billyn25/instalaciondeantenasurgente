@@ -265,10 +265,19 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   </div></section>${search()}
   <section class="section wrap"><p class="kicker">Servicios de antenista</p><h2>De la antena a la toma de TV</h2>
   <p class="intro">Si solo falla una habitación, empezamos por su toma. Si varios vecinos pierden los mismos canales, revisamos qué parte de la instalación comparten.</p>${serviceCards()}</section>
-  <section class="section surface"><div class="wrap"><p class="kicker">Fotografías de obra</p><h2>Trabajos reales de Antenista Fuentes</h2>
-  <p class="intro">Antenas en cubierta, cabeceras de televisión y equipos de distribución. Estos son algunos de los municipios donde hemos trabajado.</p>
-  ${workTowns()}${photoGrid([photos[7], photos[1], photos[2], photos[6]])}
-  <div class="actions">${link('/trabajos/', 'Ver los trabajos', 'btn dark')}</div></div></section>
+  <section class="section surface" id="trabajos-destacados"><div class="wrap"><p class="kicker">Fotografías de obra</p><h2>Trabajos reales de Antenista Fuentes</h2>
+  <div class="cards case-previews">
+    <article class="card">${image(bilbaoCasePhoto)}<p class="kicker">Bilbao centro · Reparación</p>
+      <h3>Canales que desaparecían a ciertas horas</h3>
+      <p>La instalación había perdido blindaje. Los cortes se resolvieron al sustituir la antena TDT, el previo y su fuente de alimentación.</p>
+      ${link(bilbaoCaseUrl, 'Ver el caso de Bilbao', 'text-link')}</article>
+    <article class="card">${image(photosByName.get('deba-medicion-promax'))}<p class="kicker">Deba · Medición de señal</p>
+      <h3>TDT, parabólica y distribución en viviendas</h3>
+      <p>Las fotos muestran el espectro de la señal TDT medido con Promax, una central Rover Polar con repartidores y las antenas de una de las viviendas.</p>
+      ${link('/gipuzkoa/deba/#trabajos-locales', 'Ver los trabajos de Deba', 'text-link')}</article>
+  </div>
+  ${workTowns()}
+  <div class="actions">${link('/trabajos/', 'Ver todos los trabajos', 'btn dark')}</div></div></section>
   <section class="section wrap" id="zonas"><p class="kicker">Siete provincias</p><h2>Antenas en tu municipio</h2>
   <p class="intro">Nuestro equipo sale de Bilbao y se desplaza a todos los municipios que figuran en esta zona de cobertura, tanto para visitas programadas como para averías urgentes. Busca tu pueblo o abre el listado de tu provincia. Al contactar, te confirmamos cuándo podemos llegar.</p>${directory(true)}</section>
   <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p>${diagnosticCards()}</div></section>
