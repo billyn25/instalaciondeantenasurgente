@@ -175,3 +175,32 @@ details{margin-top:.8rem}
 
 .photo-grid--mediciones img{aspect-ratio:3/4;object-fit:contain;object-position:center}
 @media(max-width:600px){.photo-grid--mediciones{grid-template-columns:minmax(0,1fr)}}
+
+/* Porteros: explicación visual del servicio y trabajos documentados. */
+.door-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(1.5rem,5vw,4rem);align-items:center}
+.door-hero .door-layout{padding-block:clamp(2rem,4vw,3.5rem)}
+.door-hero h1{font-size:clamp(2.15rem,4.3vw,3.6rem);line-height:1.08;letter-spacing:-.045em;text-wrap:initial}
+.door-jump{display:inline-block;margin-top:1.5rem;font-size:.9rem;font-weight:650;color:#fff}
+.door-photo{overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#e9edf3}
+.door-photo img{width:100%;height:390px;object-fit:contain;object-position:center}
+.door-photo figcaption{padding:.7rem 1rem;color:var(--muted);background:#fff;font-size:.8rem;line-height:1.45}
+.door-section{padding-block:clamp(2.5rem,5vw,4.5rem)}
+.door-heading{max-width:700px}
+.door-heading h2,.door-renew h2{font-size:clamp(1.8rem,3.2vw,2.7rem);line-height:1.15}
+.door-heading>p:last-child{margin-top:1rem;color:var(--muted);max-width:64ch}
+.cards.door-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+.door-cards .card{padding:1.5rem;border-top:1px solid var(--line);border-radius:14px}
+.door-cards h3{font-size:1.25rem;line-height:1.25}
+.door-cards p{margin-bottom:0}
+.door-renew{grid-template-columns:.85fr 1.15fr}
+.door-renew p{margin-top:.9rem;color:var(--muted);max-width:60ch}
+.door-renew h3{margin-top:1.7rem;line-height:1.3}
+.door-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));list-style:none;counter-reset:door;gap:1.2rem;padding:0;margin:1.75rem 0 0}
+.door-steps li{counter-increment:door;padding:1.2rem 0;border-top:2px solid #bfcce0}
+.door-steps li::before{content:'0' counter(door);display:block;font-size:.8rem;font-weight:800;color:#3156a0;margin-bottom:.7rem}
+.door-steps strong,.door-steps span{display:block}
+.door-steps span{margin-top:.45rem;color:var(--muted)}
+.door-contact{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;margin-top:2rem;padding:1.5rem;background:#edf2fa;border-radius:14px}
+.door-contact p{margin-top:.5rem;color:var(--muted)}
+.door-contact .actions{margin:0;flex-shrink:0}
+@media(max-width:660px){.door-layout,.door-renew,.cards.door-cards,.door-steps{grid-template-columns:minmax(0,1fr)}.door-hero h1{font-size:clamp(2rem,8vw,2.8rem)}.door-photo img{height:300px}.door-renew .door-photo{order:2}.door-contact{align-items:stretch;flex-direction:column}.door-contact .actions .btn{flex:1}.door-steps{gap:0}}
