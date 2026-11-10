@@ -36,6 +36,7 @@ const photosByName = new Map(photos.map((photo) => [photo[0], photo]));
 const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map((key) => photosByName.get(key));
 const bilbaoCasePhoto = photosByName.get('bilbao-centro-antena-tdt');
 const bilbaoCaseUrl = '/bizkaia/bilbao/#caso-pixelacion-bilbao';
+const bilbaoCommunityUrl = '/bizkaia/bilbao/#instalaciones-comunitarias';
 const galleryPhoto = photosByName.get('tdt-en-tejado');
 const servicePhotos = {
   instalacion: ['antena-tdt-y-parabolica', 'tdt-en-tejado', 'antenas-cielo-azul'],
@@ -329,6 +330,10 @@ for (const [code, area] of areaMap) {
           + '<p class="intro">En una instalación de Bilbao centro, algunos canales desaparecían a determinadas horas. La instalación había perdido blindaje. Sustituimos el previo de antena, su fuente de alimentación y la antena TDT. Con esos cambios se resolvieron los cortes.</p></div>'
           + '<figure class="service-photo"><a href="/assets/trabajos/bilbao-centro-antena-tdt.webp">' + image(bilbaoCasePhoto)
           + '</a><figcaption>' + esc(bilbaoCasePhoto[1]) + '</figcaption></figure></div>'
+          + '<div class="local-extra" id="instalaciones-comunitarias"><h3>Instalaciones de antena comunitaria en Bilbao</h3>'
+          + '<p class="intro">Hemos realizado trabajos en las instalaciones comunitarias de estos dos portales de Bilbao.</p>'
+          + '<ul class="work-towns"><li>Calle Arbolantxa, 5</li><li>Calle Cortes, 6</li></ul>'
+          + '<p class="intro">Cuando varios vecinos pierden los mismos canales, podemos comparar la señal en la cabecera común y en distintas tomas. Así se distingue un problema del equipo compartido de una pérdida en un ramal del edificio.</p></div>'
           : 'Hemos trabajado en ' + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p>')
         + '<div class="actions">'
         + link('/trabajos/', 'Ver la galería', 'btn dark') + '</div></div></section>' : '')
@@ -366,7 +371,8 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + '<p class="intro">Atendemos avisos a diario. Estos municipios son una muestra de los lugares donde hemos realizado trabajos. Una visita para localizar un fallo de señal también cuenta, igual que una reparación o una instalación.</p>'
   + workTowns() + '<h2>Galería de trabajos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
-  + photoGrid(photos) + '<p>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link') + '</p></section>' + callout(),
+  + photoGrid(photos) + '<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
+  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li></ul></section>' + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];

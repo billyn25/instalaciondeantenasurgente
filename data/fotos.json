@@ -70,5 +70,23 @@
     "Antenas de televisión y parabólica sobre una cubierta de Bilbao centro",
     900,
     1200
+  ],
+  [
+    "antenas-mastil-cubierta-teja",
+    "Antenas de televisión sobre un mástil junto a una cubierta de teja",
+    720,
+    960
+  ],
+  [
+    "detalle-antenas-mastil",
+    "Detalle de dos antenas de televisión y su cableado en el mástil",
+    720,
+    960
+  ],
+  [
+    "amplificador-interior-nova-mini",
+    "Amplificador interior Nova Mini 2 con conexiones de cable coaxial",
+    825,
+    1100
   ]
 ]
