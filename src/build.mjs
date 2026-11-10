@@ -37,6 +37,8 @@ const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map(
 const bilbaoCasePhoto = photosByName.get('bilbao-centro-antena-tdt');
 const bilbaoCaseUrl = '/bizkaia/bilbao/#caso-pixelacion-bilbao';
 const bilbaoCommunityUrl = '/bizkaia/bilbao/#instalaciones-comunitarias';
+const bermeoPhoto = photosByName.get('bermeo-antena-cable-vientos');
+const bermeoCaseUrl = '/bizkaia/bermeo/#trabajos-locales';
 const debaPhotos = photos.filter(([name]) => name.startsWith('deba-'));
 const galleryPhoto = photosByName.get('tdt-en-tejado');
 const servicePhotos = {
@@ -296,6 +298,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       <h3>Instalaciones en Arbolantxa y Cortes</h3>
       <p>Trabajos reales en comunidades de Calle Arbolantxa, 5 y Calle Cortes, 6. Las fotografías del caso muestran cabeceras y equipos de distribución de televisión.</p>
       ${link(bilbaoCommunityUrl, 'Ver las instalaciones comunitarias de Bilbao', 'text-link')}</article>
+    <article class="card">${image(bermeoPhoto)}<p class="kicker">Bermeo · Antena TDT</p>
+      <h3>Cambio de cable, vientos y amplificador</h3><p>Trabajo real en Bermeo, con desplazamiento urgente desde Bilbao. Intervención en la instalación de televisión terrestre y sus elementos de sujeción.</p>
+      ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
     <article class="card">${image(porteroVisits['20036'][1])}<p class="kicker">Hondarribia · Porteros comunitarios</p>
       <h3>Reparación de audio y medición para renovar</h3><p>David C. G. realizó cambios de grupos fónicos con recambio vigente y tomó medidas de las placas para valorar un posible cambio a videoportero.</p>
       ${link('/gipuzkoa/hondarribia/#visita-portero-20036', 'Ver el trabajo real de Hondarribia', 'text-link')}</article>
@@ -380,6 +385,8 @@ for (const [code, area] of areaMap) {
           + '<p class="intro">Hemos realizado trabajos en las instalaciones comunitarias de estos dos portales de Bilbao.</p>'
           + '<ul class="work-towns"><li>Calle Arbolantxa, 5</li><li>Calle Cortes, 6</li></ul>'
           + '<p class="intro">Cuando varios vecinos pierden los mismos canales, podemos comparar la señal en la cabecera común y en distintas tomas. Así se distingue un problema del equipo compartido de una pérdida en un ramal del edificio.</p></div>'
+          : place.code === '48017' ? 'Trabajo real de antena TDT en Bermeo</h2>'
+            + '<div class="split local-extra"><div><p class="kicker">Desplazamiento urgente desde Bilbao</p><h3>Cambio de cable, vientos de sujeción y amplificador</h3><p class="intro">En esta intervención real en Bermeo se trabajó sobre la instalación de antena de televisión terrestre, con cambio del cable, los vientos de sujeción del mástil y el amplificador.</p><p>La fotografía muestra la antena TDT sobre el mástil y los vientos de sujeción. El trabajo incluyó tanto elementos de la recepción y distribución de señal como de la sujeción de la instalación.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/bermeo-antena-cable-vientos.webp">'+image(bermeoPhoto)+'</a><figcaption>'+esc(bermeoPhoto[1])+'</figcaption></figure></div>'
           : place.code === '20029' ? 'Trabajos de antena en varias viviendas de Deba</h2>'
             + '<p class="intro">Las fotos muestran antenas terrestres y parabólica, una central Rover Polar con sus repartidores y una medición de TDT con Promax. Medir el nivel y la calidad de la señal ayuda a decidir si conviene intervenir en la antena o revisar el equipo y el cable que llevan la televisión a las tomas.</p>'
             + photoGrid(debaPhotos)
@@ -421,7 +428,7 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Galería de trabajos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
   + photoGrid(photos) + '<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
-  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + callout(),
+  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
