@@ -18,6 +18,7 @@ Ejecuta `node src/build.mjs` con Node.js 22. El resultado se escribe en `dist/`.
 
 - [INE. Cifras oficiales de población municipal a 1 de enero de 2025](https://www.ine.es/dynt3/inebase/es/index.htm?padre=9041)
 - [IGN. Información geográfica destacada, listado de municipios](https://www.ign.es/web/ane-datos-geograficos)
+- Mapa del pie: [límites provinciales del IGN, servidos por el Ministerio de Transportes](https://mapas.fomento.gob.es/arcgis/rest/services/SIU/ENTIDADES_TERRITORIALES_EGRN/MapServer/2) y [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/) para el contexto internacional.
 
 ## Publicación
 

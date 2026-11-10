@@ -97,31 +97,19 @@ function logo() {
 }
 
 const mapWidth = 640;
-const mapHeight = 340;
-const mapPadding = 28;
-const mapTowns = [...towns.values()];
-const west = Math.min(...mapTowns.map(({ lon }) => lon));
-const east = Math.max(...mapTowns.map(({ lon }) => lon));
-const north = Math.max(...mapTowns.map(({ lat }) => lat));
-const south = Math.min(...mapTowns.map(({ lat }) => lat));
-const mapPosition = ({ lat, lon }) => [
-  Math.round(mapPadding + (lon - west) / (east - west) * (mapWidth - 2 * mapPadding)),
-  Math.round(mapPadding + (north - lat) / (north - south) * (mapHeight - 2 * mapPadding)),
-];
-const mapDots = mapTowns.map((town) => {
-  const [x, y] = mapPosition(town);
-  return `M${x} ${y}h.01`;
-}).join('');
-const coverageMap = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${mapWidth} ${mapHeight}"><path d="${mapDots}" fill="none" stroke="#849ec5" stroke-opacity=".52" stroke-width="2.6" stroke-linecap="round"/></svg>`;
+const mapHeight = 350;
+// Límites geográficos del SVG en assets/mapa-cobertura.svg.
+const { west, east, north, south } = { west: -7.3, east: -1.25, north: 43.87, south: 41.45 };
 const mapAreas = ['24089', '39075', '48020', '20069', '01059', '09059', '26089'].map((code, index) => {
   const town = towns.get(code);
-  const [x, y] = mapPosition(town);
-  return { ...town.province, number: index + 1, x: x / mapWidth * 100, y: y / mapHeight * 100 };
+  const x = (town.lon - west) / (east - west) * 100;
+  const y = (north - town.lat) / (north - south) * 100;
+  return { ...town.province, number: index + 1, x: x.toFixed(2), y: y.toFixed(2) };
 });
 const footer = `<footer class="footer" id="mapa-cobertura"><div class="wrap">
 <div class="footer-coverage">
   <div class="footer-intro"><p class="kicker dot">Zonas de servicio</p>
-  <h2>¿Hasta dónde llegamos?</h2><p>Instalamos y reparamos antenas en siete provincias. Toca un punto del mapa para ver los municipios de esa zona.</p></div>
+<h2>¿Hasta dónde llegamos?</h2><p>Instalamos y reparamos antenas en siete provincias del norte de España. Toca un punto del mapa para ver los municipios de esa zona.</p></div>
   <div class="footer-map" role="group" aria-label="Mapa de zonas de servicio">
     <img src="/assets/mapa-cobertura.svg" alt="" width="${mapWidth}" height="${mapHeight}" loading="lazy">
     <span class="footer-map-north" aria-hidden="true">↑ N</span>
@@ -391,7 +379,6 @@ const dist = decodeURIComponent(output.pathname);
 rmSync(dist, { force: true, recursive: true });
 mkdirSync(dist, { recursive: true });
 cpSync(new URL('../assets/', import.meta.url), join(dist, 'assets'), { recursive: true });
-writeFileSync(join(dist, 'assets/mapa-cobertura.svg'), coverageMap);
 for (const [path, { html }] of pages) {
   const file = join(dist, path.endsWith('/') ? path + 'index.html' : path);
   mkdirSync(dirname(file), { recursive: true });
