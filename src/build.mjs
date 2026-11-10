@@ -37,6 +37,8 @@ const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map(
 const bilbaoCasePhoto = photosByName.get('bilbao-centro-antena-tdt');
 const bilbaoCaseUrl = '/bizkaia/bilbao/#caso-pixelacion-bilbao';
 const bilbaoCommunityUrl = '/bizkaia/bilbao/#instalaciones-comunitarias';
+const gernikaPhoto = photosByName.get('gernika-lumo-antena-tdt');
+const gernikaCaseUrl = '/bizkaia/gernika-lumo/#trabajos-locales';
 const bermeoPhoto = photosByName.get('bermeo-antena-cable-vientos');
 const bermeoCaseUrl = '/bizkaia/bermeo/#trabajos-locales';
 const debaPhotos = photos.filter(([name]) => name.startsWith('deba-'));
@@ -385,6 +387,8 @@ for (const [code, area] of areaMap) {
           + '<p class="intro">Hemos realizado trabajos en las instalaciones comunitarias de estos dos portales de Bilbao.</p>'
           + '<ul class="work-towns"><li>Calle Arbolantxa, 5</li><li>Calle Cortes, 6</li></ul>'
           + '<p class="intro">Cuando varios vecinos pierden los mismos canales, podemos comparar la señal en la cabecera común y en distintas tomas. Así se distingue un problema del equipo compartido de una pérdida en un ramal del edificio.</p></div>'
+          : place.code === '48046' ? 'Trabajo real de antena TDT en Gernika-Lumo</h2>'
+            + '<div class="split local-extra"><div><h3>Antena y montaje sobre cubierta</h3><p class="intro">Fotografía de un trabajo real en Gernika-Lumo. Se ve la antena de televisión terrestre instalada sobre un mástil en cubierta, con el cableado y los elementos de sujeción.</p><p>Esta imagen documenta la instalación exterior. Para valorar una avería en un montaje de este tipo, se revisan tanto la recepción de señal como el estado del mástil, el cable y las conexiones.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/gernika-lumo-antena-tdt.webp">'+image(gernikaPhoto)+'</a><figcaption>'+esc(gernikaPhoto[1])+'</figcaption></figure></div>'
           : place.code === '48017' ? 'Trabajo real de antena TDT en Bermeo</h2>'
             + '<div class="split local-extra"><div><p class="kicker">Desplazamiento urgente desde Bilbao</p><h3>Cambio de cable, vientos de sujeción y amplificador</h3><p class="intro">En esta intervención real en Aldatseta Kalea, Bermeo, se trabajó sobre la instalación de antena de televisión terrestre, con cambio del cable, los vientos de sujeción del mástil y el amplificador.</p><p>La fotografía muestra la antena TDT sobre el mástil y los vientos de sujeción. El trabajo incluyó tanto elementos de la recepción y distribución de señal como de la sujeción de la instalación.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/bermeo-antena-cable-vientos.webp">'+image(bermeoPhoto)+'</a><figcaption>'+esc(bermeoPhoto[1])+'</figcaption></figure></div>'
           : place.code === '20029' ? 'Trabajos de antena en varias viviendas de Deba</h2>'
@@ -428,7 +432,7 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Galería de trabajos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
   + photoGrid(photos) + '<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
-  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + callout(),
+  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
