@@ -71,6 +71,8 @@ p+p{margin-top:.8em}
 .photo-grid img{width:100%;height:auto;aspect-ratio:4/4.5;object-fit:cover;object-position:center 42%;background:#e2e8f2}
 .photo-grid a{display:block}
 .photo-grid figcaption{padding:.72rem;font-size:.88rem;line-height:1.35}
+.photo-grid--equipos{grid-template-columns:repeat(2,minmax(0,1fr));max-width:800px}
+.photo-grid--equipos img{aspect-ratio:4/3;object-fit:contain}
 .work-towns{display:flex;flex-wrap:wrap;gap:.5rem;padding:0;margin:1.2rem 0;list-style:none}
 .work-towns a{display:block;border:1px solid #b9c6df;border-radius:100px;padding:.35rem .7rem;background:#f0f4fd;font-size:.89rem}
 .split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(1.3rem,5vw,4rem);align-items:start}

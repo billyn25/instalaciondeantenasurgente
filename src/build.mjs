@@ -33,6 +33,7 @@ const names = {
 };
 const photos = read('data/fotos.json');
 const photosByName = new Map(photos.map((photo) => [photo[0], photo]));
+const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map((key) => photosByName.get(key));
 const galleryPhoto = photosByName.get('tdt-en-tejado');
 const servicePhotos = {
   instalacion: ['antena-tdt-y-parabolica', 'tdt-en-tejado', 'antenas-cielo-azul'],
@@ -156,8 +157,8 @@ function image([name, alt, width, height], eager = false) {
     + '" height="' + height + '"' + (eager ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"') + '>';
 }
 
-function photoGrid(selection) {
-  return '<div class="photo-grid">' + selection.map((photo) =>
+function photoGrid(selection, className = 'photo-grid') {
+  return '<div class="' + className + '">' + selection.map((photo) =>
     '<figure><a href="/assets/trabajos/' + photo[0] + '.webp">' + image(photo)
     + '</a><figcaption>' + esc(photo[1]) + '</figcaption></figure>').join('') + '</div>';
 }
@@ -319,8 +320,11 @@ for (const [code, area] of areaMap) {
       + '</p><p>' + guide + '</p></aside></div><figure class="service-photo service-photo--' + service + '">'
       + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
-      + (trabajos.includes(place.code) ? '<section class="surface"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>Hemos trabajado en '
-        + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p><div class="actions">'
+      + (trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
+        + (place.code === '48020' ? 'Equipos de antena comunitaria en Bilbao</h2><p class="intro">Estas fotos de Bilbao muestran dos cabeceras de televisión. La cabecera recibe la señal de la antena y la prepara para distribuirla a las viviendas. Al revisar una avería, el medidor de campo permite comparar la señal antes y después de la amplificación.</p>'
+          + photoGrid(bilbaoPhotos, 'photo-grid photo-grid--equipos')
+          : 'Hemos trabajado en ' + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p>')
+        + '<div class="actions">'
         + link('/trabajos/', 'Ver la galería', 'btn dark') + '</div></div></section>' : '')
       + '<section class="section surface" id="pueblos-cercanos"><div class="wrap"><p class="kicker">Zona de servicio</p><h2>'
       + (near ? 'Antenista en pueblos cercanos a ' : 'Cobertura desde ') + esc(place.name) + '</h2>'
