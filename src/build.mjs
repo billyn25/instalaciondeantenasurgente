@@ -173,6 +173,7 @@ function porteroVisit(code, name) {
  return '<section class="section surface" id="visita-portero-'+code+'"><div class="wrap"><p class="kicker">Porteros y videoporteros · Trabajo real</p><h2>Reparación de porteros y medición para un posible cambio a videoportero en '+esc(name)+'</h2>'
  +'<p class="intro">Trabajos reales realizados por David C. G. en '+esc(name)+': cambio de grupos fónicos que todavía disponen de recambio y medición de las placas existentes para valorar una posible sustitución por videoportero. Las fotografías documentan los equipos y las medidas tomadas durante estas intervenciones.</p>'
  +photoGrid(porteroVisits[code], 'photo-grid photo-grid--mediciones')
+ +'<p>'+link('/servicios/porteros-videoporteros/','Reparación de porteros y renovación a videoportero','btn dark')+'</p>'
  +'<div class="prose"><h3>Por qué medimos antes de presupuestar</h3><p>El tamaño de la placa y del marco condiciona el montaje. Medir el conjunto permite estudiar si la nueva placa cubre el espacio existente o si necesita una adaptación. En una comunidad también hay que tener en cuenta la distribución de los pulsadores y las distintas escaleras.</p>'
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
@@ -205,7 +206,7 @@ function search() {
 function serviceCards() {
   return '<div class="cards">' + Object.entries(servicios).map(([key, [name, intro]], index) =>
     '<article class="card"><span class="number">0' + (index + 1) + '</span><h3>'
-    + link('/servicios/' + key + '/', name) + '</h3><p>' + esc(intro) + '</p></article>').join('') + '</div>';
+    + link('/servicios/' + key + '/', name) + '</h3><p>' + esc(intro) + '</p></article>').join('') + '<article class="card"><span class="number">05</span><h3>'+link('/servicios/porteros-videoporteros/','Porteros automáticos y videoporteros')+'</h3><p>Reparación de audio, cambio de grupos fónicos y valoración del paso de portero convencional a videoportero.</p></article></div>';
 }
 
 function diagnosticCards() {
@@ -279,7 +280,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <p>Instalamos antenas y reparamos fallos de señal en viviendas y comunidades. Cuéntanos en qué pueblo estás y qué falla en tu televisión.</p>
   ${buttons()}</div><figure class="hero-photo">${image(galleryPhoto, true)}<figcaption><span>01 / TRABAJOS REALES</span> Antena TDT sobre cubierta de teja</figcaption></figure>
   </div></section>${search()}
-  <section class="section wrap"><p class="kicker">Servicios de antenista</p><h2>De la antena a la toma de TV</h2>
+  <section class="section wrap"><p class="kicker">Viviendas y comunidades</p><h2>Antenas, porteros automáticos y videoporteros</h2>
   <p class="intro">Si solo falla una habitación, empezamos por su toma. Si varios vecinos pierden los mismos canales, revisamos qué parte de la instalación comparten.</p>${serviceCards()}</section>
   <section class="section surface" id="trabajos-destacados"><div class="wrap"><p class="kicker">Fotografías de obra</p><h2>Trabajos reales de Antenista Fuentes</h2>
   <div class="cards case-previews">
@@ -420,11 +421,20 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
-add('/servicios/', 'Instalación y reparación de antenas | Antenista Fuentes',
+add('/servicios/', 'Antenas, porteros y videoporteros | Antenista Fuentes',
   'Servicios de antenista para televisión terrestre y satélite, instalación de antenas, reparación de averías y mantenimiento de antenas colectivas.',
-  smallHero('Viviendas y comunidades', 'Servicios de antenista', 'Instalación de antenas TDT y parabólicas, reparación de averías y revisión de la distribución de televisión.')
+  smallHero('Viviendas y comunidades', 'Servicios de antenas, porteros y videoporteros', 'Reparación de porteros y renovación a videoportero. Instalación de antenas TDT y parabólicas, reparación de averías y revisión de la distribución de televisión.')
   + '<section class="section wrap"><h2>Qué podemos revisar</h2>' + serviceCards() + '</section>' + callout(),
   { trail: [homeTrail, serviceTrail] });
+
+const porteroPath = '/servicios/porteros-videoporteros/';
+const porteroWhatsApp = 'https://wa.me/34641490536?text='+encodeURIComponent('Hola, necesito consultar una reparación de portero automático o un cambio a videoportero.');
+add(porteroPath, 'Reparación de porteros y cambio a videoportero | Antenista Fuentes',
+ 'Reparación de porteros automáticos, sustitución de grupos fónicos con recambio disponible y valoración de renovación a videoportero. Trabajos reales en Hondarribia y Hernani.',
+ smallHero('Porteros y videoporteros','Reparar el portero actual o preparar su renovación','Revisamos el equipo existente y valoramos la reparación de audio o el cambio a un sistema con cámara.', '', false)
+ +'<section class="section wrap prose"><h2>Reparación de porteros automáticos</h2><p>Si el portero no suena, no se oye bien o no abre la puerta, indica si ocurre en una vivienda o en toda la comunidad. Según el síntoma, la revisión se orienta al telefonillo, los pulsadores, el grupo fónico, la alimentación, el cableado o el abrepuertas.</p><h3>Cambio de grupos fónicos con recambio vigente</h3><p>Cuando el equipo dispone de recambio compatible, se puede valorar la sustitución del grupo fónico para reparar el sistema de audio existente. Identificar la marca y el modelo permite comprobar la referencia que necesita la instalación. En Hondarribia y Hernani, David C. G. ha realizado trabajos reales de este tipo.</p><h2>Del portero convencional al videoportero</h2><p>Para una posible renovación se toman medidas de la placa y su marco, se identifica el número de viviendas y escaleras y se revisa qué sistema utiliza la comunidad. La elección de placa y monitores depende de la compatibilidad del conjunto y de las condiciones del cableado.</p><p>Un sistema de dos hilos puede ser una opción, pero el aprovechamiento del cable existente se decide después de comprobar la instalación. El presupuesto debe concretar los equipos, las adaptaciones del montaje y el cableado que se conserva o se sustituye.</p><h3>Medir el hueco evita elegir una placa que no encaje</h3><p>La anchura y la altura del conjunto exterior sirven para estudiar el montaje de la nueva placa. También se tiene en cuenta cómo se distribuyen los pulsadores si existen varias escaleras. Las fotos de medición documentan la preparación de esa posible renovación.</p><h2>Consulta y atención urgente</h2><p>Envía el municipio, una foto de la placa y otra del terminal interior. Explica el fallo y cuántas viviendas están afectadas. Si necesitas una visita urgente, consulta la disponibilidad de desplazamiento para tu localidad.</p><div class="actions">'+link(tel,'Llamar: '+phone,'btn dark')+link(porteroWhatsApp,'Consultar portero por WhatsApp','btn')+'</div></section>'
+ +porteroVisit('20036','Hondarribia')+porteroVisit('20040','Hernani'),
+ {trail:[homeTrail,serviceTrail,['Porteros y videoporteros',porteroPath]],type:'Reparación de porteros automáticos y renovación a videoportero'});
 
 for (const [key, [name, intro, steps]] of Object.entries(servicios)) {
   const path = '/servicios/' + key + '/';
@@ -438,7 +448,7 @@ for (const [key, [name, intro, steps]] of Object.entries(servicios)) {
 add('/aviso-legal/', 'Aviso legal | Antenista Fuentes', 'Información y contacto de Antenista Fuentes.',
   '<article class="section wrap prose"><h1>Aviso legal</h1><h2>Titular del sitio</h2><p>' + owner + ', titular de Antenista Fuentes.</p>'
   + '<p>Domicilio a efectos de este aviso legal: ' + esc(legalAddress) + '.</p><p>Teléfono de contacto: '
-  + link(tel, phone) + '.</p><h2>Información del servicio</h2><p>La web informa sobre instalación y reparación de antenas. La disponibilidad, el alcance de cada visita y el presupuesto se confirman al contactar.</p></article>',
+  + link(tel, phone) + '.</p><h2>Información del servicio</h2><p>La web informa sobre instalación y reparación de antenas, porteros automáticos y videoporteros. La disponibilidad, el alcance de cada visita y el presupuesto se confirman al contactar.</p></article>',
   { trail: [homeTrail, ['Aviso legal', '/aviso-legal/']], indexed: false });
 
 add('/privacidad/', 'Privacidad | Antenista Fuentes', 'Información sobre el uso de datos al contactar con Antenista Fuentes.',
