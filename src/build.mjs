@@ -6,7 +6,8 @@ const read = (path) => JSON.parse(readFileSync(new URL('../' + path, import.meta
 const output = new URL('../dist/', import.meta.url);
 const base = 'https://instalaciondeantenasurgente.com';
 const brand = 'Antenista Fuentes';
-const owner = 'Roberto Fuentes González';
+const owner = 'David Corregidor Gonzalo';
+const legalAddress = 'Calle La Fragua s/n, Madrid';
 const phone = '+34 641 49 05 36';
 const tel = 'tel:+34641490536';
 const wa = (place) => 'https://wa.me/34641490536?text=' + encodeURIComponent(
@@ -94,6 +95,48 @@ function link(href, label, className = '') {
 function logo() {
   return '<a class="brand" href="/"><img src="/assets/logo.svg" width="42" height="42" alt="">Antenista<br>Fuentes</a>';
 }
+
+const mapWidth = 640;
+const mapHeight = 340;
+const mapPadding = 28;
+const mapTowns = [...towns.values()];
+const west = Math.min(...mapTowns.map(({ lon }) => lon));
+const east = Math.max(...mapTowns.map(({ lon }) => lon));
+const north = Math.max(...mapTowns.map(({ lat }) => lat));
+const south = Math.min(...mapTowns.map(({ lat }) => lat));
+const mapPosition = ({ lat, lon }) => [
+  Math.round(mapPadding + (lon - west) / (east - west) * (mapWidth - 2 * mapPadding)),
+  Math.round(mapPadding + (north - lat) / (north - south) * (mapHeight - 2 * mapPadding)),
+];
+const mapDots = mapTowns.map((town) => {
+  const [x, y] = mapPosition(town);
+  return `M${x} ${y}h.01`;
+}).join('');
+const coverageMap = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${mapWidth} ${mapHeight}"><path d="${mapDots}" fill="none" stroke="#849ec5" stroke-opacity=".52" stroke-width="2.6" stroke-linecap="round"/></svg>`;
+const mapAreas = ['24089', '39075', '48020', '20069', '01059', '09059', '26089'].map((code, index) => {
+  const town = towns.get(code);
+  const [x, y] = mapPosition(town);
+  return { ...town.province, number: index + 1, x: x / mapWidth * 100, y: y / mapHeight * 100 };
+});
+const footer = `<footer class="footer" id="mapa-cobertura"><div class="wrap">
+<div class="footer-coverage">
+  <div class="footer-intro"><p class="kicker dot">Zonas de servicio</p>
+  <h2>¿Hasta dónde llegamos?</h2><p>Instalamos y reparamos antenas en siete provincias. Toca un punto del mapa para ver los municipios de esa zona.</p></div>
+  <div class="footer-map" role="group" aria-label="Mapa de zonas de servicio">
+    <img src="/assets/mapa-cobertura.svg" alt="" width="${mapWidth}" height="${mapHeight}" loading="lazy">
+    <span class="footer-map-north" aria-hidden="true">↑ N</span>
+    ${mapAreas.map(({ url, name, number, x, y }) =>
+      `<a class="footer-pin" href="${esc(url)}" aria-label="Ver municipios de ${esc(name)}" style="--x:${x}%;--y:${y}%"><span aria-hidden="true">${number}</span></a>`).join('')}
+  </div>
+  <nav class="footer-zones" aria-label="Provincias con servicio de antenista">
+    <ul>${mapAreas.map(({ url, name, number }) =>
+      `<li><a href="${esc(url)}"><span aria-hidden="true">${number}</span>${esc(name)}</a></li>`).join('')}</ul>
+    <a class="footer-search" href="/#zonas">Ver todos los municipios <span aria-hidden="true">↗</span></a>
+  </nav>
+</div>
+<div class="footer-base">${logo()}<nav class="footer-links" aria-label="Pie de página">
+<a href="/servicios/">Servicios</a><a href="/trabajos/">Trabajos reales</a><a href="/ayuda-antenas/">Ayuda con la TDT</a><a href="/aviso-legal/">Aviso legal</a><a href="/privacidad/">Privacidad</a>
+</nav></div></div></footer>`;
 
 function buttons(place = '', callLabel = 'Llamar al 641 49 05 36') {
   return '<div class="actions desktop-contact">' + link(tel, callLabel, 'btn')
@@ -209,8 +252,7 @@ ${searchEnabled ? '<script src="/assets/buscar.js" defer></script>' : ''}
 <a href="/servicios/">Servicios</a><a href="/#zonas">Zonas</a><a href="/trabajos/">Trabajos reales</a>
 </nav></div></header>
 <main id="contenido">${trail.length ? crumbs(trail) : ''}${content}</main>
-<footer class="footer"><div class="wrap footer-grid">${logo()}
-<nav class="footer-links" aria-label="Pie de página"><a href="/#zonas">Cobertura</a><a href="/ayuda-antenas/">Ayuda con la TDT</a><a href="/aviso-legal/">Aviso legal</a><a href="/privacidad/">Privacidad</a></nav></div></footer>
+${footer}
 <nav class="mobile-actions" aria-label="Contacto rápido">${link(tel, 'Llamar', 'btn')}${link(wa(options.contactPlace), 'WhatsApp', 'btn whatsapp')}</nav>
 </body></html>`;
   pages.set(path, { html, indexed });
@@ -330,7 +372,7 @@ for (const [key, [name, intro, steps]] of Object.entries(servicios)) {
 
 add('/aviso-legal/', 'Aviso legal | Antenista Fuentes', 'Información y contacto de Antenista Fuentes.',
   '<article class="section wrap prose"><h1>Aviso legal</h1><h2>Titular del sitio</h2><p>' + owner + ', titular de Antenista Fuentes.</p>'
-  + '<p>Domicilio a efectos de este aviso legal: Alameda de Urquijo s/n, Bilbao.</p><p>Teléfono de contacto: '
+  + '<p>Domicilio a efectos de este aviso legal: ' + esc(legalAddress) + '.</p><p>Teléfono de contacto: '
   + link(tel, phone) + '.</p><h2>Información del servicio</h2><p>La web informa sobre instalación y reparación de antenas. La disponibilidad, el alcance de cada visita y el presupuesto se confirman al contactar.</p></article>',
   { trail: [homeTrail, ['Aviso legal', '/aviso-legal/']], indexed: false });
 
@@ -349,6 +391,7 @@ const dist = decodeURIComponent(output.pathname);
 rmSync(dist, { force: true, recursive: true });
 mkdirSync(dist, { recursive: true });
 cpSync(new URL('../assets/', import.meta.url), join(dist, 'assets'), { recursive: true });
+writeFileSync(join(dist, 'assets/mapa-cobertura.svg'), coverageMap);
 for (const [path, { html }] of pages) {
   const file = join(dist, path.endsWith('/') ? path + 'index.html' : path);
   mkdirSync(dirname(file), { recursive: true });
