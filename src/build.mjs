@@ -37,6 +37,7 @@ const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map(
 const bilbaoCasePhoto = photosByName.get('bilbao-centro-antena-tdt');
 const bilbaoCaseUrl = '/bizkaia/bilbao/#caso-pixelacion-bilbao';
 const bilbaoCommunityUrl = '/bizkaia/bilbao/#instalaciones-comunitarias';
+const debaPhotos = photos.filter(([name]) => name.startsWith('deba-'));
 const galleryPhoto = photosByName.get('tdt-en-tejado');
 const servicePhotos = {
   instalacion: ['antena-tdt-y-parabolica', 'tdt-en-tejado', 'antenas-cielo-azul'],
@@ -339,6 +340,9 @@ for (const [code, area] of areaMap) {
           + '<p class="intro">Hemos realizado trabajos en las instalaciones comunitarias de estos dos portales de Bilbao.</p>'
           + '<ul class="work-towns"><li>Calle Arbolantxa, 5</li><li>Calle Cortes, 6</li></ul>'
           + '<p class="intro">Cuando varios vecinos pierden los mismos canales, podemos comparar la señal en la cabecera común y en distintas tomas. Así se distingue un problema del equipo compartido de una pérdida en un ramal del edificio.</p></div>'
+          : place.code === '20029' ? 'Trabajos de antena en varias viviendas de Deba</h2>'
+            + '<p class="intro">Las fotos muestran antenas terrestres y parabólica, una central Rover Polar con sus repartidores y una medición de TDT con Promax. Medir el nivel y la calidad de la señal ayuda a decidir si conviene intervenir en la antena o revisar el equipo y el cable que llevan la televisión a las tomas.</p>'
+            + photoGrid(debaPhotos)
           : 'Hemos trabajado en ' + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p>')
         + '<div class="actions">'
         + link('/trabajos/', 'Ver la galería', 'btn dark') + '</div></div></section>' : '')

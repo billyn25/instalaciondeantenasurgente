@@ -10,7 +10,7 @@ export const provincias = [
 
 export const trabajos = [
   '48096', '01036', '09194', '09018', '20067', '20040', '20069', '48017',
-  '48902', '48913', '24021', '39097', '09410', '48020',
+  '48902', '48913', '24021', '39097', '09410', '48020', '20029',
 ];
 
 export const servicioProvincial = {
@@ -24,6 +24,7 @@ export const servicioProvincial = {
 };
 
 export const fichas = {
+  '20029': ['Comprobar si el fallo está en la antena o en el reparto', 'Si tienes TDT y parabólica, dinos cuál de las dos señales falla y en cuántas tomas. Durante la visita se puede comparar lo que llega a la central con lo que sale hacia las habitaciones. Así se valora si conviene ajustar la recepción, revisar la amplificación o reparar una conexión del coaxial.', 'reparacion'],
   '48020': ['¿Falla una vivienda o todo el bloque?', 'En un edificio con antena colectiva, pregunta a otro vecino si pierde los mismos canales. Si coincidís, podemos empezar por la cabecera y la distribución. Si solo falla tu piso, comparamos la señal entre sus tomas.', 'comunidades'],
   '48013': ['Imagen pixelada en varias plantas', 'Indica qué plantas y portales se ven afectados. Comparar tomas de la misma vertical ayuda a localizar si la pérdida está en un ramal o en el equipo que alimenta a todo el edificio.', 'comunidades'],
   '48044': ['Cortes de TDT cuando hay viento', 'Si la imagen se corta con rachas y vuelve después, conviene comprobar el movimiento del mástil y el estado de conectores exteriores. También se mide la señal en la toma interior.', 'reparacion'],

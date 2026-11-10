@@ -88,5 +88,29 @@
     "Amplificador interior Nova Mini 2 con conexiones de cable coaxial",
     825,
     1100
+  ],
+  [
+    "deba-antenas-parabolica",
+    "Antenas de televisión terrestre y parabólica en una vivienda de Deba",
+    591,
+    1050
+  ],
+  [
+    "deba-medicion-promax",
+    "Medidor de campo Promax mostrando el espectro de la señal TDT en Deba",
+    591,
+    1050
+  ],
+  [
+    "deba-central-rover-polar",
+    "Central Rover Polar con conexiones coaxiales y repartidores de televisión en Deba",
+    591,
+    1050
+  ],
+  [
+    "deba-equipo-conexiones-coaxiales",
+    "Equipo de televisión con conectores coaxiales, fotografiado como material de trabajo",
+    591,
+    1050
   ]
 ]
