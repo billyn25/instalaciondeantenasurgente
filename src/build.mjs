@@ -166,6 +166,9 @@ function photoGrid(selection, className = 'photo-grid') {
     + '</a><figcaption>' + esc(photo[1]) + '</figcaption></figure>').join('') + '</div>';
 }
 
+const diagnosticoEnVisita = '<p>Revisamos el estado de la antena, el cable coaxial, los conectores y los equipos de amplificación o reparto. Con un medidor de campo profesional Promax comprobamos el nivel y la calidad de la señal en los puntos necesarios, como la salida de la antena, la cabecera o la toma de TV.</p>'
+  + '<p>Con esas medidas te explicamos dónde está el fallo y qué conviene hacer. A veces basta con reparar una conexión o cambiar un tramo de cable. Si el problema está en la antena, la fuente de alimentación o el amplificador, valoramos la sustitución del equipo afectado.</p>';
+
 function workTowns(selection = featured) {
   return '<ul class="work-towns">' + selection.map((place) =>
     '<li>' + link(place.url, place.name) + '</li>').join('') + '</ul>';
@@ -322,6 +325,8 @@ for (const [code, area] of areaMap) {
       + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
       + '</p><p>' + guide + '</p></aside></div><figure class="service-photo service-photo--' + service + '">'
       + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
+      + '<section class="section wrap prose local-extra"><h2>Cómo comprobamos la señal y valoramos la reparación</h2>'
+      + diagnosticoEnVisita + '</section>'
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
       + (trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48020' ? 'Equipos de antena comunitaria en Bilbao</h2><p class="intro">Estas fotos de Bilbao muestran dos cabeceras de televisión. La cabecera recibe la señal de la antena y la prepara para distribuirla a las viviendas. Al revisar una avería, el medidor de campo permite comparar la señal antes y después de la amplificación.</p>'
@@ -369,7 +374,7 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   smallHero('Galería de obra', 'Trabajos reales de antenas', 'Fotografías de antenas de televisión, equipos de medida y distribución de señal.', '', false)
   + '<section class="section wrap"><h2>Municipios donde hemos trabajado</h2>'
   + '<p class="intro">Atendemos avisos a diario. Estos municipios son una muestra de los lugares donde hemos realizado trabajos. Una visita para localizar un fallo de señal también cuenta, igual que una reparación o una instalación.</p>'
-  + workTowns() + '<h2>Galería de trabajos</h2>'
+  + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Galería de trabajos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
   + photoGrid(photos) + '<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
   + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li></ul></section>' + callout(),
