@@ -1,6 +1,6 @@
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { ampliaciones, diagnosticos, fichas, provincias, servicios, trabajos } from './contenido.mjs';
+import { ampliaciones, diagnosticos, fichas, provincias, servicioProvincial, servicios, trabajos } from './contenido.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL('../' + path, import.meta.url), 'utf8'));
 const output = new URL('../dist/', import.meta.url);
@@ -266,17 +266,24 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
 
-for (const area of areaMap.values()) {
+for (const [code, area] of areaMap) {
   const heading = 'Antenista en ' + area.name;
   const centerLinks = area.centers.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
   const covered = area.centers.filter((place) => place.nearby.length).map((center) =>
     '<section><h3>' + link(center.url + '#pueblos-cercanos', 'Entorno de ' + center.name) + '</h3><ul class="places">'
     + center.nearby.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('') + '</ul></section>').join('');
   const localWorks = featured.filter((place) => place.province === area);
+  const [serviceHeading, serviceText, serviceKey, photoKey] = servicioProvincial[code];
+  const servicePhoto = photosByName.get(photoKey);
   add(area.url, heading + ' | Antenas TDT y parabólicas',
     'Instalación y reparación de antenas en ' + area.name + '. Consulta la cobertura de Antenista Fuentes por municipio y solicita una visita.',
     smallHero('Cobertura provincial', 'Cobertura de antenas en ' + area.name, area.intro, area.name)
-    + '<section class="section wrap"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
+    + '<section class="section wrap split"><div><p class="kicker">Instalación y reparación de antenas</p><h2>' + esc(serviceHeading)
+    + '</h2><p class="intro">' + esc(serviceText) + '</p><div class="actions">'
+    + link('/servicios/' + serviceKey + '/', servicios[serviceKey][0], 'text-link')
+    + link('#municipios', 'Consultar mi municipio', 'text-link') + '</div></div>'
+    + '<figure class="service-photo">' + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
+    + '<section class="section wrap" id="municipios"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
     + (localWorks.length ? '<section class="surface"><div class="wrap section"><h2>Trabajos en ' + esc(area.name)
       + '</h2>' + workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
     + '<section class="section wrap region-directory"><h2>Todos los municipios de ' + esc(area.name)
