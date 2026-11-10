@@ -291,6 +291,12 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       <h3>TDT, parabólica y distribución en viviendas</h3>
       <p>Las fotos muestran el espectro de la señal TDT medido con Promax, una central Rover Polar con repartidores y las antenas de una de las viviendas.</p>
       ${link('/gipuzkoa/deba/#trabajos-locales', 'Ver los trabajos de Deba', 'text-link')}</article>
+    <article class="card">${image(porteroVisits['20036'][1])}<p class="kicker">Hondarribia · Porteros comunitarios</p>
+      <h3>Reparación de audio y medición para renovar</h3><p>David C. G. realizó cambios de grupos fónicos con recambio vigente y tomó medidas de las placas para valorar un posible cambio a videoportero.</p>
+      ${link('/gipuzkoa/hondarribia/#visita-portero-20036', 'Ver el trabajo real de Hondarribia', 'text-link')}</article>
+    <article class="card">${image(porteroVisits['20040'][0])}<p class="kicker">Hernani · Porteros comunitarios</p>
+      <h3>Grupos fónicos y medidas de la placa existente</h3><p>Trabajos reales de David C. G.: reparación mediante cambio de grupos fónicos y medición para preparar una alternativa de renovación a videoportero.</p>
+      ${link('/gipuzkoa/hernani/#visita-portero-20040', 'Ver el trabajo real de Hernani', 'text-link')}</article>
   </div>
   ${workTowns()}
   <div class="actions">${link('/trabajos/', 'Ver todos los trabajos', 'btn dark')}</div></div></section>
