@@ -112,7 +112,7 @@ const mapAreas = ['24089', '39075', '48020', '20069', '01059', '09059', '26089']
 const footer = `<footer class="footer" id="mapa-cobertura"><div class="wrap">
 <div class="footer-coverage">
   <div class="footer-intro"><p class="kicker dot">Zonas de servicio</p>
-<h2>¿Hasta dónde llegamos?</h2><p>Instalamos y reparamos antenas en siete provincias del norte de España. Toca un punto del mapa para ver los municipios de esa zona.</p></div>
+<h2>¿Hasta dónde llegamos?</h2><p>Desde nuestra base en Bilbao nos desplazamos para instalar y reparar antenas en los municipios de las siete provincias del mapa. Toca una provincia para consultar la cobertura.</p></div>
   <div class="footer-map" role="group" aria-label="Mapa de zonas de servicio">
     <img src="/assets/mapa-cobertura.svg" alt="" width="${mapWidth}" height="${mapHeight}" loading="lazy">
     <span class="footer-map-north" aria-hidden="true">↑ N</span>
@@ -137,7 +137,7 @@ function buttons(place = '', callLabel = 'Llamar al 641 49 05 36') {
 function callout(place = '') {
   return '<section class="section wrap"><div class="callout"><p class="kicker dot">Urgencias 24 horas</p><h2>'
     + esc(place ? '¿Necesitas un antenista en ' + place + '?' : 'Cuéntanos qué le pasa a tu antena')
-    + '</h2><p>Indica el municipio, si el fallo afecta a una toma o a varios vecinos y desde cuándo ocurre. Te confirmamos la disponibilidad para el desplazamiento.</p>'
+    + '</h2><p>Atendemos avisos urgentes las 24 horas y nos desplazamos desde Bilbao. Indica el municipio, desde cuándo falla y si afecta a una toma o a varios vecinos. Te confirmamos la disponibilidad y el plazo estimado de llegada.</p>'
     + buttons(place, 'Llamar') + '</div></section>';
 }
 
@@ -265,7 +265,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   ${workTowns()}${photoGrid([photos[7], photos[1], photos[2], photos[6]])}
   <div class="actions">${link('/trabajos/', 'Ver los trabajos', 'btn dark')}</div></div></section>
   <section class="section wrap" id="zonas"><p class="kicker">Siete provincias</p><h2>Antenas en tu municipio</h2>
-  <p class="intro">Abre el listado de tu provincia para ver todos sus municipios o usa el buscador de la portada. Indica la localidad al pedir cita para confirmar el desplazamiento.</p>${directory(true)}</section>
+  <p class="intro">Nuestro equipo sale de Bilbao y se desplaza a todos los municipios que figuran en esta zona de cobertura, tanto para visitas programadas como para averías urgentes. Busca tu pueblo o abre el listado de tu provincia. Al contactar, te confirmamos cuándo podemos llegar.</p>${directory(true)}</section>
   <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
 
