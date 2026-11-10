@@ -345,8 +345,11 @@ add('/ayuda-antenas/', 'TV sin señal y TDT pixelada | Qué comprobar antes de l
 add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   'Galería de trabajos reales de Antenista Fuentes. Antenas en cubierta, mástiles, cabeceras de televisión y equipos de distribución.',
   smallHero('Galería de obra', 'Trabajos reales de antenas', 'Fotografías de antenas de televisión, equipos de medida y distribución de señal.', '', false)
-  + '<section class="section wrap"><h2>Municipios donde hemos trabajado</h2>' + workTowns()
-  + '<h2>Galería de trabajos</h2>' + photoGrid(photos) + '</section>' + callout(),
+  + '<section class="section wrap"><h2>Municipios donde hemos trabajado</h2>'
+  + '<p class="intro">Atendemos avisos a diario. Estos municipios son una muestra de los lugares donde hemos realizado trabajos. Una visita para localizar un fallo de señal también cuenta, igual que una reparación o una instalación.</p>'
+  + workTowns() + '<h2>Galería de trabajos</h2>'
+  + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
+  + photoGrid(photos) + '</section>' + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];

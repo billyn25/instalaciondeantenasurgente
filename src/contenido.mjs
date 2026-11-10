@@ -8,7 +8,10 @@ export const provincias = [
   ['26', 'La Rioja', 'la-rioja', 'Cubrimos el entorno de Logroño, Rioja Alta, Rioja Oriental y la sierra. Para segundas residencias, podemos revisar si el cableado existente sirve antes de plantear una instalación completa.'],
 ];
 
-export const trabajos = ['48096', '01036', '09194', '09018', '20067', '20040', '20069', '48017'];
+export const trabajos = [
+  '48096', '01036', '09194', '09018', '20067', '20040', '20069', '48017',
+  '48902', '48913', '24021', '39097', '09410',
+];
 
 export const servicioProvincial = {
   '48': ['Si varios vecinos pierden la TDT', 'En una comunidad de Bilbao, Barakaldo o cualquier municipio de la zona, conviene saber si faltan los mismos canales en varias viviendas. Comparamos la señal en la cabecera y en tomas de distintos pisos para distinguir un fallo del equipo común de una pérdida en un ramal. Si afecta a una sola vivienda, empezamos por sus tomas y conexiones.', 'comunidades', 'medidor-y-cabecera'],
