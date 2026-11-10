@@ -204,3 +204,7 @@ details{margin-top:.8rem}
 .door-contact p{margin-top:.5rem;color:var(--muted)}
 .door-contact .actions{margin:0;flex-shrink:0}
 @media(max-width:660px){.door-layout,.door-renew,.cards.door-cards,.door-steps{grid-template-columns:minmax(0,1fr)}.door-hero h1{font-size:clamp(2rem,8vw,2.8rem)}.door-photo img{height:300px}.door-renew .door-photo{order:2}.door-contact{align-items:stretch;flex-direction:column}.door-contact .actions .btn{flex:1}.door-steps{gap:0}}
+
+.service-questions{padding-top:1rem}.service-questions details{margin-top:.8rem;padding:1.1rem 1.25rem;background:#fff;border:1px solid var(--line);border-radius:10px;max-width:850px}.service-questions summary{cursor:pointer;font-weight:750;line-height:1.4}.service-questions details p{margin-top:.9rem;max-width:65ch;color:var(--muted)}
+
+.province-work-towns{margin-top:1.75rem}

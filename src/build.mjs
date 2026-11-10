@@ -1,3 +1,4 @@
+import { guiasServicio } from './guias-servicio.mjs';
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { ampliaciones, diagnosticos, fichas, provincias, servicioProvincial, servicios, trabajos } from './contenido.mjs';
@@ -31,12 +32,13 @@ const names = {
   '01043': ['Oyón-Oion', 'oyon-oion', 'oyon oion'],
   '09903': ['Villarcayo', 'villarcayo', 'merindad de castilla la vieja'],
 };
-const photos = read('data/fotos.json');
+const photos = read('data/fotos.json').filter(([name]) => name !== 'antena-en-cubierta');
 const photosByName = new Map(photos.map((photo) => [photo[0], photo]));
 const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map((key) => photosByName.get(key));
 const bilbaoCasePhoto = photosByName.get('bilbao-centro-antena-tdt');
 const bilbaoCaseUrl = '/bizkaia/bilbao/#caso-pixelacion-bilbao';
 const bilbaoCommunityUrl = '/bizkaia/bilbao/#instalaciones-comunitarias';
+const gernikaSecondPhoto = photosByName.get('gernika-lumo-dos-antenas');
 const gernikaPhoto = photosByName.get('gernika-lumo-antena-tdt');
 const gernikaCaseUrl = '/bizkaia/gernika-lumo/#trabajos-locales';
 const bermeoPhoto = photosByName.get('bermeo-antena-cable-vientos');
@@ -45,7 +47,7 @@ const debaPhotos = photos.filter(([name]) => name.startsWith('deba-'));
 const galleryPhoto = photosByName.get('tdt-en-tejado');
 const servicePhotos = {
   instalacion: ['antena-tdt-y-parabolica', 'tdt-en-tejado', 'antenas-cielo-azul'],
-  reparacion: ['mastil-varias-antenas', 'antena-en-cubierta', 'amplificador-de-senal'],
+  reparacion: ['mastil-varias-antenas', 'amplificador-de-senal'],
   comunidades: ['medidor-y-cabecera', 'amplificador-de-senal'],
   satelite: ['antena-tdt-y-parabolica'],
 };
@@ -181,6 +183,18 @@ function porteroVisit(code, name) {
  +'<div class="prose"><h3>Por qué medimos antes de presupuestar</h3><p>El tamaño de la placa y del marco condiciona el montaje. Medir el conjunto permite estudiar si la nueva placa cubre el espacio existente o si necesita una adaptación. En una comunidad también hay que tener en cuenta la distribución de los pulsadores y las distintas escaleras.</p>'
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
+function provinceCaseCards(code) {
+ const cases = [
+  ['48','Bilbao centro · Antenas','Canales que desaparecían a ciertas horas',bilbaoCasePhoto,bilbaoCaseUrl],
+  ['48','Bilbao · Antenas comunitarias','Arbolantxa, 5 y Cortes, 6',bilbaoPhotos[1],bilbaoCommunityUrl],
+  ['48','Bermeo · Antenas','Aldatseta Kalea: cable, vientos y amplificador',bermeoPhoto,bermeoCaseUrl],
+  ['48','Gernika-Lumo · Antenas','Fotografías del montaje exterior',gernikaSecondPhoto,gernikaCaseUrl],
+  ['20','Deba · Antenas','Medición con Promax y equipos de distribución',photosByName.get('deba-medicion-promax'),'/gipuzkoa/deba/#trabajos-locales'],
+  ['20','Hondarribia · Porteros','Grupos fónicos y medición para valorar el cambio a videoportero',porteroVisits['20036'][1],'/gipuzkoa/hondarribia/#visita-portero-20036'],
+  ['20','Hernani · Porteros','Reparaciones de audio y toma de medidas',porteroVisits['20040'][0],'/gipuzkoa/hernani/#visita-portero-20040']
+ ].filter(item=>item[0]===code);
+ return cases.length ? '<div class="cards case-previews">'+cases.map(([,place,title,photo,url])=>'<article class="card">'+image(photo)+'<p class="kicker">'+esc(place)+'</p><h3>'+esc(title)+'</h3><p>'+link(url,'Ver fotos y descripción del trabajo','text-link')+'</p></article>').join('')+'</div>' : '';
+}
 const hondarribiaAdvice = '<section class="section wrap prose"><h2>Cómo orientamos una avería de televisión en Hondarribia</h2>'
  +'<p>El primer dato es saber si falla un televisor, todas las tomas de una vivienda o varios vecinos. Si el mismo aparato funciona en otra toma, revisamos el recorrido de señal hacia la habitación afectada. Cuando coinciden varias viviendas, se compara la cabecera comunitaria con la distribución del edificio.</p>'
  +'<h3>Si los cortes aparecen con viento o lluvia</h3><p>Indica cuándo empezó el fallo y si afecta siempre a los mismos canales. En la revisión exterior se comprueban las fijaciones, el estado visible del coaxial y las conexiones. Después se compara la señal con la que llega al interior: el síntoma por sí solo no permite decidir que haya que cambiar la antena.</p>'
@@ -221,10 +235,10 @@ function diagnosticCards() {
 
 function directory(showAll = false) {
   return '<div class="zones">' + [...areaMap.values()].map((area) => {
-    const featuredPlaces = area.centers.slice(0, 6);
+    const featuredPlaces = area.centers.slice(0, showAll ? 12 : 6);
     const highlights = featuredPlaces.map((place) =>
       '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
-    const remaining = showAll ? area.places.filter((place) => !featuredPlaces.includes(place)).sort(byName) : [];
+    const remaining = []; // El listado completo permanece en cada provincia y en el buscador.
     const fullList = remaining.length ? '<details class="zone-all"><summary>Ver todos los municipios (' + area.places.length
       + ')</summary><ul>' + remaining.map((place) =>
         '<li>' + link(place.url, place.center ? place.name : 'Antenista en ' + place.name) + '</li>').join('')
@@ -325,7 +339,7 @@ for (const [code, area] of areaMap) {
     + center.nearby.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('') + '</ul></section>').join('');
   const localWorks = featured.filter((place) => place.province === area);
   const [serviceHeading, serviceText, serviceKey, photoKey] = servicioProvincial[code];
-  const servicePhoto = photosByName.get(photoKey);
+  const servicePhoto = photosByName.get(photoKey === 'antena-en-cubierta' ? 'mastil-varias-antenas' : photoKey);
   add(area.url, heading + ' | Antenas TDT y parabólicas',
     'Instalación y reparación de antenas en ' + area.name + '. Consulta la cobertura de Antenista Fuentes por municipio y solicita una visita.',
     smallHero('Cobertura provincial', 'Cobertura de antenas en ' + area.name, area.intro, area.name)
@@ -336,7 +350,7 @@ for (const [code, area] of areaMap) {
     + '<figure class="service-photo">' + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
     + '<section class="section wrap" id="municipios"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
     + (localWorks.length ? '<section class="surface"><div class="wrap section"><h2>Trabajos en ' + esc(area.name)
-      + '</h2>' + workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
+      + '</h2>' + provinceCaseCards(code) + '<h3 class="province-work-towns">Municipios donde hemos trabajado</h3>'+workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
     + '<section class="section wrap region-directory"><h2>Todos los municipios de ' + esc(area.name)
     + '</h2><p class="intro">Además de las poblaciones anteriores, puedes consultar estos municipios, organizados por la zona más cercana.</p>'
     + covered + '</section>'
@@ -348,7 +362,7 @@ for (const [code, area] of areaMap) {
     const [topic, advice, service] = fichas[place.code];
     const [serviceName, serviceIntro] = servicios[service];
     const choices = servicePhotos[service];
-    const servicePhoto = photosByName.get(choices[Number(place.code) % choices.length]);
+    const servicePhoto = place.code === '48046' ? gernikaPhoto : photosByName.get(choices[Number(place.code) % choices.length]);
     const extra = ampliaciones[place.code];
     const guideKey = service === 'comunidades' ? 'colectiva' : service === 'reparacion' ? 'pixelacion' : 'sin-senal';
     const guide = link('/ayuda-antenas/#' + guideKey, diagnosticos[guideKey][0], 'text-link');
@@ -372,7 +386,7 @@ for (const [code, area] of areaMap) {
       + '</p><p>' + guide + '</p></aside></div><figure class="service-photo service-photo--' + service + '">'
       + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
       + '<section class="section wrap prose local-extra"><h2>Cómo comprobamos la señal y valoramos la reparación</h2>'
-      + diagnosticoEnVisita + '</section>'
+      + '<p>'+esc(guiasServicio[service].local)+'</p><p>'+link('/servicios/'+service+'/','Consultar las comprobaciones y opciones de este servicio','text-link')+'</p></section>'
       + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
@@ -388,7 +402,7 @@ for (const [code, area] of areaMap) {
           + '<ul class="work-towns"><li>Calle Arbolantxa, 5</li><li>Calle Cortes, 6</li></ul>'
           + '<p class="intro">Cuando varios vecinos pierden los mismos canales, podemos comparar la señal en la cabecera común y en distintas tomas. Así se distingue un problema del equipo compartido de una pérdida en un ramal del edificio.</p></div>'
           : place.code === '48046' ? 'Trabajo real de antena TDT en Gernika-Lumo</h2>'
-            + '<div class="split local-extra"><div><h3>Antena y montaje sobre cubierta</h3><p class="intro">Fotografía de un trabajo real en Gernika-Lumo. Se ve la antena de televisión terrestre instalada sobre un mástil en cubierta, con el cableado y los elementos de sujeción.</p><p>Esta imagen documenta la instalación exterior. Para valorar una avería en un montaje de este tipo, se revisan tanto la recepción de señal como el estado del mástil, el cable y las conexiones.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/gernika-lumo-antena-tdt.webp">'+image(gernikaPhoto)+'</a><figcaption>'+esc(gernikaPhoto[1])+'</figcaption></figure></div>'
+            + '<div class="split local-extra"><div><h3>Antena y montaje sobre cubierta</h3><p>La fotografía principal de esta página corresponde al trabajo real en Gernika-Lumo: antena de televisión terrestre instalada sobre un mástil en cubierta, con su cableado y elementos de sujeción.</p><p>Al revisar un montaje de este tipo se comprueban tanto la recepción de señal como el estado del mástil, el cable y las conexiones.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/gernika-lumo-dos-antenas.webp">'+image(gernikaSecondPhoto)+'</a><figcaption>'+esc(gernikaSecondPhoto[1])+'</figcaption></figure></div>'
           : place.code === '48017' ? 'Trabajo real de antena TDT en Bermeo</h2>'
             + '<div class="split local-extra"><div><p class="kicker">Desplazamiento urgente desde Bilbao</p><h3>Cambio de cable, vientos de sujeción y amplificador</h3><p class="intro">En esta intervención real en Aldatseta Kalea, Bermeo, se trabajó sobre la instalación de antena de televisión terrestre, con cambio del cable, los vientos de sujeción del mástil y el amplificador.</p><p>La fotografía muestra la antena TDT sobre el mástil y los vientos de sujeción. El trabajo incluyó tanto elementos de la recepción y distribución de señal como de la sujeción de la instalación.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/bermeo-antena-cable-vientos.webp">'+image(bermeoPhoto)+'</a><figcaption>'+esc(bermeoPhoto[1])+'</figcaption></figure></div>'
           : place.code === '20029' ? 'Trabajos de antena en varias viviendas de Deba</h2>'
@@ -429,9 +443,9 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   smallHero('Galería de obra', 'Trabajos reales de antenas', 'Fotografías de antenas de televisión, equipos de medida y distribución de señal.', '', false)
   + '<section class="section wrap"><h2>Municipios donde hemos trabajado</h2>'
   + '<p class="intro">Atendemos avisos a diario. Estos municipios son una muestra de los lugares donde hemos realizado trabajos. Una visita para localizar un fallo de señal también cuenta, igual que una reparación o una instalación.</p>'
-  + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Galería de trabajos</h2>'
+  + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Fotografías de instalaciones y equipos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
-  + photoGrid(photos) + '<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
+  + photoGrid(photos.filter(([name])=>!name.startsWith('gernika-lumo-') && !name.startsWith('bermeo-'))) + '<h3>Fotografías identificadas por municipio</h3>'+photoGrid([gernikaPhoto,gernikaSecondPhoto,bermeoPhoto])+'<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
   + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
@@ -455,8 +469,12 @@ add(porteroPath, 'Reparación de porteros y cambio a videoportero | Antenista Fu
 
 for (const [key, [name, intro, steps]] of Object.entries(servicios)) {
   const path = '/servicios/' + key + '/';
+  const detail = guiasServicio[key];
   add(path, name + ' | ' + brand, intro, smallHero('Servicio de antenista', name, intro)
-    + '<section class="section wrap prose"><h2>Cómo preparar la visita</h2><p>' + esc(steps) + '</p></section>'
+    + '<section class="section wrap split"><div><p class="kicker">Diagnóstico y valoración</p><h2>'+esc(detail.heading)+'</h2><p class="intro">'+esc(steps)+'</p></div><figure class="service-photo service-photo--satelite">'+image(photosByName.get(detail.photo))+'<figcaption>'+esc(photosByName.get(detail.photo)[1])+'</figcaption></figure></section>'
+    + '<section class="section surface"><div class="wrap"><h2>Cómo planteamos el trabajo</h2><div class="cards diagnostic-cards">'+detail.blocks.map(([title,copy])=>'<article class="card"><h3>'+esc(title)+'</h3><p>'+esc(copy)+'</p></article>').join('')+'</div></div></section>'
+    + '<section class="section wrap"><h2>Trabajos documentados relacionados</h2><ul class="places">'+detail.cases.map(([url,label])=>'<li>'+link(url,label)+'</li>').join('')+'</ul><p class="intro">Consulta las fotos y la descripción de cada intervención para conocer el alcance del trabajo mostrado.</p></section>'
+    + '<section class="section wrap service-questions"><h2>Antes de pedir presupuesto</h2>'+detail.questions.map(([q,a])=>'<details><summary>'+esc(q)+'</summary><p>'+esc(a)+'</p></details>').join('')+'</section>'
     + '<section class="section surface"><div class="wrap"><h2>Consulta la cobertura de este servicio</h2>'
     + directory() + '</div></section>' + callout(),
     { trail: [homeTrail, serviceTrail, [name, path]], type: name });
