@@ -292,6 +292,10 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       <h3>TDT, parabólica y distribución en viviendas</h3>
       <p>Las fotos muestran el espectro de la señal TDT medido con Promax, una central Rover Polar con repartidores y las antenas de una de las viviendas.</p>
       ${link('/gipuzkoa/deba/#trabajos-locales', 'Ver los trabajos de Deba', 'text-link')}</article>
+    <article class="card">${image(bilbaoPhotos[1])}<p class="kicker">Bilbao · Antenas comunitarias</p>
+      <h3>Instalaciones en Arbolantxa y Cortes</h3>
+      <p>Trabajos reales en comunidades de Calle Arbolantxa, 5 y Calle Cortes, 6. Las fotografías del caso muestran cabeceras y equipos de distribución de televisión.</p>
+      ${link(bilbaoCommunityUrl, 'Ver las instalaciones comunitarias de Bilbao', 'text-link')}</article>
     <article class="card">${image(porteroVisits['20036'][1])}<p class="kicker">Hondarribia · Porteros comunitarios</p>
       <h3>Reparación de audio y medición para renovar</h3><p>David C. G. realizó cambios de grupos fónicos con recambio vigente y tomó medidas de las placas para valorar un posible cambio a videoportero.</p>
       ${link('/gipuzkoa/hondarribia/#visita-portero-20036', 'Ver el trabajo real de Hondarribia', 'text-link')}</article>
