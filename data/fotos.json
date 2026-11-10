@@ -64,5 +64,11 @@
     "Cabecera de antena colectiva con módulos de amplificación y cable coaxial en Bilbao",
     1400,
     788
+  ],
+  [
+    "bilbao-centro-antena-tdt",
+    "Antenas de televisión y parabólica sobre una cubierta de Bilbao centro",
+    900,
+    1200
   ]
 ]

@@ -34,6 +34,8 @@ const names = {
 const photos = read('data/fotos.json');
 const photosByName = new Map(photos.map((photo) => [photo[0], photo]));
 const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map((key) => photosByName.get(key));
+const bilbaoCasePhoto = photosByName.get('bilbao-centro-antena-tdt');
+const bilbaoCaseUrl = '/bizkaia/bilbao/#caso-pixelacion-bilbao';
 const galleryPhoto = photosByName.get('tdt-en-tejado');
 const servicePhotos = {
   instalacion: ['antena-tdt-y-parabolica', 'tdt-en-tejado', 'antenas-cielo-azul'],
@@ -323,6 +325,10 @@ for (const [code, area] of areaMap) {
       + (trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48020' ? 'Equipos de antena comunitaria en Bilbao</h2><p class="intro">Estas fotos de Bilbao muestran dos cabeceras de televisión. La cabecera recibe la señal de la antena y la prepara para distribuirla a las viviendas. Al revisar una avería, el medidor de campo permite comparar la señal antes y después de la amplificación.</p>'
           + photoGrid(bilbaoPhotos, 'photo-grid photo-grid--equipos')
+          + '<div class="split local-extra" id="caso-pixelacion-bilbao"><div><p class="kicker">Caso real en Bilbao centro</p><h3>Canales que dejaban de verse a ciertas horas</h3>'
+          + '<p class="intro">En una instalación de Bilbao centro, algunos canales desaparecían a determinadas horas. La instalación había perdido blindaje. Sustituimos el previo de antena, su fuente de alimentación y la antena TDT. Con esos cambios se resolvieron los cortes.</p></div>'
+          + '<figure class="service-photo"><a href="/assets/trabajos/bilbao-centro-antena-tdt.webp">' + image(bilbaoCasePhoto)
+          + '</a><figcaption>' + esc(bilbaoCasePhoto[1]) + '</figcaption></figure></div>'
           : 'Hemos trabajado en ' + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p>')
         + '<div class="actions">'
         + link('/trabajos/', 'Ver la galería', 'btn dark') + '</div></div></section>' : '')
@@ -342,7 +348,14 @@ add('/ayuda-antenas/', 'TV sin señal y TDT pixelada | Qué comprobar antes de l
   'Qué revisar cuando la televisión se queda sin señal, la TDT se pixela o varios vecinos pierden canales de la antena comunitaria.',
   smallHero('Guía de diagnóstico', 'Qué comprobar si falla la TDT', 'Tres averías habituales y las comprobaciones que puedes hacer desde casa.', '', false)
   + '<section class="section wrap prose guide">' + Object.entries(diagnosticos).map(([key, [title, copy]]) =>
-    '<section id="' + key + '"><h2>' + esc(title) + '</h2><p>' + esc(copy) + '</p></section>').join('')
+    '<section id="' + key + '"><h2>' + esc(title) + '</h2><p>' + esc(copy) + '</p>'
+    + (key === 'pixelacion' ? '<ul>'
+      + '<li><strong>Cableado y conectores.</strong> Un coaxial deteriorado, un conector flojo o un repartidor con pérdidas pueden reducir la señal en una o varias tomas.</li>'
+      + '<li><strong>Emisiones móviles en 700 MHz.</strong> En algunas instalaciones, una señal 5G intensa puede saturar el amplificador. Una medición permite comprobar si un filtro es adecuado. Consulta la ' + link('https://television.digital.gob.es/2DD-5G/5g-banda-700', 'información oficial sobre TDT y 5G') + '.</li>'
+      + '<li><strong>Rebotes o ecos.</strong> Una señal reflejada en edificios o en el terreno puede llegar con retraso y afectar a la calidad de recepción.</li>'
+      + '<li><strong>Emisiones en el mismo canal.</strong> Con ciertas condiciones de propagación puede llegar una emisión de otro repetidor en la misma frecuencia y dificultar la recepción de algunos canales.</li>'
+      + '</ul><p>' + link(bilbaoCaseUrl, 'Ver el caso real de canales intermitentes en Bilbao centro') + '</p>' : '')
+    + '</section>').join('')
   + '</section>' + callout(),
   { trail: [homeTrail, ['Ayuda con la TDT', '/ayuda-antenas/']] });
 
@@ -353,7 +366,7 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + '<p class="intro">Atendemos avisos a diario. Estos municipios son una muestra de los lugares donde hemos realizado trabajos. Una visita para localizar un fallo de señal también cuenta, igual que una reparación o una instalación.</p>'
   + workTowns() + '<h2>Galería de trabajos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
-  + photoGrid(photos) + '</section>' + callout(),
+  + photoGrid(photos) + '<p>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link') + '</p></section>' + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
