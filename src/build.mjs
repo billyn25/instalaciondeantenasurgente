@@ -287,7 +287,7 @@ for (const area of areaMap.values()) {
   const localWorks = featured.filter((place) => place.province === area);
   add(area.url, heading + ' | Antenas TDT y parabólicas',
     'Instalación y reparación de antenas en ' + area.name + '. Consulta la cobertura de Antenista Fuentes por municipio y solicita una visita.',
-    smallHero('Cobertura provincial', heading, area.intro, area.name)
+    smallHero('Cobertura provincial', 'Cobertura de antenas en ' + area.name, area.intro, area.name)
     + '<section class="section wrap"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
     + (localWorks.length ? '<section class="surface"><div class="wrap section"><h2>Trabajos en ' + esc(area.name)
       + '</h2>' + workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
