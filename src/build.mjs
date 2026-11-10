@@ -167,6 +167,22 @@ function photoGrid(selection, className = 'photo-grid') {
     + '</a><figcaption>' + esc(photo[1]) + '</figcaption></figure>').join('') + '</div>';
 }
 
+const porteroVisits = {"20036": [["hondarribia-placa-alcad", "Placa Alcad existente en una comunidad de Hondarribia, fotografiada para preparar el cambio a videoportero", 750, 1000], ["hondarribia-medicion-placa", "Medición del conjunto de placa y marco en Hondarribia para valorar el montaje del nuevo videoportero", 450, 1000], ["hondarribia-portero-exterior", "Portero comunitario exterior en Hondarribia antes de valorar su sustitución por videoportero", 750, 1000], ["hondarribia-placa-comunitaria", "Placa de audio de dos columnas en Hondarribia documentada durante la visita técnica", 450, 1000]], "20040": [["hernani-medicion-tegui", "Medición vertical de una placa Tegui antigua en Hernani para preparar el cambio a videoportero", 450, 1000], ["hernani-medicion-tres-escaleras", "Medición del conjunto Tegui de tres escaleras en Hernani antes de presupuestar la renovación", 750, 1000]]};
+function porteroVisit(code, name) {
+ if (!porteroVisits[code]) return '';
+ return '<section class="section surface" id="visita-portero-'+code+'"><div class="wrap"><p class="kicker">Porteros y videoporteros · Trabajo real</p><h2>Reparación de porteros y medición para un posible cambio a videoportero en '+esc(name)+'</h2>'
+ +'<p class="intro">Trabajos reales realizados por David C. G. en '+esc(name)+': cambio de grupos fónicos que todavía disponen de recambio y medición de las placas existentes para valorar una posible sustitución por videoportero. Las fotografías documentan los equipos y las medidas tomadas durante estas intervenciones.</p>'
+ +photoGrid(porteroVisits[code], 'photo-grid photo-grid--mediciones')
+ +'<div class="prose"><h3>Por qué medimos antes de presupuestar</h3><p>El tamaño de la placa y del marco condiciona el montaje. Medir el conjunto permite estudiar si la nueva placa cubre el espacio existente o si necesita una adaptación. En una comunidad también hay que tener en cuenta la distribución de los pulsadores y las distintas escaleras.</p>'
+ +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
+}
+const hondarribiaAdvice = '<section class="section wrap prose"><h2>Cómo orientamos una avería de televisión en Hondarribia</h2>'
+ +'<p>El primer dato es saber si falla un televisor, todas las tomas de una vivienda o varios vecinos. Si el mismo aparato funciona en otra toma, revisamos el recorrido de señal hacia la habitación afectada. Cuando coinciden varias viviendas, se compara la cabecera comunitaria con la distribución del edificio.</p>'
+ +'<h3>Si los cortes aparecen con viento o lluvia</h3><p>Indica cuándo empezó el fallo y si afecta siempre a los mismos canales. En la revisión exterior se comprueban las fijaciones, el estado visible del coaxial y las conexiones. Después se compara la señal con la que llega al interior: el síntoma por sí solo no permite decidir que haya que cambiar la antena.</p>'
+ +'<h3>Medición con Promax y valoración del equipo afectado</h3><p>Con el medidor de campo profesional Promax comprobamos nivel y calidad de señal en los puntos que necesita el diagnóstico. Comparar la entrada y la salida de los equipos ayuda a localizar dónde se pierde la recepción. Una medición en la toma permite valorar el resultado en el punto de uso.</p>'
+ +'<p>Según lo observado, la propuesta puede incluir reparar una conexión, renovar un tramo de cable, ajustar la antena o sustituir el amplificador, su alimentación o la propia antena. Te explicamos qué intervención conviene según el estado real de la instalación.</p>'
+ +'<h3>Qué enviar al solicitar una visita urgente</h3><p>Indica la dirección en Hondarribia, qué canales o tomas fallan y si otros vecinos tienen el mismo problema. Una foto del equipo accesible ayuda a orientar la consulta. Si es comunitaria, conviene coordinar el acceso a la cabecera con la persona responsable del edificio.</p></section>';
+
 const diagnosticoEnVisita = '<p>Revisamos el estado de la antena, el cable coaxial, los conectores y los equipos de amplificación o reparto. Con un medidor de campo profesional Promax comprobamos el nivel y la calidad de la señal en los puntos necesarios, como la salida de la antena, la cabecera o la toma de TV.</p>'
   + '<p>Con esas medidas te explicamos dónde está el fallo y qué conviene hacer. A veces basta con reparar una conexión o cambiar un tramo de cable. Si el problema está en la antena, la fuente de alimentación o el amplificador, valoramos la sustitución del equipo afectado.</p>';
 
@@ -305,7 +321,9 @@ for (const [code, area] of areaMap) {
       + '</h2>' + workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
     + '<section class="section wrap region-directory"><h2>Todos los municipios de ' + esc(area.name)
     + '</h2><p class="intro">Además de las poblaciones anteriores, puedes consultar estos municipios, organizados por la zona más cercana.</p>'
-    + covered + '</section>' + callout(area.name),
+    + covered + '</section>'
+    + (area.code === '20' || area.name === 'Gipuzkoa' ? '<section class="section wrap"><h2>Reparaciones y mediciones reales de porteros</h2><p>David C. G. realizó cambios de grupos fónicos con recambio vigente y tomó medidas para valorar un posible cambio a videoportero.</p><ul><li>'+link('/gipuzkoa/hondarribia/#visita-portero-20036','Mediciones en Hondarribia')+'</li><li>'+link('/gipuzkoa/hernani/#visita-portero-20040','Mediciones en Hernani')+'</li></ul></section>' : '')
+    + callout(area.name),
     { trail: [homeTrail, [area.name, area.url]], area: area.name, type: heading, contactPlace: area.name });
 
   for (const place of area.centers) {
@@ -337,6 +355,8 @@ for (const [code, area] of areaMap) {
       + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
       + '<section class="section wrap prose local-extra"><h2>Cómo comprobamos la señal y valoramos la reparación</h2>'
       + diagnosticoEnVisita + '</section>'
+      + (place.code === '20036' ? hondarribiaAdvice : '')
+      + porteroVisit(place.code, place.name)
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
       + (trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48020' ? 'Equipos de antena comunitaria en Bilbao</h2><p class="intro">Estas fotos de Bilbao muestran dos cabeceras de televisión. La cabecera recibe la señal de la antena y la prepara para distribuirla a las viviendas. Al revisar una avería, el medidor de campo permite comparar la señal antes y después de la amplificación.</p>'
@@ -390,7 +410,7 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Galería de trabajos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
   + photoGrid(photos) + '<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
-  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li></ul></section>' + callout(),
+  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];

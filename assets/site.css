@@ -172,3 +172,6 @@ details{margin-top:.8rem}
  .diagnostic-cards{grid-template-columns:1fr}
  .hero-photo{border-radius:3px 18px 3px 18px}
 }
+
+.photo-grid--mediciones img{aspect-ratio:3/4;object-fit:contain;object-position:center}
+@media(max-width:600px){.photo-grid--mediciones{grid-template-columns:minmax(0,1fr)}}
