@@ -460,7 +460,9 @@ for (const [code, area] of areaMap) {
       '<li>' + link('/servicios/' + key + '/', name) + '</li>').join('');
     const near = place.nearby.map((item) => '<li id="pueblo-' + item.code + '"><strong>Antenista en ' + esc(item.name)
       + '</strong>' + (item.capital ? '<small class="nucleus"> · ' + esc(item.capital) + '</small>' : '')
-      + ' <small>' + link(wa(item.name), 'Consultar visita') + '</small></li>').join('');
+      + ' <small>' + link(wa(item.name), 'Consultar visita') + '</small>'
+      + (item.code === '48904' ? '<p><strong>Aviso de antena en Sondika.</strong> La antena era antigua y la imagen se pixelaba en canales como laSexta y Antena 3.</p>' : '')
+      + '</li>').join('');
     const nearbyCenters = area.centers.filter((center) => center !== place)
       .sort((a, b) => distance(place, a) - distance(place, b)).slice(0, 3);
     const diagnosisService = place.code === '48027' ? 'reparacion' : service;
