@@ -241,3 +241,9 @@ details{margin-top:.8rem}
 }
 .local-signal-check h3 { line-height: 1.25 }
 .local-signal-check p { margin-top: .5rem }
+
+.tdt-tuning { align-items: center }
+.tdt-tuning .prose > h2:first-child,
+.tdt-guide-details .prose > h2:first-child { margin-top: 0 }
+.tdt-tuning-photo img { aspect-ratio: auto; object-fit: contain }
+.tdt-guide-details { margin-top: clamp(1.75rem, 4vw, 3rem); padding-bottom: 0 }

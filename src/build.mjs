@@ -171,6 +171,10 @@ function image([name, alt, width, height], eager = false) {
     + '" height="' + height + '"' + (eager ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"') + '>';
 }
 
+const tdtTuningFigure = '<figure class="service-photo tdt-tuning-photo">'
+  + '<img src="/assets/televisor-sintonizando-tdt.webp" alt="Televisor en la búsqueda automática de canales TDT con la barra de progreso visible" width="1050" height="788" loading="lazy" decoding="async">'
+  + '<figcaption>Ejemplo de una búsqueda automática de canales TDT.</figcaption></figure>';
+
 function photoGrid(selection, className = 'photo-grid') {
   return '<div class="' + className + '">' + selection.map((photo) =>
     '<figure><a href="/assets/trabajos/' + photo[0] + '.webp">' + image(photo)
@@ -419,14 +423,14 @@ for (const [code, area] of areaMap) {
         + '<figcaption>Trabajo real en Santurtzi. La fotografía muestra la antena TDT, su abrazadera y el cable que baja por el mástil.</figcaption></figure>'
         : '<figure class="service-photo service-photo--' + service + '">' + image(servicePhoto)
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
-      + '<section class="wrap section local-extra" id="resintonizar-tdt"><div class="prose"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
+      + '<section class="wrap section local-extra split tdt-tuning" id="resintonizar-tdt"><div class="prose"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
       + '<p class="intro">Si faltan canales tras los cambios de noviembre, prueba la búsqueda automática en el modo Antena del televisor o receptor. Si ves los canales HD y faltan los UHD, comprueba que tu equipo admite DVB-T2 y HEVC/H.265.</p>'
       + '<p>' + (service === 'comunidades'
         ? 'Si varios vecinos pierden los mismos canales después de la búsqueda, podemos comprobar la cabecera y medir en una toma afectada.'
         : 'Hacemos la resintonización y ordenamos los canales a domicilio. Si tras la búsqueda sigue faltando señal, podemos medir en la toma.') + '</p>'
       + (service === 'comunidades' ? '<p>También resintonizamos y ordenamos los canales del televisor o receptor a domicilio.</p>' : '')
       + '<div class="actions">' + link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar y comprobar UHD', 'text-link')
-      + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></div></section>'
+      + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></div>' + tdtTuningFigure + '</section>'
       + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
@@ -465,18 +469,19 @@ for (const [code, area] of areaMap) {
 }
 
 const officialTdt = 'https://television.digital.gob.es/atencion-a-la-ciudadania/notas-prensa/tdt/nueva-tdt-uhd--que-cambia-el-5-de-noviembre-de-2026';
-const tdtGuide = '<section class="section wrap"><div class="prose guide"><h2 id="resintonizar">Cómo resintonizar la TDT</h2>'
+const tdtGuide = '<section class="section wrap"><div class="split tdt-tuning"><div class="prose guide"><h2 id="resintonizar">Cómo resintonizar la TDT</h2>'
   + '<p>El 5 de noviembre de 2026 se redistribuyeron varios canales estatales. Si has perdido Clan, DKiss, A3Series, BeMad o Boing, o quieres buscar La Séptima HD, haz una búsqueda nueva. En esta primera fase se mantienen las emisiones habituales en HD y se incorporan emisiones UHD en DVB-T2.</p>'
   + '<ol><li>Abre el menú del equipo al que está conectado el cable de antena. Si usas un receptor externo para ver la TDT, busca en ese receptor.</li>'
   + '<li>En Ajustes, abre Canales, Emisión o Sintonización. Elige Antena, Terrestre o TDT y selecciona la búsqueda automática de canales digitales.</li>'
   + '<li>Deja que termine, guarda la lista y revisa también los últimos puestos. Si faltan tus favoritos, vuelve a ordenarlos.</li></ol>'
   + '<p>' + link(officialTdt, 'Consulta los cambios y las fechas en el portal oficial de Televisión Digital', 'text-link') + '.</p>'
-  + '<h2 id="tdt-uhd">Qué necesitas para ver la TDT en UHD</h2>'
+  + '</div>' + tdtTuningFigure + '</div>'
+  + '<div class="split local-extra tdt-guide-details"><div class="prose guide"><h2 id="tdt-uhd">Qué necesitas para ver la TDT en UHD</h2>'
   + '<p>Busca DVB-T2 y HEVC/H.265 en la ficha de tu televisor o receptor. Para ver la imagen en 4K necesitas también una pantalla UHD. Si los canales HD funcionan pero faltan los UHD, comprueba primero el modelo exacto. Si el equipo es compatible, pregunta si otro vecino con un equipo compatible recibe esas emisiones.</p>'
-  + '<h2 id="servicio-resintonizacion">Servicio de resintonización de canales y comprobación UHD</h2>'
+  + '</div><div class="prose guide"><h2 id="servicio-resintonizacion">Servicio de resintonización de canales y comprobación UHD</h2>'
   + '<p>Podemos sintonizar y ordenar los canales de tu televisor o receptor TDT y comprobar si admite las emisiones UHD. Si siguen faltando canales, medimos la señal en la toma. Cuando el fallo afecta a varias viviendas, podemos revisar la cabecera comunitaria con acceso autorizado por la comunidad.</p>'
   + '<p>Al pedir visita, indica tu municipio, el modelo del televisor o receptor y los canales que faltan. Dinos también si ya has hecho la búsqueda y si el problema afecta a algún vecino.</p>'
-  + '<div class="actions">' + link(wa('', 'necesito resintonizar los canales TDT'), 'Pedir ayuda por WhatsApp', 'btn dark') + '</div></div></section>';
+  + '<div class="actions">' + link(wa('', 'necesito resintonizar los canales TDT'), 'Pedir ayuda por WhatsApp', 'btn dark') + '</div></div></div></section>';
 
 add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista Fuentes',
   'Cómo buscar los canales tras los cambios de noviembre de 2026, comprobar la compatibilidad UHD y pedir ayuda con la resintonización o la señal de antena.',
