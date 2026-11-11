@@ -342,7 +342,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <div class="actions">${link('/trabajos/', 'Ver todos los trabajos', 'btn dark')}</div></div></section>
   <section class="section wrap" id="zonas"><p class="kicker">Siete provincias</p><h2>Antenas en tu municipio</h2>
   <h3>Bilbao y alrededores</h3>
-  <p class="intro">Nuestro equipo sale de Bilbao y se desplaza a todos los municipios que figuran en esta zona de cobertura, tanto para visitas programadas como para averías urgentes. Busca tu pueblo o abre el listado de tu provincia. Al contactar, te confirmamos cuándo podemos llegar.</p>${workTowns(['48020', '48013', '48082', '48078', '48084', '48044', '48054'].map(code => towns.get(code)))}
+  <p class="intro">Nuestro equipo sale de Bilbao y se desplaza a todos los municipios que figuran en esta zona de cobertura, tanto para visitas programadas como para averías urgentes. Busca tu pueblo o abre el listado de tu provincia. Al contactar, te confirmamos cuándo podemos llegar.</p>${workTowns(['48020', '48013', '48082', '48078', '48084', '48044', '48054', '48015'].map(code => towns.get(code)))}
   ${directory(true)}</section>
   <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
@@ -421,7 +421,8 @@ for (const [code, area] of areaMap) {
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
       + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
-      + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
+      + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
+        + (extra[2] ? '<p>' + link(...extra[2], 'text-link') + '</p>' : '') + '</section>' : '')
       + (place.code !== '48027' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48020' ? 'Equipos de antena comunitaria en Bilbao</h2><p class="intro">Estas fotos de Bilbao muestran dos cabeceras de televisión. La cabecera recibe la señal de la antena y la prepara para distribuirla a las viviendas. Al revisar una avería, el medidor de campo permite comparar la señal antes y después de la amplificación.</p>'
           + photoGrid(bilbaoPhotos, 'photo-grid photo-grid--equipos')
