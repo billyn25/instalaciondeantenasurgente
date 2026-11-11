@@ -469,7 +469,7 @@ for (const [code, area] of areaMap) {
 }
 
 const officialTdt = 'https://television.digital.gob.es/atencion-a-la-ciudadania/notas-prensa/tdt/nueva-tdt-uhd--que-cambia-el-5-de-noviembre-de-2026';
-const tdtGuide = '<section class="section wrap"><div class="split tdt-tuning"><div class="prose guide"><h2 id="resintonizar">Cómo resintonizar la TDT</h2>'
+const tdtGuide = '<section class="section wrap tdt-guide"><div class="split tdt-tuning"><div class="prose guide"><h2 id="resintonizar">Cómo resintonizar la TDT</h2>'
   + '<p>El 5 de noviembre de 2026 se redistribuyeron varios canales estatales. Si has perdido Clan, DKiss, A3Series, BeMad o Boing, o quieres buscar La Séptima HD, haz una búsqueda nueva. En esta primera fase se mantienen las emisiones habituales en HD y se incorporan emisiones UHD en DVB-T2.</p>'
   + '<ol><li>Abre el menú del equipo al que está conectado el cable de antena. Si usas un receptor externo para ver la TDT, busca en ese receptor.</li>'
   + '<li>En Ajustes, abre Canales, Emisión o Sintonización. Elige Antena, Terrestre o TDT y selecciona la búsqueda automática de canales digitales.</li>'
@@ -487,7 +487,7 @@ add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista 
   'Cómo buscar los canales tras los cambios de noviembre de 2026, comprobar la compatibilidad UHD y pedir ayuda con la resintonización o la señal de antena.',
   smallHero('Ayuda con la televisión', 'Resintonización de la TDT y canales UHD', 'Busca los canales que han cambiado, comprueba qué admite tu televisor y averigua cuándo conviene revisar la antena.', '', false)
   + tdtGuide
-  + '<div class="section wrap"><div class="prose guide">' + Object.entries(diagnosticos).map(([key, [title, copy]]) =>
+  + '<div class="wrap guide tdt-diagnostics">' + Object.entries(diagnosticos).map(([key, [title, copy]]) =>
     '<section id="' + key + '"><h2>' + esc(title) + '</h2><p>' + esc(copy) + '</p>'
     + (key === 'pixelacion' ? '<ul>'
       + '<li><strong>Cableado y conectores.</strong> Un coaxial deteriorado, un conector flojo o un repartidor con pérdidas pueden reducir la señal en una o varias tomas.</li>'
@@ -496,7 +496,7 @@ add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista 
       + '<li><strong>Emisiones en el mismo canal.</strong> Con ciertas condiciones de propagación puede llegar una emisión de otro repetidor en la misma frecuencia y dificultar la recepción de algunos canales.</li>'
       + '</ul><p>' + link(bilbaoCaseUrl, 'Ver el caso real de canales intermitentes en Bilbao centro') + '</p>' : '')
     + '</section>').join('')
-  + '</div></div>' + callout(),
+  + '</div>' + callout(),
   { trail: [homeTrail, ['Ayuda con la TDT', '/ayuda-antenas/']] });
 
 add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',

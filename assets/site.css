@@ -247,3 +247,30 @@ details{margin-top:.8rem}
 .tdt-guide-details .prose > h2:first-child { margin-top: 0 }
 .tdt-tuning-photo img { aspect-ratio: auto; object-fit: contain }
 .tdt-guide-details { margin-top: clamp(1.75rem, 4vw, 3rem); padding-bottom: 0 }
+
+.tdt-guide { padding-bottom: 0 }
+.tdt-diagnostics {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: "sin-senal pixelacion" "colectiva pixelacion" ". pixelacion";
+  grid-template-rows: auto auto 1fr;
+  gap: clamp(1.35rem, 3vw, 2rem) clamp(1.3rem, 5vw, 4rem);
+  align-content: start;
+  align-items: start;
+  padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 5vw, 4rem);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--line);
+}
+.tdt-diagnostics #sin-senal { grid-area: sin-senal }
+.tdt-diagnostics #pixelacion { grid-area: pixelacion }
+.tdt-diagnostics #colectiva { grid-area: colectiva }
+.tdt-diagnostics section + section { margin-top: 0 }
+.tdt-diagnostics h2 { margin-bottom: .7rem }
+.tdt-diagnostics li + li { margin-top: .45rem }
+@media (max-width: 660px) {
+  .tdt-diagnostics {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "sin-senal" "pixelacion" "colectiva";
+    grid-template-rows: auto;
+  }
+}
