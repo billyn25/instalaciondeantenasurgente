@@ -283,6 +283,14 @@ details{margin-top:.8rem}
 }
 
 .home-antenna-cases .kicker { margin-top: 0 }
+.home-antenna-cases .card > img {
+  width: 100%;
+  height: clamp(11rem, 24vw, 17rem);
+  object-fit: contain;
+  background: #edf2fc;
+  border-radius: .5rem;
+  margin-bottom: .95rem;
+}
 .home-portero-cases-heading { margin-top: clamp(2rem, 4vw, 3.25rem) }
 
 @media (min-width: 901px) {
