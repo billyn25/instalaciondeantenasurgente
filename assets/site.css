@@ -274,3 +274,10 @@ details{margin-top:.8rem}
     grid-template-rows: auto;
   }
 }
+
+.cards.service-cards { gap: 1.15rem }
+.service-photo figcaption { padding: .9rem 1rem }
+@media (max-width: 660px) {
+  .split:has(> .service-photo) { row-gap: 1.75rem }
+  .cards.service-cards { grid-template-columns: 1fr }
+}

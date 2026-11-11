@@ -235,10 +235,18 @@ function search() {
   <noscript>Consulta los municipios en el listado por provincia.</noscript></div></div></section>`;
 }
 
+const mobileAntennaPath = '/servicios/antenas-4g-5g/';
+const mobileAntennaName = 'Antenas 4G y 5G para cobertura móvil';
+
 function serviceCards() {
-  return '<div class="cards">' + Object.entries(servicios).map(([key, [name, intro]], index) =>
-    '<article class="card"><span class="number">0' + (index + 1) + '</span><h3>'
-    + link('/servicios/' + key + '/', name) + '</h3><p>' + esc(intro) + '</p></article>').join('') + '<article class="card"><span class="number">05</span><h3>'+link('/servicios/porteros-videoporteros/','Porteros automáticos y videoporteros')+'</h3><p>Reparación de audio, cambio de grupos fónicos y valoración del paso de portero convencional a videoportero.</p></article></div>';
+  const cards = Object.entries(servicios).map(([key, [name, intro]]) => ['/servicios/' + key + '/', name, intro]);
+  cards.push(
+    ['/servicios/porteros-videoporteros/', 'Porteros automáticos y videoporteros', 'Reparación de audio, cambio de grupos fónicos y valoración del paso de portero convencional a videoportero.'],
+    ['/ayuda-antenas/#servicio-resintonizacion', 'Resintonización de TDT y UHD', 'Buscamos y ordenamos los canales y comprobamos la compatibilidad del televisor con UHD.'],
+    [mobileAntennaPath, mobileAntennaName, 'Medimos la señal de tu operador e instalamos antenas exteriores para routers compatibles. Valoramos opciones para las llamadas dentro del edificio.']
+  );
+  return '<div class="cards service-cards">' + cards.map(([url, name, intro]) =>
+    '<article class="card"><h3>' + link(url, name) + '</h3><p>' + esc(intro) + '</p></article>').join('') + '</div>';
 }
 
 function diagnosticCards() {
@@ -511,11 +519,24 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
-add('/servicios/', 'Antenas, porteros y videoporteros | Antenista Fuentes',
-  'Servicios de antenista para televisión terrestre y satélite, instalación de antenas, reparación de averías y mantenimiento de antenas colectivas.',
-  smallHero('Viviendas y comunidades', 'Servicios de antenas, porteros y videoporteros', 'Reparación de porteros y renovación a videoportero. Instalación de antenas TDT y parabólicas, reparación de averías y revisión de la distribución de televisión.')
-  + '<section class="section wrap"><h2>Qué podemos revisar</h2>' + serviceCards() + '<p>' + link('/ayuda-antenas/#servicio-resintonizacion', 'Servicio de resintonización de TDT y comprobación UHD', 'text-link') + '</p></section>' + callout(),
+add('/servicios/', 'Antenas TDT, 4G y 5G, porteros y videoporteros | Antenista Fuentes',
+  'Instalación de antenas TDT, parabólicas y antenas para routers 4G y 5G. Resintonización de canales y reparación de porteros.',
+  smallHero('Viviendas y comunidades', 'Servicios de antenas, porteros y videoporteros', 'Instalamos y reparamos antenas de televisión, montamos antenas para conexión móvil 4G y 5G y reparamos porteros automáticos.')
+  + '<section class="section wrap"><h2>Servicios de instalación y reparación</h2>' + serviceCards() + '</section>' + callout(),
   { trail: [homeTrail, serviceTrail] });
+
+const repeaterInfo = 'https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/equipos-telecomunicacion/repetidores-senal-telefonia-movil';
+add(mobileAntennaPath, 'Instalación de antenas 4G y 5G para cobertura móvil | Antenista Fuentes',
+  'Medición de señal móvil e instalación de antenas exteriores para routers 4G y 5G. Valoración de cobertura para llamadas GSM y datos en interiores.',
+  smallHero('Cobertura móvil', 'Instalación de antenas 4G y 5G', 'Medimos la señal móvil del operador y valoramos cómo mejorar la conexión en viviendas, locales y comunidades.', '', false)
+  + '<section class="section wrap split"><div class="prose guide"><h2>Antena exterior para internet 4G o 5G</h2>'
+  + '<p>Comparamos la señal exterior con la del interior. Si el router admite antena externa y hay señal aprovechable, instalamos y orientamos la antena y comprobamos la conexión desde el router.</p></div>'
+  + '<div class="prose guide"><h2>Cobertura para llamadas GSM y móvil</h2>'
+  + '<p>Si el móvil pierde llamadas dentro, dinos el operador y en qué habitaciones sucede. Comprobamos la señal y valoramos opciones como las llamadas por Wi-Fi, si el teléfono y el operador las admiten. Los repetidores activos requieren la intervención o autorización del operador.</p>'
+  + '<p>' + link(repeaterInfo, 'Información oficial sobre repetidores de telefonía móvil', 'text-link') + '</p></div></section>'
+  + '<section class="wrap section local-extra"><div class="prose"><h2>Pide una valoración de cobertura</h2><p>Indica el municipio, el operador, si fallan las llamadas o los datos y si tienes un router 4G o 5G. Si conoces el modelo del router, inclúyelo.</p>'
+  + '<div class="actions">' + link(wa('', 'necesito revisar la cobertura móvil 4G o 5G'), 'Consultar cobertura por WhatsApp', 'btn dark') + '</div></div></section>',
+  { trail: [homeTrail, serviceTrail, [mobileAntennaName, mobileAntennaPath]], type: mobileAntennaName });
 
 const porteroPath = '/servicios/porteros-videoporteros/';
 const porteroWhatsApp = 'https://wa.me/34641490536?text='+encodeURIComponent('Hola, necesito consultar una reparación de portero automático o un cambio a videoportero.');
