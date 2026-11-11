@@ -45,6 +45,8 @@ const durangoPhoto = photosByName.get('durango-antena-caida-reparada');
 const durangoCaseUrl = '/bizkaia/durango/#trabajos-locales';
 const bermeoPhoto = photosByName.get('bermeo-antena-cable-vientos');
 const bermeoCaseUrl = '/bizkaia/bermeo/#trabajos-locales';
+const santurtziPhoto = ['santurtzi-antena-tdt', 'Antena TDT sobre un mástil exterior en Santurtzi', 676, 1200];
+const santurtziCaseUrl = '/bizkaia/santurtzi/#trabajos-locales';
 const debaPhotos = photos.filter(([name]) => name.startsWith('deba-'));
 const galleryPhoto = photosByName.get('tdt-en-tejado');
 const servicePhotos = {
@@ -193,6 +195,7 @@ function provinceCaseCards(code) {
   ['01','Llodio / Laudio · Porteros','Reparación urgente del grupo fónico Fermax PVT9696',llodioPhoto,llodioCaseUrl],
   ['48','Bilbao centro · Antenas','Canales que desaparecían a ciertas horas',bilbaoCasePhoto,bilbaoCaseUrl],
   ['48','Bilbao · Antenas comunitarias','Arbolantxa, 5 y Cortes, 6',bilbaoPhotos[1],bilbaoCommunityUrl],
+  ['48','Santurtzi · Antenas','Antena TDT en mástil exterior',null,santurtziCaseUrl],
   ['48','Durango · Antenas','Reparación de una antena caída',durangoPhoto,durangoCaseUrl],
   ['48','Bermeo · Antenas','Aldatseta Kalea: cable, vientos y amplificador',bermeoPhoto,bermeoCaseUrl],
   ['48','Gernika-Lumo · Antenas','Fotografías del montaje exterior',gernikaSecondPhoto,gernikaCaseUrl],
@@ -200,7 +203,7 @@ function provinceCaseCards(code) {
   ['20','Hondarribia · Porteros','Grupos fónicos y medición para valorar el cambio a videoportero',porteroVisits['20036'][1],'/gipuzkoa/hondarribia/#visita-portero-20036'],
   ['20','Hernani · Porteros','Reparaciones de audio y toma de medidas',porteroVisits['20040'][0],'/gipuzkoa/hernani/#visita-portero-20040']
  ].filter(item=>item[0]===code);
- return cases.length ? '<div class="cards case-previews">'+cases.map(([,place,title,photo,url])=>'<article class="card">'+image(photo)+'<p class="kicker">'+esc(place)+'</p><h3>'+esc(title)+'</h3><p>'+link(url,'Ver fotos y descripción del trabajo','text-link')+'</p></article>').join('')+'</div>' : '';
+ return cases.length ? '<div class="cards case-previews">'+cases.map(([,place,title,photo,url])=>'<article class="card">'+(photo ? image(photo) : '')+'<p class="kicker">'+esc(place)+'</p><h3>'+esc(title)+'</h3><p>'+link(url,'Ver fotos y descripción del trabajo','text-link')+'</p></article>').join('')+'</div>' : '';
 }
 const hondarribiaAdvice = '<section class="section wrap prose"><h2>Cómo orientamos una avería de televisión en Hondarribia</h2>'
  +'<p>El primer dato es saber si falla un televisor, todas las tomas de una vivienda o varios vecinos. Si el mismo aparato funciona en otra toma, revisamos el recorrido de señal hacia la habitación afectada. Cuando coinciden varias viviendas, se compara la cabecera comunitaria con la distribución del edificio.</p>'
@@ -338,7 +341,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   ${workTowns()}
   <div class="actions">${link('/trabajos/', 'Ver todos los trabajos', 'btn dark')}</div></div></section>
   <section class="section wrap" id="zonas"><p class="kicker">Siete provincias</p><h2>Antenas en tu municipio</h2>
-  <p class="intro">Nuestro equipo sale de Bilbao y se desplaza a todos los municipios que figuran en esta zona de cobertura, tanto para visitas programadas como para averías urgentes. Busca tu pueblo o abre el listado de tu provincia. Al contactar, te confirmamos cuándo podemos llegar.</p>${directory(true)}</section>
+  <h3>Bilbao y alrededores</h3>
+  <p class="intro">Nuestro equipo sale de Bilbao y se desplaza a todos los municipios que figuran en esta zona de cobertura, tanto para visitas programadas como para averías urgentes. Busca tu pueblo o abre el listado de tu provincia. Al contactar, te confirmamos cuándo podemos llegar.</p>${workTowns(['48020', '48013', '48082', '48078', '48084', '48044', '48054'].map(code => towns.get(code)))}
+  ${directory(true)}</section>
   <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
 
@@ -373,7 +378,9 @@ for (const [code, area] of areaMap) {
     const [topic, advice, service] = fichas[place.code];
     const [serviceName, serviceIntro] = servicios[service];
     const choices = servicePhotos[service];
-    const servicePhoto = place.code === '48046' ? gernikaPhoto : photosByName.get(choices[Number(place.code) % choices.length]);
+    const isSanturtzi = place.code === '48082';
+    const servicePhoto = place.code === '48046' ? gernikaPhoto
+      : photosByName.get(choices[Number(place.code) % choices.length]);
     const extra = ampliaciones[place.code];
     const guideKey = service === 'comunidades' ? 'colectiva' : service === 'reparacion' ? 'pixelacion' : 'sin-senal';
     const guide = link('/ayuda-antenas/#' + guideKey, diagnosticos[guideKey][0], 'text-link');
@@ -406,12 +413,16 @@ for (const [code, area] of areaMap) {
       + '</h2><p class="intro">' + esc(advice) + '</p>' + signalCheck
       + '<aside class="note"><h3>' + esc(serviceName)
       + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
-      + '</p><p>' + guide + '</p></aside></div><figure class="service-photo service-photo--' + service + '">'
-      + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>')
+      + '</p><p>' + guide + '</p></aside></div>'
+      + (isSanturtzi ? '<figure class="service-photo service-photo--reparacion" id="trabajos-locales">'
+        + '<a href="/assets/trabajos/' + santurtziPhoto[0] + '.webp">' + image(santurtziPhoto) + '</a>'
+        + '<figcaption>Trabajo real en Santurtzi. La fotografía muestra la antena TDT, su abrazadera y el cable que baja por el mástil.</figcaption></figure>'
+        : '<figure class="service-photo service-photo--' + service + '">' + image(servicePhoto)
+          + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
       + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
-      + (place.code !== '48027' && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
+      + (place.code !== '48027' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48020' ? 'Equipos de antena comunitaria en Bilbao</h2><p class="intro">Estas fotos de Bilbao muestran dos cabeceras de televisión. La cabecera recibe la señal de la antena y la prepara para distribuirla a las viviendas. Al revisar una avería, el medidor de campo permite comparar la señal antes y después de la amplificación.</p>'
           + photoGrid(bilbaoPhotos, 'photo-grid photo-grid--equipos')
           + '<div class="split local-extra" id="caso-pixelacion-bilbao"><div><p class="kicker">Caso real en Bilbao centro</p><h3>Canales que dejaban de verse a ciertas horas</h3>'
@@ -467,7 +478,7 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Fotografías de instalaciones y equipos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
   + photoGrid(photos.filter(([name])=>!name.startsWith('gernika-lumo-') && !name.startsWith('bermeo-') && !name.startsWith('durango-'))) + '<h3>Fotografías identificadas por municipio</h3>'+photoGrid([durangoPhoto,gernikaPhoto,gernikaSecondPhoto,bermeoPhoto])+'<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
-  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
+  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li><li>'+link(santurtziCaseUrl,'Santurtzi: antena TDT en mástil exterior','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
