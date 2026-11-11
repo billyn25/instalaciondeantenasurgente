@@ -230,3 +230,11 @@ details{margin-top:.8rem}
 @media (max-width: 660px) {
   .durango-photo { justify-self: start }
 }
+
+.local-signal-check {
+  margin-top: 1.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+.local-signal-check h3 { line-height: 1.25 }
+.local-signal-check p { margin-top: .5rem }

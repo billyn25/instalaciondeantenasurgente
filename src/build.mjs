@@ -388,9 +388,12 @@ for (const [code, area] of areaMap) {
     const nearbyCenters = area.centers.filter((center) => center !== place)
       .sort((a, b) => distance(place, a) - distance(place, b)).slice(0, 3);
     const diagnosisService = place.code === '48027' ? 'reparacion' : service;
+    const signalCheck = '<div class="local-signal-check"><h3>Cómo comprobamos la señal y valoramos la reparación</h3>'
+      + '<p>' + esc(guiasServicio[diagnosisService].local) + '</p></div>';
     const durangoCase = '<section class="surface durango-case" id="trabajos-locales"><div class="wrap section split">'
       + '<div><p class="kicker">Trabajo real en Durango</p><h2>Reparación de una antena caída</h2>'
       + '<p class="intro">Reparamos una antena que había caído sobre la cubierta. La foto muestra la antena y el mástil antes de la intervención.</p>'
+      + signalCheck
       + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación', 'btn dark') + '</div></div>'
       + '<figure class="service-photo durango-photo"><a href="/assets/trabajos/durango-antena-caida-reparada.webp">'
       + image(durangoPhoto) + '</a><figcaption>' + esc(durangoPhoto[1]) + '</figcaption></figure></div></section>';
@@ -400,12 +403,11 @@ for (const [code, area] of areaMap) {
         'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.', place.name)
       + (place.code === '48027' ? durangoCase
         : '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
-      + '</h2><p class="intro">' + esc(advice) + '</p><aside class="note"><h3>' + esc(serviceName)
+      + '</h2><p class="intro">' + esc(advice) + '</p>' + signalCheck
+      + '<aside class="note"><h3>' + esc(serviceName)
       + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
       + '</p><p>' + guide + '</p></aside></div><figure class="service-photo service-photo--' + service + '">'
       + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>')
-      + '<section class="section wrap prose local-extra"><h2>Cómo comprobamos la señal y valoramos la reparación</h2>'
-      + '<p>'+esc(guiasServicio[diagnosisService].local)+'</p><p>'+link('/servicios/'+diagnosisService+'/','Consultar las comprobaciones y opciones de este servicio','text-link')+'</p></section>'
       + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
