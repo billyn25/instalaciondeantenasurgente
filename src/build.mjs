@@ -220,8 +220,7 @@ function porteroVisit(code, name) {
  +'<div class="prose"><h3>Por qué medimos antes de presupuestar</h3><p>El tamaño de la placa y del marco condiciona el montaje. Medir el conjunto permite estudiar si la nueva placa cubre el espacio existente o si necesita una adaptación. En una comunidad también hay que tener en cuenta la distribución de los pulsadores y las distintas escaleras.</p>'
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
-function provinceCaseCards(code) {
- const cases = [
+const documentedCases = [
   ['39','Los Corrales de Buelna · Antenas','Cambio de antenas para recuperar todos los canales',null,corralesCaseUrl],
   ['39','Torrelavega · Porteros','Reparación del grupo fónico Golmar Stadio',null,torrelavegaCaseUrl],
   ['01','Amurrio · Antenas','Reparación urgente de una antena caída',null,amurrioCaseUrl],
@@ -239,8 +238,10 @@ function provinceCaseCards(code) {
   ['20','Deba · Antenas','Medición con Promax y equipos de distribución',photosByName.get('deba-medicion-promax'),'/gipuzkoa/deba/#trabajos-locales'],
   ['20','Hondarribia · Porteros','Grupos fónicos y medición para valorar el cambio a videoportero',porteroVisits['20036'][1],'/gipuzkoa/hondarribia/#visita-portero-20036'],
   ['20','Hernani · Porteros','Reparaciones de audio y toma de medidas',porteroVisits['20040'][0],'/gipuzkoa/hernani/#visita-portero-20040']
- ].filter(item=>item[0]===code);
- return cases.length ? '<div class="cards case-previews">'+cases.map(([,place,title,photo,url])=>'<article class="card">'+(photo ? image(photo) : '')+'<p class="kicker">'+esc(place)+'</p><h3>'+esc(title)+'</h3><p>'+link(url,'Ver fotos y descripción del trabajo','text-link')+'</p></article>').join('')+'</div>' : '';
+];
+function provinceCaseCards(code) {
+ const cases = documentedCases.filter(item=>item[0]===code);
+ return cases.length ? '<div class="cards case-previews">'+cases.map(([,place,title,photo,url])=>'<article class="card">'+(photo ? image(photo) : '')+'<p class="kicker">'+esc(place)+'</p><h3>'+esc(title)+'</h3><p>'+link(url,'Ver el trabajo en '+place.split(' · ')[0],'text-link')+'</p></article>').join('')+'</div>' : '';
 }
 const hondarribiaAdvice = '<section class="section wrap prose"><h2>Cómo orientamos una avería de televisión en Hondarribia</h2>'
  +'<p>El primer dato es saber si falla un televisor, todas las tomas de una vivienda o varios vecinos. Si el mismo aparato funciona en otra toma, revisamos el recorrido de señal hacia la habitación afectada. Cuando coinciden varias viviendas, se compara la cabecera comunitaria con la distribución del edificio.</p>'
@@ -589,12 +590,18 @@ add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista 
 add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   'Galería de trabajos reales de Antenista Fuentes. Antenas en cubierta, mástiles, cabeceras de televisión y equipos de distribución.',
   smallHero('Galería de obra', 'Trabajos reales de antenas', 'Fotografías de antenas de televisión, equipos de medida y distribución de señal.', '', false)
-  + '<section class="section wrap"><h2>Municipios donde hemos trabajado</h2>'
-  + '<p class="intro">Atendemos avisos a diario. Estos municipios son una muestra de los lugares donde hemos realizado trabajos. Una visita para localizar un fallo de señal también cuenta, igual que una reparación o una instalación.</p>'
-  + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Fotografías de instalaciones y equipos</h2>'
-  + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
-  + photoGrid(photos.filter(([name])=>!name.startsWith('gernika-lumo-') && !name.startsWith('bermeo-') && !name.startsWith('durango-'))) + '<h3>Fotografías identificadas por municipio</h3>'+photoGrid([durangoPhoto,gernikaPhoto,gernikaSecondPhoto,bermeoPhoto])+'<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
-  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li><li>'+link(santurtziCaseUrl,'Santurtzi: antena TDT en mástil exterior','text-link')+'</li><li>'+link(amurrioCaseUrl,'Amurrio: reparación urgente de una antena caída','text-link')+'</li><li>'+link(azpeitiaCaseUrl,'Azpeitia: cambio de antenas UHF y FM','text-link')+'</li><li>'+link(corralesCaseUrl,'Los Corrales de Buelna: cambio de antenas TDT','text-link')+'</li><li>'+link(balmasedaCaseUrl,'Balmaseda: instalación de TDT y parabólica con diplexor','text-link')+'</li><li>'+link(gizaburuagaCaseUrl,'Gizaburuaga: antena UHF y torreta nueva','text-link')+'</li><li>'+link(zierbenaCaseUrl,'Zierbena: antena Televes con dipolo activo','text-link')+'</li><li>'+link(torrelavegaCaseUrl,'Torrelavega: reparación del grupo fónico Golmar Stadio','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
+  + '<section class="section wrap"><h2>Trabajos documentados por provincia</h2>'
+  + '<div class="cards case-previews">' + [...areaMap].map(([code,area]) => {
+    const cases = documentedCases.filter(item => item[0] === code);
+    return cases.length ? '<article class="card"><h3>' + esc(area.name) + '</h3><ul>'
+      + cases.map(([,place,title,,url]) => '<li>' + link(url,place.split(' · ')[0] + ' — ' + title,'text-link') + '</li>').join('')
+      + '</ul></article>' : '';
+  }).join('') + '</div></section>'
+  + '<section class="section wrap local-extra"><h2>Municipios donde hemos trabajado</h2>' + workTowns()
+  + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div></section>'
+  + '<section class="section wrap local-extra"><h2>Ejemplos de antenas y equipos</h2>'
+  + photoGrid(photos.filter(([name]) => !/^(gernika-lumo|bermeo|durango|bilbao|deba)-/.test(name)))
+  + '</section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
