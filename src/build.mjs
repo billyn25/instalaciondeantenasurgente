@@ -461,7 +461,7 @@ for (const [code, area] of areaMap) {
     const near = place.nearby.map((item) => '<li id="pueblo-' + item.code + '"><strong>Antenista en ' + esc(item.name)
       + '</strong>' + (item.capital ? '<small class="nucleus"> · ' + esc(item.capital) + '</small>' : '')
       + ' <small>' + link(wa(item.name), 'Consultar visita') + '</small>'
-      + (item.code === '48904' ? '<p><strong>Aviso de antena en Sondika.</strong> La antena era antigua y la imagen se pixelaba en canales como laSexta y Antena 3.</p>' : '')
+      + (item.code === '48904' ? '<p><strong>Aviso de antena en Sondika.</strong> La antena era antigua y la imagen se pixelaba en canales como laSexta y Antena 3. Sustituimos la antena antigua por una nueva.</p>' : '')
       + '</li>').join('');
     const nearbyCenters = area.centers.filter((center) => center !== place)
       .sort((a, b) => distance(place, a) - distance(place, b)).slice(0, 3);
