@@ -281,3 +281,6 @@ details{margin-top:.8rem}
   .split:has(> .service-photo) { row-gap: 1.75rem }
   .cards.service-cards { grid-template-columns: 1fr }
 }
+
+.home-antenna-cases .kicker { margin-top: 0 }
+.home-portero-cases-heading { margin-top: clamp(2rem, 4vw, 3.25rem) }

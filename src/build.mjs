@@ -350,9 +350,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <p>Instalamos antenas y reparamos fallos de señal en viviendas y comunidades. Cuéntanos en qué pueblo estás y qué falla en tu televisión.</p>
   ${buttons()}</div><figure class="hero-photo">${image(galleryPhoto, true)}<figcaption><span>01 / TRABAJOS REALES</span> Antena TDT sobre cubierta de teja</figcaption></figure>
   </div></section>${search()}
-  <section class="section wrap"><p class="kicker">Viviendas y comunidades</p><h2>Antenas, porteros automáticos y videoporteros</h2>
-  <p class="intro">Si solo falla una habitación, empezamos por su toma. Si varios vecinos pierden los mismos canales, revisamos qué parte de la instalación comparten.</p>${serviceCards()}</section>
-  <section class="section surface" id="trabajos-destacados"><div class="wrap"><p class="kicker">Fotografías de obra</p><h2>Trabajos reales de Antenista Fuentes</h2>
+  <section class="section surface" id="trabajos-destacados"><div class="wrap"><h2>Trabajos reales de instalación y reparación de antenas</h2>
   <div class="cards case-previews">
     <article class="card">${image(bilbaoCasePhoto)}<p class="kicker">Bilbao centro · Reparación</p>
       <h3>Canales que desaparecían a ciertas horas</h3>
@@ -372,6 +370,23 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
     <article class="card">${image(bermeoPhoto)}<p class="kicker">Bermeo · Antena TDT</p>
       <h3>Antena TDT en Aldatseta Kalea</h3><p>Cambio de cable, vientos de sujeción y amplificador. Trabajo real en Bermeo, con desplazamiento urgente desde Bilbao. Intervención en la instalación de televisión terrestre y sus elementos de sujeción.</p>
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
+  </div>
+  <div class="cards home-antenna-cases">
+    <article class="card"><p class="kicker">Balmaseda</p><h3>TDT y parabólica en un mismo mástil</h3>
+      <p>Montamos las dos antenas y usamos un diplexor para llevar ambas señales por un solo cable coaxial.</p>
+      ${link(balmasedaCaseUrl, 'Ver la instalación de Balmaseda', 'text-link')}</article>
+    <article class="card"><p class="kicker">Gizaburuaga</p><h3>Torreta nueva tras la caída de la anterior</h3>
+      <p>Instalamos una antena UHF con previo de mástil y fuente de alimentación para amplificar la señal.</p>
+      ${link(gizaburuagaCaseUrl, 'Ver el montaje de Gizaburuaga', 'text-link')}</article>
+    <article class="card"><p class="kicker">Los Corrales de Buelna</p><h3>Dos antenas para captar todos los canales</h3>
+      <p>Sustituimos las antenas y montamos dos antenas TDT en cubierta.</p>
+      ${link(corralesCaseUrl, 'Ver el cambio de antenas en Los Corrales de Buelna', 'text-link')}</article>
+    <article class="card"><p class="kicker">Azpeitia</p><h3>Cambio de antenas UHF y FM</h3>
+      <p>Sustituimos las antenas del mástil que reciben la televisión terrestre y la radio FM.</p>
+      ${link(azpeitiaCaseUrl, 'Ver el trabajo de Azpeitia', 'text-link')}</article>
+  </div>
+  <h3 class="home-portero-cases-heading">Trabajos de porteros automáticos</h3>
+  <div class="cards case-previews">
     <article class="card">${image(llodioPhoto)}<p class="kicker">Llodio / Laudio · Porteros</p><h3>Reparación urgente de grupo fónico Fermax</h3><p>Trabajo real de reparación del grupo fónico Fermax PVT9696 en un portero comunitario.</p>${link(llodioCaseUrl,'Ver el caso real en Llodio / Laudio','text-link')}</article>
     <article class="card">${image(porteroVisits['20036'][1])}<p class="kicker">Hondarribia · Porteros comunitarios</p>
       <h3>Reparación de audio y medición para renovar</h3><p>David C. G. realizó cambios de grupos fónicos con recambio vigente y tomó medidas de las placas para valorar un posible cambio a videoportero.</p>
@@ -382,6 +397,8 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   </div>
   ${workTowns()}
   <div class="actions">${link('/trabajos/', 'Ver todos los trabajos', 'btn dark')}</div></div></section>
+  <section class="section wrap"><p class="kicker">Viviendas y comunidades</p><h2>Antenas, porteros automáticos y videoporteros</h2>
+  <p class="intro">Si solo falla una habitación, empezamos por su toma. Si varios vecinos pierden los mismos canales, revisamos qué parte de la instalación comparten.</p>${serviceCards()}</section>
   <section class="section wrap" id="zonas"><p class="kicker">Siete provincias</p><h2>Antenas en tu municipio</h2>
   <h3>Bilbao y alrededores</h3>
   <p class="intro">Nuestro equipo sale de Bilbao y se desplaza a todos los municipios que figuran en esta zona de cobertura, tanto para visitas programadas como para averías urgentes. Busca tu pueblo o abre el listado de tu provincia. Al contactar, te confirmamos cuándo podemos llegar.</p>${workTowns(['48020', '48013', '48082', '48078', '48084', '48044', '48054', '48015'].map(code => towns.get(code)))}
