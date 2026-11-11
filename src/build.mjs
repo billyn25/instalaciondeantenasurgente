@@ -447,19 +447,8 @@ for (const [code, area] of areaMap) {
         + '<figcaption>Trabajo real en Santurtzi. La fotografía muestra la antena TDT, su abrazadera y el cable que baja por el mástil.</figcaption></figure>'
         : '<figure class="service-photo service-photo--' + service + '">' + image(servicePhoto)
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
-      + '<section class="wrap section local-extra split tdt-tuning" id="resintonizar-tdt"><div class="prose"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
-      + '<p class="intro">Si faltan canales tras los cambios de noviembre, prueba la búsqueda automática en el modo Antena del televisor o receptor. Si ves los canales HD y faltan los UHD, comprueba que tu equipo admite DVB-T2 y HEVC/H.265.</p>'
-      + '<p>' + (service === 'comunidades'
-        ? 'Si varios vecinos pierden los mismos canales después de la búsqueda, podemos comprobar la cabecera y medir en una toma afectada.'
-        : 'Hacemos la resintonización y ordenamos los canales a domicilio. Si tras la búsqueda sigue faltando señal, podemos medir en la toma.') + '</p>'
-      + (service === 'comunidades' ? '<p>También resintonizamos y ordenamos los canales del televisor o receptor a domicilio.</p>' : '')
-      + '<div class="actions">' + link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar y comprobar UHD', 'text-link')
-      + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></div>' + tdtTuningFigure + '</section>'
-      + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
-      + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
-        + (extra[2] ? '<p>' + link(...extra[2], 'text-link') + '</p>' : '') + '</section>' : '')
-      + (place.code !== '48027' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
+      + (place.code !== '48027' && place.code !== '39087' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '20018' ? 'Cambio de antenas UHF y FM en Azpeitia</h2>'
           + '<div class="split local-extra"><div><p class="intro">Sustituimos las antenas UHF y FM de una instalación en Azpeitia. La UHF se usa para recibir la TDT y la FM para la radio. En la foto se ve el conjunto exterior montado en el mástil.</p>'
           + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div></div>'
@@ -488,6 +477,17 @@ for (const [code, area] of areaMap) {
           : 'Hemos trabajado en ' + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p>')
         + '<div class="actions">'
         + link('/trabajos/', 'Ver la galería', 'btn dark') + '</div></div></section>' : '')
+      + '<section class="wrap section local-extra split tdt-tuning" id="resintonizar-tdt"><div class="prose"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
+      + '<p class="intro">Si faltan canales tras los cambios de noviembre, prueba la búsqueda automática en el modo Antena del televisor o receptor. Si ves los canales HD y faltan los UHD, comprueba que tu equipo admite DVB-T2 y HEVC/H.265.</p>'
+      + '<p>' + (service === 'comunidades'
+        ? 'Si varios vecinos pierden los mismos canales después de la búsqueda, podemos comprobar la cabecera y medir en una toma afectada.'
+        : 'Hacemos la resintonización y ordenamos los canales a domicilio. Si tras la búsqueda sigue faltando señal, podemos medir en la toma.') + '</p>'
+      + (service === 'comunidades' ? '<p>También resintonizamos y ordenamos los canales del televisor o receptor a domicilio.</p>' : '')
+      + '<div class="actions">' + link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar y comprobar UHD', 'text-link')
+      + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></div>' + tdtTuningFigure + '</section>'
+      + (place.code === '20036' ? hondarribiaAdvice : '')
+      + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
+        + (extra[2] ? '<p>' + link(...extra[2], 'text-link') + '</p>' : '') + '</section>' : '')
       + '<section class="section surface" id="pueblos-cercanos"><div class="wrap"><p class="kicker">Zona de servicio</p><h2>'
       + (near ? 'Antenista en pueblos cercanos a ' : 'Cobertura desde ') + esc(place.name) + '</h2>'
       + (near ? '<p class="intro">Si estás en alguno de estos municipios, puedes enviar el aviso indicando dónde está la vivienda.</p><ul class="places nearby">' + near + '</ul>' : '')
