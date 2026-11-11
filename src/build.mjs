@@ -11,8 +11,8 @@ const owner = 'David Corregidor Gonzalo';
 const legalAddress = 'Calle La Fragua s/n, Madrid';
 const phone = '+34 641 49 05 36';
 const tel = 'tel:+34641490536';
-const wa = (place) => 'https://wa.me/34641490536?text=' + encodeURIComponent(
-  'Hola, necesito un antenista' + (place ? ' en ' + place : '') + '.'
+const wa = (place, request = 'necesito un antenista') => 'https://wa.me/34641490536?text=' + encodeURIComponent(
+  'Hola, ' + request + (place ? ' en ' + place : '') + '.'
 );
 const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -344,7 +344,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <h3>Bilbao y alrededores</h3>
   <p class="intro">Nuestro equipo sale de Bilbao y se desplaza a todos los municipios que figuran en esta zona de cobertura, tanto para visitas programadas como para averías urgentes. Busca tu pueblo o abre el listado de tu provincia. Al contactar, te confirmamos cuándo podemos llegar.</p>${workTowns(['48020', '48013', '48082', '48078', '48084', '48044', '48054', '48015'].map(code => towns.get(code)))}
   ${directory(true)}</section>
-  <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p>${diagnosticCards()}</div></section>
+  <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p><p>${link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar la TDT y comprobar los canales UHD', 'text-link')}</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
 
 for (const [code, area] of areaMap) {
@@ -419,6 +419,14 @@ for (const [code, area] of areaMap) {
         + '<figcaption>Trabajo real en Santurtzi. La fotografía muestra la antena TDT, su abrazadera y el cable que baja por el mástil.</figcaption></figure>'
         : '<figure class="service-photo service-photo--' + service + '">' + image(servicePhoto)
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
+      + '<section class="wrap section local-extra" id="resintonizar-tdt"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
+      + '<p class="intro">Si faltan canales tras los cambios de noviembre, prueba la búsqueda automática en el modo Antena del televisor o receptor. Si ves los canales HD y faltan los UHD, comprueba que tu equipo admite DVB-T2 y HEVC/H.265.</p>'
+      + '<p>' + (service === 'comunidades'
+        ? 'Si varios vecinos pierden los mismos canales después de la búsqueda, podemos comprobar la cabecera y medir en una toma afectada.'
+        : 'Hacemos la resintonización y ordenamos los canales a domicilio. Si tras la búsqueda sigue faltando señal, podemos medir en la toma.') + '</p>'
+      + (service === 'comunidades' ? '<p>También resintonizamos y ordenamos los canales del televisor o receptor a domicilio.</p>' : '')
+      + '<div class="actions">' + link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar y comprobar UHD', 'text-link')
+      + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></section>'
       + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
@@ -456,9 +464,24 @@ for (const [code, area] of areaMap) {
   }
 }
 
-add('/ayuda-antenas/', 'TV sin señal y TDT pixelada | Qué comprobar antes de llamar',
-  'Qué revisar cuando la televisión se queda sin señal, la TDT se pixela o varios vecinos pierden canales de la antena comunitaria.',
-  smallHero('Guía de diagnóstico', 'Qué comprobar si falla la TDT', 'Tres averías habituales y las comprobaciones que puedes hacer desde casa.', '', false)
+const officialTdt = 'https://television.digital.gob.es/atencion-a-la-ciudadania/notas-prensa/tdt/nueva-tdt-uhd--que-cambia-el-5-de-noviembre-de-2026';
+const tdtGuide = '<section class="section wrap prose guide"><h2 id="resintonizar">Cómo resintonizar la TDT</h2>'
+  + '<p>El 5 de noviembre de 2026 se redistribuyeron varios canales estatales. Si has perdido Clan, DKiss, A3Series, BeMad o Boing, o quieres buscar La Séptima HD, haz una búsqueda nueva. En esta primera fase se mantienen las emisiones habituales en HD y se incorporan emisiones UHD en DVB-T2.</p>'
+  + '<ol><li>Abre el menú del equipo al que está conectado el cable de antena. Si usas un receptor externo para ver la TDT, busca en ese receptor.</li>'
+  + '<li>En Ajustes, abre Canales, Emisión o Sintonización. Elige Antena, Terrestre o TDT y selecciona la búsqueda automática de canales digitales.</li>'
+  + '<li>Deja que termine, guarda la lista y revisa también los últimos puestos. Si faltan tus favoritos, vuelve a ordenarlos.</li></ol>'
+  + '<p>' + link(officialTdt, 'Consulta los cambios y las fechas en el portal oficial de Televisión Digital', 'text-link') + '.</p>'
+  + '<h2 id="tdt-uhd">Qué necesitas para ver la TDT en UHD</h2>'
+  + '<p>Busca DVB-T2 y HEVC/H.265 en la ficha de tu televisor o receptor. Para ver la imagen en 4K necesitas también una pantalla UHD. Si los canales HD funcionan pero faltan los UHD, comprueba primero el modelo exacto. Si el equipo es compatible, pregunta si otro vecino con un equipo compatible recibe esas emisiones.</p>'
+  + '<h2 id="servicio-resintonizacion">Servicio de resintonización de canales y comprobación UHD</h2>'
+  + '<p>Podemos sintonizar y ordenar los canales de tu televisor o receptor TDT y comprobar si admite las emisiones UHD. Si siguen faltando canales, medimos la señal en la toma. Cuando el fallo afecta a varias viviendas, podemos revisar la cabecera comunitaria con acceso autorizado por la comunidad.</p>'
+  + '<p>Al pedir visita, indica tu municipio, el modelo del televisor o receptor y los canales que faltan. Dinos también si ya has hecho la búsqueda y si el problema afecta a algún vecino.</p>'
+  + '<div class="actions">' + link(wa('', 'necesito resintonizar los canales TDT'), 'Pedir ayuda por WhatsApp', 'btn dark') + '</div></section>';
+
+add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista Fuentes',
+  'Cómo buscar los canales tras los cambios de noviembre de 2026, comprobar la compatibilidad UHD y pedir ayuda con la resintonización o la señal de antena.',
+  smallHero('Ayuda con la televisión', 'Resintonización de la TDT y canales UHD', 'Busca los canales que han cambiado, comprueba qué admite tu televisor y averigua cuándo conviene revisar la antena.', '', false)
+  + tdtGuide
   + '<section class="section wrap prose guide">' + Object.entries(diagnosticos).map(([key, [title, copy]]) =>
     '<section id="' + key + '"><h2>' + esc(title) + '</h2><p>' + esc(copy) + '</p>'
     + (key === 'pixelacion' ? '<ul>'
@@ -486,7 +509,7 @@ const serviceTrail = ['Servicios', '/servicios/'];
 add('/servicios/', 'Antenas, porteros y videoporteros | Antenista Fuentes',
   'Servicios de antenista para televisión terrestre y satélite, instalación de antenas, reparación de averías y mantenimiento de antenas colectivas.',
   smallHero('Viviendas y comunidades', 'Servicios de antenas, porteros y videoporteros', 'Reparación de porteros y renovación a videoportero. Instalación de antenas TDT y parabólicas, reparación de averías y revisión de la distribución de televisión.')
-  + '<section class="section wrap"><h2>Qué podemos revisar</h2>' + serviceCards() + '</section>' + callout(),
+  + '<section class="section wrap"><h2>Qué podemos revisar</h2>' + serviceCards() + '<p>' + link('/ayuda-antenas/#servicio-resintonizacion', 'Servicio de resintonización de TDT y comprobación UHD', 'text-link') + '</p></section>' + callout(),
   { trail: [homeTrail, serviceTrail] });
 
 const porteroPath = '/servicios/porteros-videoporteros/';
