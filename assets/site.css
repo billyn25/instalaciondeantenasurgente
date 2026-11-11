@@ -284,3 +284,7 @@ details{margin-top:.8rem}
 
 .home-antenna-cases .kicker { margin-top: 0 }
 .home-portero-cases-heading { margin-top: clamp(2rem, 4vw, 3.25rem) }
+
+@media (min-width: 901px) {
+  .cards.home-antenna-cases { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+}

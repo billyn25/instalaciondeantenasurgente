@@ -25,6 +25,7 @@ export const servicioProvincial = {
 };
 
 export const fichas = {
+  '48913': ['Comprobar la señal antes de amplificar', 'Si la TDT se corta, indica qué canales fallan y si ocurre en varias tomas. Comparar la señal de la antena con la de la toma ayuda a decidir si conviene orientar la antena, revisar el cable o amplificar.', 'instalacion'],
   '48090': ['TDT y satélite con una misma bajada de cable', 'Si quieres añadir una parabólica y ya tienes una antena terrestre, indica qué tomas quieres utilizar. Revisamos si el cable y los equipos de reparto permiten llevar ambas señales por la misma bajada.', 'satelite'],
   '48047': ['Sustituir una torreta de antena caída', 'Si la antena o su soporte han caído, indica si has perdido la televisión en todas las tomas. Podemos valorar el montaje del soporte nuevo, la recepción de TDT y si hace falta amplificar la señal antes de distribuirla.', 'instalacion'],
   '20029': ['Comprobar si el fallo está en la antena o en el reparto', 'Si tienes TDT y parabólica, dinos cuál de las dos señales falla y en cuántas tomas. Durante la visita se puede comparar lo que llega a la central con lo que sale hacia las habitaciones. Así se valora si conviene ajustar la recepción, revisar la amplificación o reparar una conexión del coaxial.', 'reparacion'],
