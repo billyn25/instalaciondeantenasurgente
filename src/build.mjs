@@ -41,6 +41,8 @@ const bilbaoCommunityUrl = '/bizkaia/bilbao/#instalaciones-comunitarias';
 const gernikaSecondPhoto = photosByName.get('gernika-lumo-dos-antenas');
 const gernikaPhoto = photosByName.get('gernika-lumo-antena-tdt');
 const gernikaCaseUrl = '/bizkaia/gernika-lumo/#trabajos-locales';
+const durangoPhoto = photosByName.get('durango-antena-caida-reparada');
+const durangoCaseUrl = '/bizkaia/durango/#trabajos-locales';
 const bermeoPhoto = photosByName.get('bermeo-antena-cable-vientos');
 const bermeoCaseUrl = '/bizkaia/bermeo/#trabajos-locales';
 const debaPhotos = photos.filter(([name]) => name.startsWith('deba-'));
@@ -191,6 +193,7 @@ function provinceCaseCards(code) {
   ['01','Llodio / Laudio · Porteros','Reparación urgente del grupo fónico Fermax PVT9696',llodioPhoto,llodioCaseUrl],
   ['48','Bilbao centro · Antenas','Canales que desaparecían a ciertas horas',bilbaoCasePhoto,bilbaoCaseUrl],
   ['48','Bilbao · Antenas comunitarias','Arbolantxa, 5 y Cortes, 6',bilbaoPhotos[1],bilbaoCommunityUrl],
+  ['48','Durango · Antenas','Reparación de una antena caída',durangoPhoto,durangoCaseUrl],
   ['48','Bermeo · Antenas','Aldatseta Kalea: cable, vientos y amplificador',bermeoPhoto,bermeoCaseUrl],
   ['48','Gernika-Lumo · Antenas','Fotografías del montaje exterior',gernikaSecondPhoto,gernikaCaseUrl],
   ['20','Deba · Antenas','Medición con Promax y equipos de distribución',photosByName.get('deba-medicion-promax'),'/gipuzkoa/deba/#trabajos-locales'],
@@ -318,6 +321,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       <h3>Instalaciones en Arbolantxa y Cortes</h3>
       <p>Trabajos reales en comunidades de Calle Arbolantxa, 5 y Calle Cortes, 6. Las fotografías del caso muestran cabeceras y equipos de distribución de televisión.</p>
       ${link(bilbaoCommunityUrl, 'Ver las instalaciones comunitarias de Bilbao', 'text-link')}</article>
+    <article class="card">${image(durangoPhoto)}<p class="kicker">Durango · Antenas</p>
+      <h3>Reparación de una antena caída</h3><p>Trabajo real en Durango. La fotografía muestra la antena caída sobre la cubierta antes de la reparación.</p>
+      ${link(durangoCaseUrl, 'Ver el trabajo en Durango', 'text-link')}</article>
     <article class="card">${image(bermeoPhoto)}<p class="kicker">Bermeo · Antena TDT</p>
       <h3>Antena TDT en Aldatseta Kalea</h3><p>Cambio de cable, vientos de sujeción y amplificador. Trabajo real en Bermeo, con desplazamiento urgente desde Bilbao. Intervención en la instalación de televisión terrestre y sus elementos de sujeción.</p>
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
@@ -408,6 +414,9 @@ for (const [code, area] of areaMap) {
           + '<p class="intro">Cuando varios vecinos pierden los mismos canales, podemos comparar la señal en la cabecera común y en distintas tomas. Así se distingue un problema del equipo compartido de una pérdida en un ramal del edificio.</p></div>'
           : place.code === '48046' ? 'Trabajo real de antena TDT en Gernika-Lumo</h2>'
             + '<div class="split local-extra"><div><h3>Antena y montaje sobre cubierta</h3><p>La fotografía principal de esta página corresponde al trabajo real en Gernika-Lumo: antena de televisión terrestre instalada sobre un mástil en cubierta, con su cableado y elementos de sujeción.</p><p>Al revisar un montaje de este tipo se comprueban tanto la recepción de señal como el estado del mástil, el cable y las conexiones.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/gernika-lumo-dos-antenas.webp">'+image(gernikaSecondPhoto)+'</a><figcaption>'+esc(gernikaSecondPhoto[1])+'</figcaption></figure></div>'
+          : place.code === '48027' ? 'Reparación de una antena caída en Durango</h2>'
+            + '<div class="split local-extra"><div><p class="intro">En esta intervención real en Durango se reparó una antena que había caído sobre la cubierta.</p><p>La fotografía documenta el estado de la antena y el mástil antes de la reparación.</p></div>'
+            + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/durango-antena-caida-reparada.webp">'+image(durangoPhoto)+'</a><figcaption>'+esc(durangoPhoto[1])+'</figcaption></figure></div>'
           : place.code === '48017' ? 'Trabajo real de antena TDT en Bermeo</h2>'
             + '<div class="split local-extra"><div><p class="kicker">Desplazamiento urgente desde Bilbao</p><h3>Cambio de cable, vientos de sujeción y amplificador</h3><p class="intro">En esta intervención real en Aldatseta Kalea, Bermeo, se trabajó sobre la instalación de antena de televisión terrestre, con cambio del cable, los vientos de sujeción del mástil y el amplificador.</p><p>La fotografía muestra la antena TDT sobre el mástil y los vientos de sujeción. El trabajo incluyó tanto elementos de la recepción y distribución de señal como de la sujeción de la instalación.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/bermeo-antena-cable-vientos.webp">'+image(bermeoPhoto)+'</a><figcaption>'+esc(bermeoPhoto[1])+'</figcaption></figure></div>'
           : place.code === '20029' ? 'Trabajos de antena en varias viviendas de Deba</h2>'
@@ -450,8 +459,8 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + '<p class="intro">Atendemos avisos a diario. Estos municipios son una muestra de los lugares donde hemos realizado trabajos. Una visita para localizar un fallo de señal también cuenta, igual que una reparación o una instalación.</p>'
   + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Fotografías de instalaciones y equipos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
-  + photoGrid(photos.filter(([name])=>!name.startsWith('gernika-lumo-') && !name.startsWith('bermeo-'))) + '<h3>Fotografías identificadas por municipio</h3>'+photoGrid([gernikaPhoto,gernikaSecondPhoto,bermeoPhoto])+'<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
-  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
+  + photoGrid(photos.filter(([name])=>!name.startsWith('gernika-lumo-') && !name.startsWith('bermeo-') && !name.startsWith('durango-'))) + '<h3>Fotografías identificadas por municipio</h3>'+photoGrid([durangoPhoto,gernikaPhoto,gernikaSecondPhoto,bermeoPhoto])+'<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
+  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
