@@ -387,6 +387,7 @@ for (const [code, area] of areaMap) {
       + ' <small>' + link(wa(item.name), 'Consultar visita') + '</small></li>').join('');
     const nearbyCenters = area.centers.filter((center) => center !== place)
       .sort((a, b) => distance(place, a) - distance(place, b)).slice(0, 3);
+    const diagnosisService = place.code === '48027' ? 'reparacion' : service;
     const durangoCase = '<section class="surface durango-case" id="trabajos-locales"><div class="wrap section split">'
       + '<div><p class="kicker">Trabajo real en Durango</p><h2>Reparación de una antena caída</h2>'
       + '<p class="intro">Reparamos una antena que había caído sobre la cubierta. La foto muestra la antena y el mástil antes de la intervención.</p>'
@@ -402,9 +403,9 @@ for (const [code, area] of areaMap) {
       + '</h2><p class="intro">' + esc(advice) + '</p><aside class="note"><h3>' + esc(serviceName)
       + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
       + '</p><p>' + guide + '</p></aside></div><figure class="service-photo service-photo--' + service + '">'
-      + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
+      + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>')
       + '<section class="section wrap prose local-extra"><h2>Cómo comprobamos la señal y valoramos la reparación</h2>'
-      + '<p>'+esc(guiasServicio[service].local)+'</p><p>'+link('/servicios/'+service+'/','Consultar las comprobaciones y opciones de este servicio','text-link')+'</p></section>')
+      + '<p>'+esc(guiasServicio[diagnosisService].local)+'</p><p>'+link('/servicios/'+diagnosisService+'/','Consultar las comprobaciones y opciones de este servicio','text-link')+'</p></section>'
       + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
