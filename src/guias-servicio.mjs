@@ -44,7 +44,7 @@ export const guiasServicio = {
       ['Servicio y presupuesto', 'El montaje se valora para la dirección y el equipo concretos. Si buscas una alternativa a la TDT, explícalo al consultar para estudiar la opción que corresponda. El presupuesto debe concretar qué equipos y trabajos incluye.']
     ],
     local: 'Para una parabólica necesitamos saber qué servicio quieres ver y qué receptor tienes. Revisamos la recepción, el soporte y el recorrido del cable. Si fallan TDT y satélite, comprobamos qué elementos comparten antes de valorar la sustitución de equipos.',
-    cases: [['/gipuzkoa/deba/#trabajos-locales','Deba: instalación con televisión terrestre y satélite']],
+    cases: [['/bizkaia/amorebieta-etxano/#trabajos-locales','Amorebieta-Etxano: instalación de parabólica para Astra 19,2° Este'], ['/gipuzkoa/deba/#trabajos-locales','Deba: instalación con televisión terrestre y satélite']],
     questions: [['¿Sirve cualquier receptor?', 'La elección depende del servicio que quieres recibir. Indica el modelo del equipo al pedir la valoración.'], ['¿Y si también falla la TDT?', 'Cuéntanos si las dos señales llegan por la misma instalación y qué tomas están afectadas, para orientar la revisión de los elementos compartidos.']]
   }
 };

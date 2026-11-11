@@ -49,6 +49,11 @@ const amurrioPhoto = ['amurrio-antena-caida', 'Antena de televisión caída sobr
 const balmasedaPhoto = ['balmaseda-tdt-parabolica', 'Antena TDT y parabólica montadas en un mástil en Balmaseda', 647, 1150];
 const gizaburuagaPhoto = ['gizaburuaga-antena-uhf-torreta', 'Antena UHF sobre la torreta nueva en Gizaburuaga', 647, 1150];
 const zierbenaPhoto = ['zierbena-televes-dipolo-activo', 'Antena TDT Televes con dipolo activo sobre un mástil en Zierbena', 810, 1080];
+const amorebietaCaseUrl = '/bizkaia/amorebieta-etxano/#trabajos-locales';
+const amorebietaPhotos = [
+  ['amorebieta-etxano-parabolica-astra', 'Parabólica Fte instalada en la cubierta de la vivienda en Amorebieta-Etxano', 840, 1120],
+  ['amorebieta-etxano-parabolica-lnb', 'Detalle de la parabólica, el LNB y el cableado exterior de la misma instalación', 840, 1120],
+];
 const sondikaCaseUrl = '/bizkaia/sondika/#trabajos-locales';
 const zierbenaCaseUrl = '/bizkaia/zierbena/#trabajos-locales';
 const balmasedaCaseUrl = '/bizkaia/balmaseda/#trabajos-locales';
@@ -222,6 +227,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['48','Amorebieta-Etxano · Antenas','Instalación nueva de parabólica para Astra 19,2° Este',null,amorebietaCaseUrl],
   ['48','Sondika · Antenas','Cambio de antena por pixelación en laSexta y Antena 3',null,sondikaCaseUrl],
   ['39','Los Corrales de Buelna · Antenas','Cambio de antenas para recuperar todos los canales',null,corralesCaseUrl],
   ['39','Torrelavega · Porteros','Reparación del grupo fónico Golmar Stadio',null,torrelavegaCaseUrl],
@@ -378,6 +384,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card"><p class="kicker">Amorebieta-Etxano</p><h3>Primera instalación de parabólica para Astra</h3>
+      <p>La vivienda no tenía parabólica. Instalamos una Fte en la cubierta y la orientamos a Astra 19,2° Este para recibir televisión por satélite.</p>
+      ${link(amorebietaCaseUrl, 'Ver las fotos de Amorebieta-Etxano', 'text-link')}</article>
     <article class="card"><p class="kicker">Sondika</p><h3>La imagen se pixelaba en laSexta y Antena 3</h3>
       <p>Sustituimos la antena antigua por una nueva.</p>
       ${link(sondikaCaseUrl, 'Ver el cambio de antena en Sondika', 'text-link')}</article>
@@ -496,7 +505,11 @@ for (const [code, area] of areaMap) {
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
       + porteroVisit(place.code, place.name)
       + (place.code !== '48027' && place.code !== '39087' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
-        + (place.code === '48904' ? 'Cambio de antena TDT en Sondika</h2>'
+        + (place.code === '48003' ? 'Instalación de una parabólica para Astra 19,2° Este en Amorebieta-Etxano</h2>'
+          + '<p class="intro">La vivienda no tenía parabólica. Instalamos una antena Fte en la cubierta y la orientamos a Astra 19,2° Este. Con el montaje, la vivienda quedó equipada para recibir televisión por satélite.</p>'
+          + photoGrid(amorebietaPhotos, 'photo-grid photo-grid--equipos photo-grid--mediciones')
+          + '<div class="actions">' + link('/servicios/satelite/', 'Ver el servicio de instalación de parabólicas', 'text-link') + '</div>'
+          : place.code === '48904' ? 'Cambio de antena TDT en Sondika</h2>'
           + '<p class="intro">La imagen se pixelaba en canales como laSexta y Antena 3. La instalación tenía una antena antigua, así que la sustituimos por una nueva.</p>'
           : place.code === '48913' ? 'Antena TDT Televes con dipolo activo en Zierbena</h2>'
           + '<div class="split local-extra"><div><p class="intro">Montamos una antena Televes con dipolo activo para reforzar la señal de TDT. El dipolo activo amplifica la señal en la propia antena, antes de que recorra el cable coaxial.</p>'
