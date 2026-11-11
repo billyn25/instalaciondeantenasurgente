@@ -32,7 +32,8 @@ const names = {
   '01043': ['Oyón-Oion', 'oyon-oion', 'oyon oion'],
   '09903': ['Villarcayo', 'villarcayo', 'merindad de castilla la vieja'],
 };
-const photos = read('data/fotos.json').filter(([name]) => name !== 'antena-en-cubierta' && name !== 'antenas-cielo-azul');
+const photoData = read('data/fotos.json');
+const photos = photoData.filter(([name]) => name !== 'antena-en-cubierta' && name !== 'antenas-cielo-azul' && name !== 'antena-tdt-y-parabolica');
 const photosByName = new Map(photos.map((photo) => [photo[0], photo]));
 const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map((key) => photosByName.get(key));
 const bilbaoCasePhoto = photosByName.get('bilbao-centro-antena-tdt');
@@ -45,6 +46,12 @@ const durangoPhoto = photosByName.get('durango-antena-caida-reparada');
 const azpeitiaPhoto = ['azpeitia-antenas-uhf-fm', 'Antenas UHF y FM montadas en un mástil en Azpeitia', 676, 1200];
 const azpeitiaCaseUrl = '/gipuzkoa/azpeitia/#trabajos-locales';
 const amurrioPhoto = ['amurrio-antena-caida', 'Antena de televisión caída sobre un tejado de Amurrio antes de la reparación', 675, 1200];
+const corralesCaseUrl = '/cantabria/los-corrales-de-buelna/#trabajos-locales';
+const corralesPhotos = [
+  ['corrales-buelna-antenas-cubierta', 'Dos antenas de televisión terrestre en una cubierta de Los Corrales de Buelna', 647, 1150],
+  ['corrales-buelna-trabajo-antenas', 'Trabajo sobre un mástil con dos antenas en Los Corrales de Buelna', 850, 1133],
+  photoData.find(([name]) => name === 'antena-tdt-y-parabolica'),
+];
 const amurrioCaseUrl = '/alava/amurrio/#trabajos-locales';
 const durangoCaseUrl = '/bizkaia/durango/#trabajos-locales';
 const bermeoPhoto = photosByName.get('bermeo-antena-cable-vientos');
@@ -54,10 +61,10 @@ const santurtziCaseUrl = '/bizkaia/santurtzi/#trabajos-locales';
 const debaPhotos = photos.filter(([name]) => name.startsWith('deba-'));
 const galleryPhoto = photosByName.get('tdt-en-tejado');
 const servicePhotos = {
-  instalacion: ['antena-tdt-y-parabolica', 'tdt-en-tejado', 'mastil-varias-antenas'],
+  instalacion: ['antenas-mastil-cubierta-teja', 'tdt-en-tejado', 'mastil-varias-antenas'],
   reparacion: ['mastil-varias-antenas', 'amplificador-de-senal'],
   comunidades: ['medidor-y-cabecera', 'amplificador-de-senal'],
-  satelite: ['antena-tdt-y-parabolica'],
+  satelite: ['mastil-varias-antenas'],
 };
 const areaMap = new Map(provincias.map(([code, name, key, intro]) =>
   [code, { name, key, intro, url: '/' + key + '/', places: [] }]));
@@ -209,6 +216,7 @@ function porteroVisit(code, name) {
 }
 function provinceCaseCards(code) {
  const cases = [
+  ['39','Los Corrales de Buelna · Antenas','Trabajos de antena en cubierta',null,corralesCaseUrl],
   ['39','Torrelavega · Porteros','Reparación del grupo fónico Golmar Stadio',null,torrelavegaCaseUrl],
   ['01','Amurrio · Antenas','Reparación urgente de una antena caída',null,amurrioCaseUrl],
   ['01','Llodio / Laudio · Porteros','Reparación urgente del grupo fónico Fermax PVT9696',llodioPhoto,llodioCaseUrl],
@@ -449,7 +457,10 @@ for (const [code, area] of areaMap) {
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
       + porteroVisit(place.code, place.name)
       + (place.code !== '48027' && place.code !== '39087' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
-        + (place.code === '20018' ? 'Cambio de antenas UHF y FM en Azpeitia</h2>'
+        + (place.code === '39025' ? 'Trabajos de antena en Los Corrales de Buelna</h2>'
+          + '<p class="intro">Las fotografías muestran antenas de televisión terrestre montadas en cubierta, una intervención sobre un mástil y una instalación con antena TDT y parabólica.</p>'
+          + photoGrid(corralesPhotos)
+          : place.code === '20018' ? 'Cambio de antenas UHF y FM en Azpeitia</h2>'
           + '<div class="split local-extra"><div><p class="intro">Sustituimos las antenas UHF y FM de una instalación en Azpeitia. La UHF se usa para recibir la TDT y la FM para la radio. En la foto se ve el conjunto exterior montado en el mástil.</p>'
           + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div></div>'
           + '<figure class="service-photo service-photo--satelite">' + image(azpeitiaPhoto) + '<figcaption>' + esc(azpeitiaPhoto[1]) + '</figcaption></figure></div>'
@@ -539,7 +550,7 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Fotografías de instalaciones y equipos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
   + photoGrid(photos.filter(([name])=>!name.startsWith('gernika-lumo-') && !name.startsWith('bermeo-') && !name.startsWith('durango-'))) + '<h3>Fotografías identificadas por municipio</h3>'+photoGrid([durangoPhoto,gernikaPhoto,gernikaSecondPhoto,bermeoPhoto])+'<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
-  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li><li>'+link(santurtziCaseUrl,'Santurtzi: antena TDT en mástil exterior','text-link')+'</li><li>'+link(amurrioCaseUrl,'Amurrio: reparación urgente de una antena caída','text-link')+'</li><li>'+link(azpeitiaCaseUrl,'Azpeitia: cambio de antenas UHF y FM','text-link')+'</li><li>'+link(torrelavegaCaseUrl,'Torrelavega: reparación del grupo fónico Golmar Stadio','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
+  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li><li>'+link(santurtziCaseUrl,'Santurtzi: antena TDT en mástil exterior','text-link')+'</li><li>'+link(amurrioCaseUrl,'Amurrio: reparación urgente de una antena caída','text-link')+'</li><li>'+link(azpeitiaCaseUrl,'Azpeitia: cambio de antenas UHF y FM','text-link')+'</li><li>'+link(corralesCaseUrl,'Los Corrales de Buelna: trabajos de antena en cubierta','text-link')+'</li><li>'+link(torrelavegaCaseUrl,'Torrelavega: reparación del grupo fónico Golmar Stadio','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];

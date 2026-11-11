@@ -37,7 +37,7 @@ export const guiasServicio = {
   },
   satelite: {
     heading: 'Valorar la recepción por satélite en tu instalación',
-    photo: 'antena-tdt-y-parabolica',
+    photo: 'mastil-varias-antenas',
     blocks: [
       ['Instalación nueva o fallo existente', 'Indica qué servicio quieres recibir, qué receptor utilizas y si ya existe una parabólica. Si es una avería, concreta si han desaparecido todos los canales o solo algunos.'],
       ['Parabólica y recorrido de señal', 'Revisamos orientación, soporte, conexiones y cableado, además del equipo de recepción. La comprobación permite valorar dónde intervenir y qué elementos de la instalación existente se pueden aprovechar.'],
