@@ -216,7 +216,7 @@ function porteroVisit(code, name) {
 }
 function provinceCaseCards(code) {
  const cases = [
-  ['39','Los Corrales de Buelna · Antenas','Trabajos de antena en cubierta',null,corralesCaseUrl],
+  ['39','Los Corrales de Buelna · Antenas','Cambio de antenas para recuperar todos los canales',null,corralesCaseUrl],
   ['39','Torrelavega · Porteros','Reparación del grupo fónico Golmar Stadio',null,torrelavegaCaseUrl],
   ['01','Amurrio · Antenas','Reparación urgente de una antena caída',null,amurrioCaseUrl],
   ['01','Llodio / Laudio · Porteros','Reparación urgente del grupo fónico Fermax PVT9696',llodioPhoto,llodioCaseUrl],
@@ -457,8 +457,8 @@ for (const [code, area] of areaMap) {
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
       + porteroVisit(place.code, place.name)
       + (place.code !== '48027' && place.code !== '39087' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
-        + (place.code === '39025' ? 'Trabajos de antena en Los Corrales de Buelna</h2>'
-          + '<p class="intro">Las fotografías muestran antenas de televisión terrestre montadas en cubierta, una intervención sobre un mástil y una instalación con antena TDT y parabólica.</p>'
+        + (place.code === '39025' ? 'Cambio de antenas TDT en Los Corrales de Buelna</h2>'
+          + '<p class="intro">Sustituimos las antenas de televisión terrestre y montamos dos antenas TDT en cubierta para captar todos los canales.</p>'
           + photoGrid(corralesPhotos)
           : place.code === '20018' ? 'Cambio de antenas UHF y FM en Azpeitia</h2>'
           + '<div class="split local-extra"><div><p class="intro">Sustituimos las antenas UHF y FM de una instalación en Azpeitia. La UHF se usa para recibir la TDT y la FM para la radio. En la foto se ve el conjunto exterior montado en el mástil.</p>'
@@ -550,7 +550,7 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Fotografías de instalaciones y equipos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
   + photoGrid(photos.filter(([name])=>!name.startsWith('gernika-lumo-') && !name.startsWith('bermeo-') && !name.startsWith('durango-'))) + '<h3>Fotografías identificadas por municipio</h3>'+photoGrid([durangoPhoto,gernikaPhoto,gernikaSecondPhoto,bermeoPhoto])+'<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
-  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li><li>'+link(santurtziCaseUrl,'Santurtzi: antena TDT en mástil exterior','text-link')+'</li><li>'+link(amurrioCaseUrl,'Amurrio: reparación urgente de una antena caída','text-link')+'</li><li>'+link(azpeitiaCaseUrl,'Azpeitia: cambio de antenas UHF y FM','text-link')+'</li><li>'+link(corralesCaseUrl,'Los Corrales de Buelna: trabajos de antena en cubierta','text-link')+'</li><li>'+link(torrelavegaCaseUrl,'Torrelavega: reparación del grupo fónico Golmar Stadio','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
+  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li><li>'+link(santurtziCaseUrl,'Santurtzi: antena TDT en mástil exterior','text-link')+'</li><li>'+link(amurrioCaseUrl,'Amurrio: reparación urgente de una antena caída','text-link')+'</li><li>'+link(azpeitiaCaseUrl,'Azpeitia: cambio de antenas UHF y FM','text-link')+'</li><li>'+link(corralesCaseUrl,'Los Corrales de Buelna: cambio de antenas TDT','text-link')+'</li><li>'+link(torrelavegaCaseUrl,'Torrelavega: reparación del grupo fónico Golmar Stadio','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
