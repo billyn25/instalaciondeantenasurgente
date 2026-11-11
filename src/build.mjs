@@ -419,14 +419,14 @@ for (const [code, area] of areaMap) {
         + '<figcaption>Trabajo real en Santurtzi. La fotografía muestra la antena TDT, su abrazadera y el cable que baja por el mástil.</figcaption></figure>'
         : '<figure class="service-photo service-photo--' + service + '">' + image(servicePhoto)
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
-      + '<section class="wrap section local-extra" id="resintonizar-tdt"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
+      + '<section class="wrap section local-extra" id="resintonizar-tdt"><div class="prose"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
       + '<p class="intro">Si faltan canales tras los cambios de noviembre, prueba la búsqueda automática en el modo Antena del televisor o receptor. Si ves los canales HD y faltan los UHD, comprueba que tu equipo admite DVB-T2 y HEVC/H.265.</p>'
       + '<p>' + (service === 'comunidades'
         ? 'Si varios vecinos pierden los mismos canales después de la búsqueda, podemos comprobar la cabecera y medir en una toma afectada.'
         : 'Hacemos la resintonización y ordenamos los canales a domicilio. Si tras la búsqueda sigue faltando señal, podemos medir en la toma.') + '</p>'
       + (service === 'comunidades' ? '<p>También resintonizamos y ordenamos los canales del televisor o receptor a domicilio.</p>' : '')
       + '<div class="actions">' + link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar y comprobar UHD', 'text-link')
-      + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></section>'
+      + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></div></section>'
       + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
@@ -465,7 +465,7 @@ for (const [code, area] of areaMap) {
 }
 
 const officialTdt = 'https://television.digital.gob.es/atencion-a-la-ciudadania/notas-prensa/tdt/nueva-tdt-uhd--que-cambia-el-5-de-noviembre-de-2026';
-const tdtGuide = '<section class="section wrap prose guide"><h2 id="resintonizar">Cómo resintonizar la TDT</h2>'
+const tdtGuide = '<section class="section wrap"><div class="prose guide"><h2 id="resintonizar">Cómo resintonizar la TDT</h2>'
   + '<p>El 5 de noviembre de 2026 se redistribuyeron varios canales estatales. Si has perdido Clan, DKiss, A3Series, BeMad o Boing, o quieres buscar La Séptima HD, haz una búsqueda nueva. En esta primera fase se mantienen las emisiones habituales en HD y se incorporan emisiones UHD en DVB-T2.</p>'
   + '<ol><li>Abre el menú del equipo al que está conectado el cable de antena. Si usas un receptor externo para ver la TDT, busca en ese receptor.</li>'
   + '<li>En Ajustes, abre Canales, Emisión o Sintonización. Elige Antena, Terrestre o TDT y selecciona la búsqueda automática de canales digitales.</li>'
@@ -476,13 +476,13 @@ const tdtGuide = '<section class="section wrap prose guide"><h2 id="resintonizar
   + '<h2 id="servicio-resintonizacion">Servicio de resintonización de canales y comprobación UHD</h2>'
   + '<p>Podemos sintonizar y ordenar los canales de tu televisor o receptor TDT y comprobar si admite las emisiones UHD. Si siguen faltando canales, medimos la señal en la toma. Cuando el fallo afecta a varias viviendas, podemos revisar la cabecera comunitaria con acceso autorizado por la comunidad.</p>'
   + '<p>Al pedir visita, indica tu municipio, el modelo del televisor o receptor y los canales que faltan. Dinos también si ya has hecho la búsqueda y si el problema afecta a algún vecino.</p>'
-  + '<div class="actions">' + link(wa('', 'necesito resintonizar los canales TDT'), 'Pedir ayuda por WhatsApp', 'btn dark') + '</div></section>';
+  + '<div class="actions">' + link(wa('', 'necesito resintonizar los canales TDT'), 'Pedir ayuda por WhatsApp', 'btn dark') + '</div></div></section>';
 
 add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista Fuentes',
   'Cómo buscar los canales tras los cambios de noviembre de 2026, comprobar la compatibilidad UHD y pedir ayuda con la resintonización o la señal de antena.',
   smallHero('Ayuda con la televisión', 'Resintonización de la TDT y canales UHD', 'Busca los canales que han cambiado, comprueba qué admite tu televisor y averigua cuándo conviene revisar la antena.', '', false)
   + tdtGuide
-  + '<section class="section wrap prose guide">' + Object.entries(diagnosticos).map(([key, [title, copy]]) =>
+  + '<div class="section wrap"><div class="prose guide">' + Object.entries(diagnosticos).map(([key, [title, copy]]) =>
     '<section id="' + key + '"><h2>' + esc(title) + '</h2><p>' + esc(copy) + '</p>'
     + (key === 'pixelacion' ? '<ul>'
       + '<li><strong>Cableado y conectores.</strong> Un coaxial deteriorado, un conector flojo o un repartidor con pérdidas pueden reducir la señal en una o varias tomas.</li>'
@@ -491,7 +491,7 @@ add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista 
       + '<li><strong>Emisiones en el mismo canal.</strong> Con ciertas condiciones de propagación puede llegar una emisión de otro repetidor en la misma frecuencia y dificultar la recepción de algunos canales.</li>'
       + '</ul><p>' + link(bilbaoCaseUrl, 'Ver el caso real de canales intermitentes en Bilbao centro') + '</p>' : '')
     + '</section>').join('')
-  + '</section>' + callout(),
+  + '</div></div>' + callout(),
   { trail: [homeTrail, ['Ayuda con la TDT', '/ayuda-antenas/']] });
 
 add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
