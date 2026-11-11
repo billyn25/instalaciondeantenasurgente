@@ -32,7 +32,7 @@ const names = {
   '01043': ['Oyón-Oion', 'oyon-oion', 'oyon oion'],
   '09903': ['Villarcayo', 'villarcayo', 'merindad de castilla la vieja'],
 };
-const photos = read('data/fotos.json').filter(([name]) => name !== 'antena-en-cubierta');
+const photos = read('data/fotos.json').filter(([name]) => name !== 'antena-en-cubierta' && name !== 'antenas-cielo-azul');
 const photosByName = new Map(photos.map((photo) => [photo[0], photo]));
 const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map((key) => photosByName.get(key));
 const bilbaoCasePhoto = photosByName.get('bilbao-centro-antena-tdt');
@@ -42,6 +42,8 @@ const gernikaSecondPhoto = photosByName.get('gernika-lumo-dos-antenas');
 const gernikaPhoto = photosByName.get('gernika-lumo-antena-tdt');
 const gernikaCaseUrl = '/bizkaia/gernika-lumo/#trabajos-locales';
 const durangoPhoto = photosByName.get('durango-antena-caida-reparada');
+const azpeitiaPhoto = ['azpeitia-antenas-uhf-fm', 'Antenas UHF y FM montadas en un mástil en Azpeitia', 676, 1200];
+const azpeitiaCaseUrl = '/gipuzkoa/azpeitia/#trabajos-locales';
 const amurrioPhoto = ['amurrio-antena-caida', 'Antena de televisión caída sobre un tejado de Amurrio antes de la reparación', 675, 1200];
 const amurrioCaseUrl = '/alava/amurrio/#trabajos-locales';
 const durangoCaseUrl = '/bizkaia/durango/#trabajos-locales';
@@ -52,7 +54,7 @@ const santurtziCaseUrl = '/bizkaia/santurtzi/#trabajos-locales';
 const debaPhotos = photos.filter(([name]) => name.startsWith('deba-'));
 const galleryPhoto = photosByName.get('tdt-en-tejado');
 const servicePhotos = {
-  instalacion: ['antena-tdt-y-parabolica', 'tdt-en-tejado', 'antenas-cielo-azul'],
+  instalacion: ['antena-tdt-y-parabolica', 'tdt-en-tejado', 'mastil-varias-antenas'],
   reparacion: ['mastil-varias-antenas', 'amplificador-de-senal'],
   comunidades: ['medidor-y-cabecera', 'amplificador-de-senal'],
   satelite: ['antena-tdt-y-parabolica'],
@@ -216,6 +218,7 @@ function provinceCaseCards(code) {
   ['48','Durango · Antenas','Reparación de una antena caída',durangoPhoto,durangoCaseUrl],
   ['48','Bermeo · Antenas','Aldatseta Kalea: cable, vientos y amplificador',bermeoPhoto,bermeoCaseUrl],
   ['48','Gernika-Lumo · Antenas','Fotografías del montaje exterior',gernikaSecondPhoto,gernikaCaseUrl],
+  ['20','Azpeitia · Antenas','Cambio de antenas UHF y FM',null,azpeitiaCaseUrl],
   ['20','Deba · Antenas','Medición con Promax y equipos de distribución',photosByName.get('deba-medicion-promax'),'/gipuzkoa/deba/#trabajos-locales'],
   ['20','Hondarribia · Porteros','Grupos fónicos y medición para valorar el cambio a videoportero',porteroVisits['20036'][1],'/gipuzkoa/hondarribia/#visita-portero-20036'],
   ['20','Hernani · Porteros','Reparaciones de audio y toma de medidas',porteroVisits['20040'][0],'/gipuzkoa/hernani/#visita-portero-20040']
@@ -457,7 +460,11 @@ for (const [code, area] of areaMap) {
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
         + (extra[2] ? '<p>' + link(...extra[2], 'text-link') + '</p>' : '') + '</section>' : '')
       + (place.code !== '48027' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
-        + (place.code === '01002' ? 'Reparación urgente de una antena caída en Amurrio</h2>'
+        + (place.code === '20018' ? 'Cambio de antenas UHF y FM en Azpeitia</h2>'
+          + '<div class="split local-extra"><div><p class="intro">Sustituimos las antenas UHF y FM de una instalación en Azpeitia. La UHF se usa para recibir la TDT y la FM para la radio. En la foto se ve el conjunto exterior montado en el mástil.</p>'
+          + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div></div>'
+          + '<figure class="service-photo service-photo--satelite">' + image(azpeitiaPhoto) + '<figcaption>' + esc(azpeitiaPhoto[1]) + '</figcaption></figure></div>'
+          : place.code === '01002' ? 'Reparación urgente de una antena caída en Amurrio</h2>'
           + '<div class="split local-extra"><div><p class="kicker">Urgencias 24 horas</p><p class="intro">Atendimos un aviso en Amurrio por una antena caída que había dejado la vivienda sin televisión. Reparamos la instalación de antena. La foto muestra cómo encontramos el mástil y la antena sobre las tejas.</p>'
           + '<div class="actions">' + link(wa(place.name, 'tengo una avería urgente de antena'), 'Consultar una urgencia por WhatsApp', 'btn dark') + '</div></div>'
           + '<figure class="service-photo service-photo--satelite">' + image(amurrioPhoto) + '<figcaption>' + esc(amurrioPhoto[1]) + '</figcaption></figure></div>'
@@ -532,7 +539,7 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + workTowns() + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div><h2>Fotografías de instalaciones y equipos</h2>'
   + '<p class="intro">Las fotos muestran una selección de intervenciones y equipos de Antenista Fuentes.</p>'
   + photoGrid(photos.filter(([name])=>!name.startsWith('gernika-lumo-') && !name.startsWith('bermeo-') && !name.startsWith('durango-'))) + '<h3>Fotografías identificadas por municipio</h3>'+photoGrid([durangoPhoto,gernikaPhoto,gernikaSecondPhoto,bermeoPhoto])+'<ul><li>' + link(bilbaoCaseUrl, 'Caso real en Bilbao centro: canales que se cortaban a ciertas horas', 'text-link')
-  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li><li>'+link(santurtziCaseUrl,'Santurtzi: antena TDT en mástil exterior','text-link')+'</li><li>'+link(amurrioCaseUrl,'Amurrio: reparación urgente de una antena caída','text-link')+'</li><li>'+link(torrelavegaCaseUrl,'Torrelavega: reparación del grupo fónico Golmar Stadio','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
+  + '</li><li>' + link(bilbaoCommunityUrl, 'Instalaciones comunitarias en Arbolantxa y Cortes, Bilbao', 'text-link') + '</li><li>'+link(bermeoCaseUrl,'Bermeo: cambio de cable, vientos y amplificador con desplazamiento urgente desde Bilbao','text-link')+'</li><li>'+link(gernikaCaseUrl,'Gernika-Lumo: fotografía de un trabajo real de antena TDT','text-link')+'</li><li>'+link(durangoCaseUrl,'Durango: reparación de una antena caída','text-link')+'</li><li>'+link(santurtziCaseUrl,'Santurtzi: antena TDT en mástil exterior','text-link')+'</li><li>'+link(amurrioCaseUrl,'Amurrio: reparación urgente de una antena caída','text-link')+'</li><li>'+link(azpeitiaCaseUrl,'Azpeitia: cambio de antenas UHF y FM','text-link')+'</li><li>'+link(torrelavegaCaseUrl,'Torrelavega: reparación del grupo fónico Golmar Stadio','text-link')+'</li></ul></section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
