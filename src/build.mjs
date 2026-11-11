@@ -49,6 +49,7 @@ const amurrioPhoto = ['amurrio-antena-caida', 'Antena de televisión caída sobr
 const balmasedaPhoto = ['balmaseda-tdt-parabolica', 'Antena TDT y parabólica montadas en un mástil en Balmaseda', 647, 1150];
 const gizaburuagaPhoto = ['gizaburuaga-antena-uhf-torreta', 'Antena UHF sobre la torreta nueva en Gizaburuaga', 647, 1150];
 const zierbenaPhoto = ['zierbena-televes-dipolo-activo', 'Antena TDT Televes con dipolo activo sobre un mástil en Zierbena', 810, 1080];
+const sondikaCaseUrl = '/bizkaia/sondika/#trabajos-locales';
 const zierbenaCaseUrl = '/bizkaia/zierbena/#trabajos-locales';
 const balmasedaCaseUrl = '/bizkaia/balmaseda/#trabajos-locales';
 const gizaburuagaCaseUrl = '/bizkaia/gizaburuaga/#trabajos-locales';
@@ -221,6 +222,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['48','Sondika · Antenas','Cambio de antena por pixelación en laSexta y Antena 3',null,sondikaCaseUrl],
   ['39','Los Corrales de Buelna · Antenas','Cambio de antenas para recuperar todos los canales',null,corralesCaseUrl],
   ['39','Torrelavega · Porteros','Reparación del grupo fónico Golmar Stadio',null,torrelavegaCaseUrl],
   ['01','Amurrio · Antenas','Reparación urgente de una antena caída',null,amurrioCaseUrl],
@@ -376,6 +378,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card"><p class="kicker">Sondika</p><h3>La imagen se pixelaba en laSexta y Antena 3</h3>
+      <p>Sustituimos la antena antigua por una nueva.</p>
+      ${link(sondikaCaseUrl, 'Ver el cambio de antena en Sondika', 'text-link')}</article>
     <article class="card"><p class="kicker">Zierbena</p><h3>Antena Televes con dipolo activo</h3>
       <p>Montamos una antena con amplificación en el dipolo para reforzar la señal de TDT.</p>
       ${link(zierbenaCaseUrl, 'Ver la instalación de Zierbena', 'text-link')}</article>
@@ -461,7 +466,6 @@ for (const [code, area] of areaMap) {
     const near = place.nearby.map((item) => '<li id="pueblo-' + item.code + '"><strong>Antenista en ' + esc(item.name)
       + '</strong>' + (item.capital ? '<small class="nucleus"> · ' + esc(item.capital) + '</small>' : '')
       + ' <small>' + link(wa(item.name), 'Consultar visita') + '</small>'
-      + (item.code === '48904' ? '<p><strong>Aviso de antena en Sondika.</strong> La antena era antigua y la imagen se pixelaba en canales como laSexta y Antena 3. Sustituimos la antena antigua por una nueva.</p>' : '')
       + '</li>').join('');
     const nearbyCenters = area.centers.filter((center) => center !== place)
       .sort((a, b) => distance(place, a) - distance(place, b)).slice(0, 3);
@@ -492,7 +496,9 @@ for (const [code, area] of areaMap) {
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
       + porteroVisit(place.code, place.name)
       + (place.code !== '48027' && place.code !== '39087' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
-        + (place.code === '48913' ? 'Antena TDT Televes con dipolo activo en Zierbena</h2>'
+        + (place.code === '48904' ? 'Cambio de antena TDT en Sondika</h2>'
+          + '<p class="intro">La imagen se pixelaba en canales como laSexta y Antena 3. La instalación tenía una antena antigua, así que la sustituimos por una nueva.</p>'
+          : place.code === '48913' ? 'Antena TDT Televes con dipolo activo en Zierbena</h2>'
           + '<div class="split local-extra"><div><p class="intro">Montamos una antena Televes con dipolo activo para reforzar la señal de TDT. El dipolo activo amplifica la señal en la propia antena, antes de que recorra el cable coaxial.</p>'
           + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div></div>'
           + '<figure class="service-photo service-photo--satelite">' + image(zierbenaPhoto) + '<figcaption>' + esc(zierbenaPhoto[1]) + '</figcaption></figure></div>'
@@ -549,6 +555,7 @@ for (const [code, area] of areaMap) {
       + '<section class="section surface" id="pueblos-cercanos"><div class="wrap"><p class="kicker">Zona de servicio</p><h2>'
       + (near ? 'Antenista en pueblos cercanos a ' : 'Cobertura desde ') + esc(place.name) + '</h2>'
       + (near ? '<p class="intro">Si estás en alguno de estos municipios, puedes enviar el aviso indicando dónde está la vivienda.</p><ul class="places nearby">' + near + '</ul>' : '')
+      + (place.code === '48020' ? '<p id="pueblo-48904">' + link(sondikaCaseUrl, 'Ver el cambio de antena en Sondika', 'text-link') + '</p>' : '')
       + '<h3>Otras páginas de la zona</h3><ul class="places">' + nearbyCenters.map((item) =>
         '<li>' + link(item.url, 'Antenista en ' + item.name) + '</li>').join('') + '</ul>'
       + link(area.url, 'Ver todos los municipios de ' + area.name, 'text-link') + '</div></section>'

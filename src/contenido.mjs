@@ -9,6 +9,7 @@ export const provincias = [
 ];
 
 export const trabajos = [
+  '48904',
   '48082', '48027', '39087', '01002', '20018', '39025', '48090', '48047',
   '48046', '48096', '01036', '09194', '09018', '20067', '20040', '20069', '48017',
   '48902', '48913', '24021', '39097', '09410', '48020', '20029',
@@ -25,6 +26,7 @@ export const servicioProvincial = {
 };
 
 export const fichas = {
+  '48904': ['Qué comprobar si solo se pixelan algunos canales', 'Indica qué canales fallan y si los cortes se repiten en más de un televisor. Comparar la señal en la antena y en las tomas ayuda a decidir si el problema está en la captación, en el cable o en el reparto.', 'reparacion'],
   '48913': ['Comprobar la señal antes de amplificar', 'Si la TDT se corta, indica qué canales fallan y si ocurre en varias tomas. Comparar la señal de la antena con la de la toma ayuda a decidir si conviene orientar la antena, revisar el cable o amplificar.', 'instalacion'],
   '48090': ['TDT y satélite con una misma bajada de cable', 'Si quieres añadir una parabólica y ya tienes una antena terrestre, indica qué tomas quieres utilizar. Revisamos si el cable y los equipos de reparto permiten llevar ambas señales por la misma bajada.', 'satelite'],
   '48047': ['Sustituir una torreta de antena caída', 'Si la antena o su soporte han caído, indica si has perdido la televisión en todas las tomas. Podemos valorar el montaje del soporte nuevo, la recepción de TDT y si hace falta amplificar la señal antes de distribuirla.', 'instalacion'],
