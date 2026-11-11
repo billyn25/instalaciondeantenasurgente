@@ -208,3 +208,17 @@ details{margin-top:.8rem}
 .service-questions{padding-top:1rem}.service-questions details{margin-top:.8rem;padding:1.1rem 1.25rem;background:#fff;border:1px solid var(--line);border-radius:10px;max-width:850px}.service-questions summary{cursor:pointer;font-weight:750;line-height:1.4}.service-questions details p{margin-top:.9rem;max-width:65ch;color:var(--muted)}
 
 .province-work-towns{margin-top:1.75rem}
+
+/* Separación entre la galería y el texto de los trabajos de porteros. */
+.photo-grid--mediciones + p {
+  margin-block: 1.25rem 1.75rem;
+}
+.photo-grid--mediciones + p .btn {
+  line-height: 1.35;
+}
+.photo-grid--mediciones + p + .prose > h3 {
+  line-height: 1.25;
+}
+.photo-grid--mediciones + p + .prose > p + h3 {
+  margin-top: 1.75rem;
+}
