@@ -387,21 +387,28 @@ for (const [code, area] of areaMap) {
       + ' <small>' + link(wa(item.name), 'Consultar visita') + '</small></li>').join('');
     const nearbyCenters = area.centers.filter((center) => center !== place)
       .sort((a, b) => distance(place, a) - distance(place, b)).slice(0, 3);
+    const durangoCase = '<section class="surface durango-case" id="trabajos-locales"><div class="wrap section split">'
+      + '<div><p class="kicker">Trabajo real en Durango</p><h2>Reparación de una antena caída</h2>'
+      + '<p class="intro">Reparamos una antena que había caído sobre la cubierta. La foto muestra la antena y el mástil antes de la intervención.</p>'
+      + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación', 'btn dark') + '</div></div>'
+      + '<figure class="service-photo durango-photo"><a href="/assets/trabajos/durango-antena-caida-reparada.webp">'
+      + image(durangoPhoto) + '</a><figcaption>' + esc(durangoPhoto[1]) + '</figcaption></figure></div></section>';
     add(place.url, heading + ' | ' + localService,
       heading + '. ' + topic.replace(/[?¿]/g, '') + '. Visitas para viviendas y comunidades.',
       smallHero(area.name + ' · Servicio de antenista', heading,
         'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.', place.name)
-      + '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
+      + (place.code === '48027' ? durangoCase
+        : '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
       + '</h2><p class="intro">' + esc(advice) + '</p><aside class="note"><h3>' + esc(serviceName)
       + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
       + '</p><p>' + guide + '</p></aside></div><figure class="service-photo service-photo--' + service + '">'
       + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
       + '<section class="section wrap prose local-extra"><h2>Cómo comprobamos la señal y valoramos la reparación</h2>'
-      + '<p>'+esc(guiasServicio[service].local)+'</p><p>'+link('/servicios/'+service+'/','Consultar las comprobaciones y opciones de este servicio','text-link')+'</p></section>'
+      + '<p>'+esc(guiasServicio[service].local)+'</p><p>'+link('/servicios/'+service+'/','Consultar las comprobaciones y opciones de este servicio','text-link')+'</p></section>')
       + (place.code === '20036' ? hondarribiaAdvice : '')
       + porteroVisit(place.code, place.name)
       + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p></section>' : '')
-      + (trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
+      + (place.code !== '48027' && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48020' ? 'Equipos de antena comunitaria en Bilbao</h2><p class="intro">Estas fotos de Bilbao muestran dos cabeceras de televisión. La cabecera recibe la señal de la antena y la prepara para distribuirla a las viviendas. Al revisar una avería, el medidor de campo permite comparar la señal antes y después de la amplificación.</p>'
           + photoGrid(bilbaoPhotos, 'photo-grid photo-grid--equipos')
           + '<div class="split local-extra" id="caso-pixelacion-bilbao"><div><p class="kicker">Caso real en Bilbao centro</p><h3>Canales que dejaban de verse a ciertas horas</h3>'
@@ -414,9 +421,6 @@ for (const [code, area] of areaMap) {
           + '<p class="intro">Cuando varios vecinos pierden los mismos canales, podemos comparar la señal en la cabecera común y en distintas tomas. Así se distingue un problema del equipo compartido de una pérdida en un ramal del edificio.</p></div>'
           : place.code === '48046' ? 'Trabajo real de antena TDT en Gernika-Lumo</h2>'
             + '<div class="split local-extra"><div><h3>Antena y montaje sobre cubierta</h3><p>La fotografía principal de esta página corresponde al trabajo real en Gernika-Lumo: antena de televisión terrestre instalada sobre un mástil en cubierta, con su cableado y elementos de sujeción.</p><p>Al revisar un montaje de este tipo se comprueban tanto la recepción de señal como el estado del mástil, el cable y las conexiones.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/gernika-lumo-dos-antenas.webp">'+image(gernikaSecondPhoto)+'</a><figcaption>'+esc(gernikaSecondPhoto[1])+'</figcaption></figure></div>'
-          : place.code === '48027' ? 'Reparación de una antena caída en Durango</h2>'
-            + '<div class="split local-extra"><div><p class="intro">En esta intervención real en Durango se reparó una antena que había caído sobre la cubierta.</p><p>La fotografía documenta el estado de la antena y el mástil antes de la reparación.</p></div>'
-            + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/durango-antena-caida-reparada.webp">'+image(durangoPhoto)+'</a><figcaption>'+esc(durangoPhoto[1])+'</figcaption></figure></div>'
           : place.code === '48017' ? 'Trabajo real de antena TDT en Bermeo</h2>'
             + '<div class="split local-extra"><div><p class="kicker">Desplazamiento urgente desde Bilbao</p><h3>Cambio de cable, vientos de sujeción y amplificador</h3><p class="intro">En esta intervención real en Aldatseta Kalea, Bermeo, se trabajó sobre la instalación de antena de televisión terrestre, con cambio del cable, los vientos de sujeción del mástil y el amplificador.</p><p>La fotografía muestra la antena TDT sobre el mástil y los vientos de sujeción. El trabajo incluyó tanto elementos de la recepción y distribución de señal como de la sujeción de la instalación.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/bermeo-antena-cable-vientos.webp">'+image(bermeoPhoto)+'</a><figcaption>'+esc(bermeoPhoto[1])+'</figcaption></figure></div>'
           : place.code === '20029' ? 'Trabajos de antena en varias viviendas de Deba</h2>'

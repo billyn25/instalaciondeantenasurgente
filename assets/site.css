@@ -222,3 +222,11 @@ details{margin-top:.8rem}
 .photo-grid--mediciones + p + .prose > p + h3 {
   margin-top: 1.75rem;
 }
+
+.durango-case { scroll-margin-top: 1rem }
+.durango-case > .split { align-items: center }
+.durango-photo { width: min(100%, 420px); justify-self: end }
+.durango-photo img { aspect-ratio: 4/5; object-position: center 25% }
+@media (max-width: 660px) {
+  .durango-photo { justify-self: start }
+}
