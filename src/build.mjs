@@ -54,6 +54,7 @@ const amorebietaPhotos = [
   ['amorebieta-etxano-parabolica-astra', 'Parabólica Fte instalada en la cubierta de un pabellón en Amorebieta-Etxano', 840, 1120],
   ['amorebieta-etxano-parabolica-lnb', 'Detalle de la parabólica, el LNB y el cableado exterior de la misma instalación', 840, 1120],
 ];
+const sondikaPhoto = ['sondika-antena-tdt-antes', 'Antena TDT antigua en el tejado de Sondika, antes de la sustitución', 675, 1200];
 const sondikaCaseUrl = '/bizkaia/sondika/#trabajos-locales';
 const zierbenaCaseUrl = '/bizkaia/zierbena/#trabajos-locales';
 const balmasedaCaseUrl = '/bizkaia/balmaseda/#trabajos-locales';
@@ -228,7 +229,7 @@ function porteroVisit(code, name) {
 }
 const documentedCases = [
   ['48','Amorebieta-Etxano · Antenas','Instalación de parabólica para Astra 19,2° Este en un pabellón',amorebietaPhotos[0],amorebietaCaseUrl],
-  ['48','Sondika · Antenas','Cambio de antena por pixelación en laSexta y Antena 3',null,sondikaCaseUrl],
+  ['48','Sondika · Antenas','Cambio de antena por pixelación en laSexta y Antena 3',sondikaPhoto,sondikaCaseUrl],
   ['39','Los Corrales de Buelna · Antenas','Cambio de antenas para recuperar todos los canales',null,corralesCaseUrl],
   ['39','Torrelavega · Porteros','Reparación del grupo fónico Golmar Stadio',null,torrelavegaCaseUrl],
   ['01','Amurrio · Antenas','Reparación urgente de una antena caída',null,amurrioCaseUrl],
@@ -387,6 +388,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
     <article class="card">${image(amorebietaPhotos[0])}<p class="kicker">Amorebieta-Etxano</p><h3>Primera instalación de parabólica para Astra</h3>
       <p>El pabellón no tenía parabólica. Montamos una antena Fte y la orientamos a Astra 19,2° Este para recibir televisión por satélite.</p>
       ${link(amorebietaCaseUrl, 'Ver las fotos de Amorebieta-Etxano', 'text-link')}</article>
+    <article class="card">${image(sondikaPhoto)}<p class="kicker">Sondika</p><h3>Cambio de antena TDT por pixelación</h3>
+      <p>LaSexta y Antena 3 se pixelaban. Sustituimos la antena antigua que se ve en la foto.</p>
+      ${link(sondikaCaseUrl, 'Ver el cambio de antena en Sondika', 'text-link')}</article>
     <article class="card">${image(zierbenaPhoto)}<p class="kicker">Zierbena</p><h3>Antena Televes con dipolo activo</h3>
       <p>Montamos una antena con amplificación en el dipolo para reforzar la señal de TDT.</p>
       ${link(zierbenaCaseUrl, 'Ver la instalación de Zierbena', 'text-link')}</article>
@@ -406,7 +410,6 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       <p>Sustituimos las antenas del mástil que reciben la televisión terrestre y la radio FM.</p>
       ${link(azpeitiaCaseUrl, 'Ver el trabajo de Azpeitia', 'text-link')}</article>
   </div>
-  <p>${link(sondikaCaseUrl, 'Cambio de antena en Sondika por pixelación en laSexta y Antena 3', 'text-link')}</p>
   <h3 class="home-portero-cases-heading">Trabajos de porteros automáticos</h3>
   <div class="cards case-previews">
     <article class="card">${image(llodioPhoto)}<p class="kicker">Llodio / Laudio · Porteros</p><h3>Reparación urgente de grupo fónico Fermax</h3><p>Trabajo real de reparación del grupo fónico Fermax PVT9696 en un portero comunitario.</p>${link(llodioCaseUrl,'Ver el caso real en Llodio / Laudio','text-link')}</article>
@@ -509,6 +512,7 @@ for (const [code, area] of areaMap) {
           + '<div class="actions">' + link('/servicios/satelite/', 'Ver el servicio de instalación de parabólicas', 'text-link') + '</div>'
           : place.code === '48904' ? 'Cambio de antena TDT en Sondika</h2>'
           + '<p class="intro">La imagen se pixelaba en canales como laSexta y Antena 3. La instalación tenía una antena antigua, así que la sustituimos por una nueva.</p>'
+          + photoGrid([sondikaPhoto], 'photo-grid photo-grid--mediciones')
           + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación de antenas', 'text-link') + '</div>'
           : place.code === '48913' ? 'Antena TDT Televes con dipolo activo en Zierbena</h2>'
           + '<div class="split local-extra"><div><p class="intro">Montamos una antena Televes con dipolo activo para reforzar la señal de TDT. El dipolo activo amplifica la señal en la propia antena, antes de que recorra el cable coaxial.</p>'
