@@ -50,6 +50,8 @@ const asturiasUrl = '/asturias/';
 const ribadesella = { name: 'Ribadesella', url: asturiasUrl + 'ribadesella/' };
 const asturias = { name: 'Asturias', url: asturiasUrl, centers: [ribadesella] };
 const ribadesellaCaseUrl = ribadesella.url + '#ribadesella-antena-caida';
+const erandioPhoto = ['erandio-renovacion-antena-tdt', 'Antena UHF de TDT y parabólica sobre la cubierta de la instalación de Erandio', 904, 1200];
+const erandioCaseUrl = '/bizkaia/erandio/#trabajos-locales';
 const getxoPhoto = ['getxo-antena-uhf-filtro-5g', 'Antena UHF del trabajo de Getxo, sujeta a la fachada de piedra junto a la escalera de acceso', 675, 1200];
 const getxoCaseUrl = '/bizkaia/getxo/#trabajos-locales';
 const tolosaPhoto = ['tolosa-mastil-antenas-caidas', 'Mástil doblado y antenas caídas por el viento en Tolosa antes de la reparación', 900, 1200];
@@ -239,6 +241,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['48','Erandio · Antenas','Renovación de antena UHF, cableado y tomas de TV',erandioPhoto,erandioCaseUrl],
   ['48','Getxo · Antenas','Cambio de antena UHF con filtro 5G y revisión de tomas',getxoPhoto,getxoCaseUrl],
   ['20','Tolosa · Antenas','Sustitución urgente de mástil y antenas tras fuertes vientos',tolosaPhoto,tolosaCaseUrl],
   ['48','Amorebieta-Etxano · Antenas','Instalación de parabólica para Astra 19,2° Este en un pabellón',amorebietaPhotos[0],amorebietaCaseUrl],
@@ -398,6 +401,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(erandioPhoto)}<p class="kicker">Erandio · TDT</p><h3>Renovación de antena UHF y tomas de TV</h3>
+      <p>Renovamos la antena y el cableado, añadimos un diplexor y un amplificador de mástil e instalamos varias tomas de televisión.</p>
+      ${link(erandioCaseUrl, 'Ver la renovación de antena en Erandio', 'text-link')}</article>
     <article class="card">${image(ribadesellaPhoto)}<p class="kicker">Ribadesella · Aviso urgente</p><h3>${esc(ribadesellaTitle)}</h3>
       <p>${esc(ribadesellaSummary)}</p>
       ${link(ribadesellaCaseUrl, 'Ver el aviso de Ribadesella', 'text-link')}</article>
@@ -551,6 +557,11 @@ for (const [code, area] of areaMap) {
           : place.code === '39025' ? 'Cambio de antenas TDT en Los Corrales de Buelna</h2>'
           + '<p class="intro">Sustituimos las antenas de televisión terrestre y montamos dos antenas TDT en cubierta para captar todos los canales.</p>'
           + photoGrid(corralesPhotos)
+          : place.code === '48902' ? 'Renovación de antena UHF para TDT en Erandio</h2>'
+          + '<p class="intro">Renovamos la antena UHF de TDT y sustituimos el cable coaxial. La instalación también tenía una parabólica. Añadimos un diplexor para combinar las señales terrestre y de satélite en la misma bajante.</p>'
+          + '<p>Montamos un amplificador de mástil y varias tomas de televisión. En la fotografía se ven la antena terrestre y la parabólica sobre la cubierta.</p>'
+          + photoGrid([erandioPhoto], 'photo-grid photo-grid--mediciones')
+          + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div>'
           : place.code === '48044' ? 'Cambio de antena UHF con filtro 5G en Getxo</h2>'
           + '<p class="intro">En esta vivienda de Getxo habían dejado de verse algunas cadenas de TDT por interferencias de la señal móvil 5G. Sustituimos la antena por una UHF con filtro 5G. El soporte estaba a gran altura en la fachada y usamos una escalera para acceder a él.</p>'
           + '<p>Ajustamos la antena con un medidor de campo y revisamos todas las tomas de televisión de la vivienda para comprobar cómo llegaba la señal a cada punto.</p>'
