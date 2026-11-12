@@ -46,7 +46,8 @@ const durangoPhoto = photosByName.get('durango-antena-caida-reparada');
 const ribadesellaPhoto = ['ribadesella-antena-tdt-caida', 'Antena TDT caída en el suelo tras una tormenta en Ribadesella', 900, 1200];
 const ribadesellaTitle = 'Antena TDT caída tras una tormenta en Ribadesella';
 const ribadesellaSummary = 'La antena cayó al suelo después de la tormenta. Está prevista una intervención urgente para sustituir por completo la instalación de antena.';
-const ribadesellaCaseUrl = '/trabajos/#ribadesella-antena-caida';
+const asturiasUrl = '/asturias/';
+const ribadesellaCaseUrl = asturiasUrl + '#ribadesella-antena-caida';
 const getxoPhoto = ['getxo-antena-uhf-filtro-5g', 'Antena UHF del trabajo de Getxo, sujeta a la fachada de piedra junto a la escalera de acceso', 675, 1200];
 const getxoCaseUrl = '/bizkaia/getxo/#trabajos-locales';
 const tolosaPhoto = ['tolosa-mastil-antenas-caidas', 'Mástil doblado y antenas caídas por el viento en Tolosa antes de la reparación', 900, 1200];
@@ -643,23 +644,32 @@ add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista 
 add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   'Galería de trabajos reales de Antenista Fuentes. Antenas en cubierta, mástiles, cabeceras de televisión y equipos de distribución.',
   smallHero('Galería de obra', 'Trabajos reales de antenas', 'Fotografías de antenas de televisión, equipos de medida y distribución de señal.', '', false)
-  + '<section class="section wrap split" id="ribadesella-antena-caida"><div><p class="kicker">Asturias · Aviso urgente</p><h2>' + esc(ribadesellaTitle) + '</h2>'
-  + '<p class="intro">' + esc(ribadesellaSummary) + '</p></div>'
-  + '<figure class="service-photo"><a href="/assets/trabajos/' + ribadesellaPhoto[0] + '.webp">' + image(ribadesellaPhoto) + '</a><figcaption>Estado de la antena antes de la intervención.</figcaption></figure></section>'
-  + '<section class="section wrap"><h2>Trabajos documentados por provincia</h2>'
-  + '<div class="cards case-previews">' + [...areaMap].map(([code,area]) => {
+  + '<section class="section wrap"><h2>Trabajos y avisos por provincia</h2>'
+  + '<div class="cards case-previews gallery-provinces">' + [...areaMap].map(([code,area]) => {
     const cases = documentedCases.filter(item => item[0] === code);
     const preview = cases.find(([, , , photo]) => photo)?.[3];
     return cases.length ? '<article class="card">' + (preview ? image(preview) : '') + '<h3>' + esc(area.name) + '</h3><ul>'
       + cases.map(([,place,title,,url]) => '<li>' + link(url,place.split(' · ')[0] + ' — ' + title,'text-link') + '</li>').join('')
       + '</ul></article>' : '';
-  }).join('') + '</div></section>'
+  }).join('')
+  + '<article class="card" id="ribadesella-antena-caida">' + image(ribadesellaPhoto) + '<h3>' + link(asturiasUrl, 'Asturias') + '</h3><ul><li>'
+  + link(ribadesellaCaseUrl, 'Ribadesella — Aviso urgente por una antena TDT caída', 'text-link') + '</li></ul></article>'
+  + '</div></section>'
   + '<section class="section wrap local-extra"><h2>Municipios donde hemos trabajado</h2>' + workTowns()
   + '<div class="prose"><h3>Qué hacemos en una visita de antena</h3>' + diagnosticoEnVisita + '</div></section>'
   + '<section class="section wrap local-extra"><h2>Ejemplos de antenas y equipos</h2>'
   + photoGrid(photos.filter(([name]) => !/^(gernika-lumo|bermeo|durango|bilbao|deba)-/.test(name)))
   + '</section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
+
+add(asturiasUrl, 'Trabajos de antenas en Asturias | Antenista Fuentes',
+  'Aviso urgente en Ribadesella por la caída de una antena TDT tras una tormenta. Fotografía del estado de la instalación y sustitución prevista.',
+  smallHero('Asturias', 'Trabajos de antenas en Asturias', 'Aviso de reparación urgente de una antena TDT en Ribadesella.', '', false)
+  + '<section class="section wrap split" id="ribadesella-antena-caida"><div><p class="kicker">Aviso urgente</p><h2>' + esc(ribadesellaTitle) + '</h2>'
+  + '<p class="intro">' + esc(ribadesellaSummary) + '</p>'
+  + '<div class="actions">' + link('/trabajos/', 'Ver la galería de trabajos', 'text-link') + '</div></div>'
+  + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + ribadesellaPhoto[0] + '.webp">' + image(ribadesellaPhoto) + '</a><figcaption>Estado de la antena antes de la intervención.</figcaption></figure></section>',
+  { trail: [homeTrail, ['Asturias', asturiasUrl]] });
 
 const serviceTrail = ['Servicios', '/servicios/'];
 add('/servicios/', 'Antenas TDT, 4G y 5G, porteros y videoporteros | Antenista Fuentes',
