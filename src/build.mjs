@@ -66,6 +66,8 @@ const asturiasUrl = '/asturias/';
 const ribadesella = { name: 'Ribadesella', url: asturiasUrl + 'ribadesella/' };
 const asturias = { name: 'Asturias', url: asturiasUrl, centers: [ribadesella] };
 const ribadesellaCaseUrl = ribadesella.url + '#ribadesella-antena-caida';
+const villablinoPhoto = ['villablino-antena-tdt-tres-parabolicas', 'Montaje exterior de antena TDT y parabólicas en Villablino', 1086, 1448];
+const villablinoCaseUrl = '/leon/villablino/#trabajos-locales';
 const lekeitioLocalPhoto = ['lekeitio-antena-tdt-canales-locales', 'Detalle de una antena TDT sobre la cubierta en Lekeitio', 675, 1200];
 const lekeitioLocalCaseUrl = '/bizkaia/lekeitio/#trabajos-locales';
 const salasPhoto = ['salas-infantes-ellipse-avenida-castrillo', 'Antena Televes Ellipse montada en un poste de la avenida Castrillo, en Salas de los Infantes', 675, 1200];
@@ -277,6 +279,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['24','Villablino · TDT y satélite','Antena TDT, tres parabólicas y central amplificadora de TV y SAT',villablinoPhoto,villablinoCaseUrl],
   ['24','La Bañeza · Videoporteros','Instalación de videoportero IP Dahua con monitor Wi-Fi, UTP y switch PoE',banezaPhoto,banezaCaseUrl],
   ['48','Lekeitio · Antenas','Antena TDT nueva por problemas de recepción de canales locales',lekeitioLocalPhoto,lekeitioLocalCaseUrl],
   ['09','Salas de los Infantes · Antenas','Instalación de una Televes Ellipse en la avenida Castrillo',salasPhoto,salasCaseUrl],
@@ -443,6 +446,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(villablinoPhoto)}<p class="kicker">Villablino · TDT y satélite</p><h3>TDT y tres parabólicas con central amplificadora</h3>
+      <p>Instalación de antena TDT y tres parabólicas para Astra, Hot Bird y TDT por satélite, con central amplificadora de TV y SAT.</p>
+      ${link(villablinoCaseUrl, 'Ver la instalación de Villablino', 'text-link')}</article>
     <article class="card">${image(banezaPhoto)}<p class="kicker">La Bañeza · Videoportero IP</p><h3>Dahua con monitor IP Wi-Fi</h3>
       <p>Instalamos un videoportero IP con monitor interior Wi-Fi, cable UTP y switch PoE.</p>
       ${link(banezaCaseUrl, 'Ver la instalación de La Bañeza', 'text-link')}</article>
@@ -519,6 +525,16 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
 const septimaHelp = '<p>¿Buscas La Séptima? Revisa toda la lista de canales y, si no aparece, haz una búsqueda automática en modo Antena o TDT. ' + link('/ayuda-antenas/#la-septima', 'Cómo encontrar La Séptima y qué hacer si falta', 'text-link') + '</p>';
 
 const localCaseGuides = {
+  '24202': {
+    title: 'Preparar una instalación con TDT y varios satélites',
+    checks: [
+      'Indica qué servicios quieres recibir y qué receptores tienes. Si conoces sus modelos, inclúyelos en la consulta.',
+      'Dinos cuántas tomas de televisión o satélite necesitas y cuáles se utilizarán a la vez.',
+      'Envía una foto del montaje exterior y de la central accesible, si ya existe. Así podemos preparar la revisión del conjunto.',
+    ],
+    request: 'quiero consultar una instalación de TDT y parabólicas',
+    service: 'satelite',
+  },
   '48057': {
     title: '¿Se ven mal solo los canales locales?',
     checks: [
@@ -775,6 +791,10 @@ for (const [code, area] of areaMap) {
           : place.code === '39025' ? 'Cambio de antenas TDT en Los Corrales de Buelna</h2>'
           + '<p class="intro">Sustituimos las antenas de televisión terrestre y montamos dos antenas TDT en cubierta para captar todos los canales.</p>'
           + photoGrid(corralesPhotos)
+          : place.code === '24202' ? 'Instalación de antena TDT y tres parabólicas en Villablino</h2>'
+          + '<p class="intro">Instalamos una antena TDT y tres parabólicas para Astra, Hot Bird y TDT por satélite en Villablino, León. El trabajo incluye una central amplificadora de televisión y SAT.</p>'
+          + '<p>La fotografía muestra el montaje exterior: las antenas terrestres, las parabólicas, los mástiles y los vientos de sujeción. La central amplificadora forma parte de la instalación, aunque no aparece en esta imagen.</p>'
+          + casePhotoAndGuide(villablinoPhoto, caseGuide, place.name)
           : place.code === '48057' ? 'Antena TDT nueva por problemas con los canales locales en Lekeitio</h2>'
           + '<p class="intro">En esta vivienda de Lekeitio los canales locales se veían mal. Instalamos una antena TDT nueva en la cubierta. La foto muestra el detalle de la antena y la conexión del cable.</p>'
           + casePhotoAndGuide(lekeitioLocalPhoto, caseGuide, place.name)
