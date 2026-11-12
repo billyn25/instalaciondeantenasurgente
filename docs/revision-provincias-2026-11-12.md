@@ -22,7 +22,7 @@ Los casos contabilizados tienen foto y descripción en el registro de trabajos d
 | Burgos | 12 | 1 | Salas de los Infantes tiene el caso fotografiado. Priorizar información real de Burgos capital, Miranda, Aranda y Lerma antes de crear más fichas. |
 | León | 12 | 2 | La Bañeza incorpora un videoportero IP Dahua con monitor IP Wi-Fi, UTP y switch PoE. Villablino añade TDT, tres parabólicas para Astra, Hot Bird y TDT por satélite y central amplificadora de TV y SAT. Boñar todavía no tiene un caso desarrollado con foto. |
 | Cantabria | 14 | 3 | Mantener Castro Urdiales, Los Corrales de Buelna y Torrelavega. Santander y otras fichas se beneficiarían de intervenciones propias bien explicadas. |
-| La Rioja | 13 | 0 | Prioridad alta: obtener detalles y fotos de trabajos autorizados para esta web, empezando por los municipios atendidos. |
+| La Rioja | 13 | 0 terminados; 1 renovación prevista con foto | Nájera documenta el videoportero convencional anterior al cambio previsto a Tegui Serie 8 con monitor Classe 100. Actualizar el resultado cuando se confirme la finalización. |
 | Asturias | 1 | 0 terminados; 1 aviso con foto | Ribadesella está documentada como aviso pendiente. Actualizar actuación y resultado solo cuando el titular confirme la finalización. |
 
 La prioridad es editorial y se basa en el contenido disponible, no en datos de ranking o una supuesta penalización.

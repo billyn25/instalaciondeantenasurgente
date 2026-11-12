@@ -252,7 +252,18 @@ const torrelavegaPhoto = ['torrelavega-golmar-estadio', 'Placa exterior Golmar S
 const torrelavegaCaseUrl = '/cantabria/torrelavega/#visita-portero-39087';
 const banezaPhoto = ['la-baneza-videoportero-ip-dahua', 'Placa exterior Dahua del videoportero IP instalado en La Bañeza', 1152, 1536, 'jpeg'];
 const banezaCaseUrl = towns.get('24010').url + '#videoportero-ip-dahua';
+const najeraPhoto = ['najera-videoportero-tegui-antes', 'Videoportero Tegui convencional en Nájera, antes de la renovación prevista', 864, 1536, 'jpeg'];
+const najeraCaseUrl = towns.get('26102').url + '#renovacion-videoportero-tegui';
 function porteroVisit(code, name) {
+ if (code === '26102') return '<section class="section surface" id="renovacion-videoportero-tegui"><div class="wrap split">'
+  + '<div class="prose"><p class="kicker">Nájera, La Rioja · Renovación prevista</p><h2>Cambio de videoportero convencional a Tegui Serie 8 con monitor Classe 100</h2>'
+  + '<p class="intro">Está previsto sustituir el videoportero convencional existente en Nájera por un conjunto Tegui Serie 8 con monitor Classe 100. La fotografía corresponde al equipo antiguo, antes del cambio.</p>'
+  + '<h3>El equipo que se va a sustituir</h3><p>La instalación actual tiene la cámara separada de la placa de audio y pulsadores, ambas sobre el revestimiento de madera de la entrada. Este es el estado previo a la renovación.</p>'
+  + '<h3>Preparar la renovación del conjunto</h3><p>Antes del montaje hay que concretar cómo se adaptará el espacio ocupado por los módulos antiguos, qué recorrido tiene el cableado y cuántos monitores necesita el edificio. Esos datos permiten definir los equipos y los remates del cambio.</p>'
+  + '<div class="actions">' + link('/servicios/porteros-videoporteros/', 'Consultar renovación de videoporteros', 'text-link')
+  + link(wa(name, 'quiero consultar el cambio de un videoportero antiguo'), 'Consultar por WhatsApp', 'btn whatsapp') + '</div></div>'
+  + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + najeraPhoto[0] + '.jpeg">' + image(najeraPhoto)
+  + '</a><figcaption>Equipo antiguo en Nájera. Cambio previsto a Tegui Serie 8 con monitor Classe 100.</figcaption></figure></div></section>';
  if (code === '24010') return '<section class="section surface" id="videoportero-ip-dahua"><div class="wrap split">'
   + '<div class="prose"><p class="kicker">Trabajo real · La Bañeza, León</p><h2>Instalación de videoportero IP Dahua con monitor Wi-Fi</h2>'
   + '<p class="intro">Instalamos un videoportero IP Dahua en La Bañeza con un monitor interior IP con conexión Wi-Fi. En el montaje utilizamos cable UTP y un switch PoE.</p>'
@@ -279,6 +290,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['26','Nájera · Renovación prevista','Cambio a Tegui Serie 8 con monitor Classe 100: equipo antiguo',najeraPhoto,najeraCaseUrl],
   ['24','Villablino · TDT y satélite','Antena TDT, tres parabólicas y central amplificadora de TV y SAT',villablinoPhoto,villablinoCaseUrl],
   ['24','La Bañeza · Videoporteros','Instalación de videoportero IP Dahua con monitor Wi-Fi, UTP y switch PoE',banezaPhoto,banezaCaseUrl],
   ['48','Lekeitio · Antenas','Antena TDT nueva por problemas de recepción de canales locales',lekeitioLocalPhoto,lekeitioLocalCaseUrl],
@@ -310,7 +322,7 @@ const documentedCases = [
 ];
 function provinceCaseCards(code) {
  const cases = documentedCases.filter(item=>item[0]===code);
- return cases.length ? '<div class="cards case-previews">'+cases.map(([,place,title,photo,url])=>'<article class="card">'+(photo ? image(photo) : '')+'<p class="kicker">'+esc(place)+'</p><h3>'+esc(title)+'</h3><p>'+link(url,'Ver el trabajo en '+place.split(' · ')[0],'text-link')+'</p></article>').join('')+'</div>' : '';
+ return cases.length ? '<div class="cards case-previews">'+cases.map(([,place,title,photo,url])=>'<article class="card">'+(photo ? image(photo) : '')+'<p class="kicker">'+esc(place)+'</p><h3>'+esc(title)+'</h3><p>'+link(url,'Ver el caso de '+place.split(' · ')[0],'text-link')+'</p></article>').join('')+'</div>' : '';
 }
 const hondarribiaAdvice = '<section class="section wrap prose"><h2>Cómo orientamos una avería de televisión en Hondarribia</h2>'
  +'<p>El primer dato es saber si falla un televisor, todas las tomas de una vivienda o varios vecinos. Si el mismo aparato funciona en otra toma, revisamos el recorrido de señal hacia la habitación afectada. Cuando coinciden varias viviendas, se compara la cabecera comunitaria con la distribución del edificio.</p>'
@@ -446,6 +458,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(najeraPhoto)}<p class="kicker">Nájera · Renovación prevista</p><h3>Cambio a Tegui Serie 8 y Classe 100</h3>
+      <p>El videoportero convencional se va a sustituir. La foto muestra el equipo antiguo antes del cambio.</p>
+      ${link(najeraCaseUrl, 'Ver la renovación prevista en Nájera', 'text-link')}</article>
     <article class="card">${image(villablinoPhoto)}<p class="kicker">Villablino · TDT y satélite</p><h3>TDT y tres parabólicas con central amplificadora</h3>
       <p>Instalación de antena TDT y tres parabólicas para Astra, Hot Bird y TDT por satélite, con central amplificadora de TV y SAT.</p>
       ${link(villablinoCaseUrl, 'Ver la instalación de Villablino', 'text-link')}</article>
@@ -710,8 +725,8 @@ for (const [code, area] of areaMap) {
     + (code === '09' ? burgosHelp : '')
     + provincialAdvice(code, area)
     + '<section class="section wrap" id="municipios"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
-    + (localWorks.length ? '<section class="surface"><div class="wrap section"><h2>Trabajos en ' + esc(area.name)
-      + '</h2>' + provinceCaseCards(code) + '<h3 class="province-work-towns">Municipios donde hemos trabajado</h3>'+workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
+    + (localWorks.length || documentedCases.some(item => item[0] === code) ? '<section class="surface"><div class="wrap section"><h2>Trabajos y avisos en ' + esc(area.name)
+      + '</h2>' + provinceCaseCards(code) + (localWorks.length ? '<h3 class="province-work-towns">Municipios donde hemos trabajado</h3>'+workTowns(localWorks) : '') + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
     + '<section class="section wrap region-directory"><h2>Todos los municipios de ' + esc(area.name)
     + '</h2><p class="intro">Además de las poblaciones anteriores, puedes consultar estos municipios, organizados por la zona más cercana.</p>'
     + covered + '</section>'
@@ -988,6 +1003,7 @@ add(porteroPath, 'Reparación de porteros y cambio a videoportero | Antenista Fu
  +'<section class="section wrap door-section"><div class="door-heading"><p class="kicker">01 · Reparar</p><h2>¿No suena, no se oye<br>o no abre?</h2><p>Primero localizamos el fallo. No todas las averías requieren cambiar el portero completo.</p></div><div class="cards door-cards"><article class="card"><h3>Revisar el sistema actual</h3><p>Indica si afecta a una vivienda o a toda la comunidad. Según el síntoma, revisamos telefonillo, pulsadores, grupo fónico, alimentación, cableado o abrepuertas.</p></article><article class="card"><h3>Cambiar el grupo fónico</h3><p>Si hay recambio compatible, se puede valorar la sustitución del módulo de audio. Identificamos la marca y el modelo antes de elegir la referencia. David C. G. ha realizado estos trabajos en Hondarribia y Hernani.</p></article></div></section>'
  +'<section class="surface"><div class="section wrap door-layout door-renew"><figure class="door-photo">'+image(porteroVisits['20040'][0])+'<figcaption>Hernani · Medición de una placa Tegui para valorar la renovación</figcaption></figure><div><p class="kicker">02 · Renovar</p><h2>Del portero de audio<br>al videoportero</h2><p>Medimos la placa y el marco, contamos viviendas y escaleras e identificamos el sistema existente. Así podemos estudiar qué placa y monitores necesita la comunidad.</p><h3>El cableado también cuenta</h3><p>Un sistema de dos hilos puede ser una opción. Aprovechar los cables depende de su estado y de la compatibilidad con el equipo elegido; se comprueba antes de presupuestar.</p><h3>Una placa que encaje en tu portal</h3><p>La anchura y la altura del conjunto permiten valorar si hace falta adaptar el hueco o el marco. El presupuesto debe indicar equipos, remates y cableado que se conserva o sustituye.</p></div></div></section>'
  +'<section class="section wrap split" id="instalacion-videoportero-ip"><div class="prose"><p class="kicker">Instalación realizada · León</p><h2>Videoportero IP Dahua en La Bañeza</h2><p>Montaje de videoportero IP con monitor interior Wi-Fi, cable UTP y switch PoE. La fotografía muestra la placa exterior de esta instalación.</p><div class="actions">'+link(banezaCaseUrl,'Ver el trabajo completo de La Bañeza','btn dark')+'</div></div><figure class="service-photo service-photo--satelite">'+image(banezaPhoto)+'<figcaption>Placa exterior Dahua instalada en La Bañeza.</figcaption></figure></section>'
+ +'<section class="section wrap split" id="renovacion-prevista-najera"><div class="prose"><p class="kicker">Nájera · La Rioja · Renovación prevista</p><h2>Del videoportero convencional a Tegui Serie 8</h2><p>Está previsto renovar el equipo antiguo con Tegui Serie 8 y monitor Classe 100. La fotografía documenta el estado anterior al cambio.</p><div class="actions">'+link(najeraCaseUrl,'Ver el caso de Nájera','btn dark')+'</div></div><figure class="service-photo service-photo--satelite">'+image(najeraPhoto)+'<figcaption>Videoportero antiguo de Nájera antes de su sustitución.</figcaption></figure></section>'
  +'<section class="section wrap door-section" id="trabajos-porteros"><div class="door-heading"><p class="kicker">Fotografías propias · Trabajo real</p><h2>Reparaciones y mediciones<br>de David C. G.</h2><p>Cambio de grupos fónicos con recambio vigente y toma de medidas para un posible cambio a videoportero. La renovación con cámara es una actuación que se está valorando.</p></div>'+photoGrid([porteroVisits['20036'][1],porteroVisits['20036'][2],porteroVisits['20036'][3],porteroVisits['20040'][1]],'photo-grid photo-grid--mediciones')+'<div class="actions">'+link('/gipuzkoa/hondarribia/#visita-portero-20036','Ver la intervención en Hondarribia','text-link')+link('/gipuzkoa/hernani/#visita-portero-20040','Ver la intervención en Hernani','text-link')+link(llodioCaseUrl,'Reparación urgente Fermax en Llodio / Laudio','text-link')+link(torrelavegaCaseUrl,'Reparación Golmar Stadio en Torrelavega','text-link')+'</div></section>'
  +'<section class="surface"><div class="section wrap door-section"><div class="door-heading"><p class="kicker">Preparar la visita</p><h2>Cuéntanos qué necesita tu entrada</h2></div><ol class="door-steps"><li><strong>Municipio y edificio</strong><span>Indica dónde está la instalación y si es una casa o comunidad.</span></li><li><strong>Fotos del equipo</strong><span>Envía la placa exterior y el telefonillo o monitor interior.</span></li><li><strong>Fallo o renovación</strong><span>Explica qué ocurre y cuántas viviendas están afectadas.</span></li></ol><div class="door-contact"><div><h3>¿Necesitas atención urgente?</h3><p>Consulta la disponibilidad de desplazamiento para tu localidad.</p></div><div class="actions">'+link(tel,'Llamar','btn dark')+link(porteroWhatsApp,'WhatsApp','btn whatsapp')+'</div></div></div></section>',
  {trail:[homeTrail,serviceTrail,['Porteros y videoporteros',porteroPath]],type:'Reparación de porteros automáticos y renovación a videoportero'});
