@@ -228,8 +228,8 @@ function smallHero(eyebrow, heading, intro, place = '', contact = true) {
     + (contact ? buttons(place) : '') + '</div></section>';
 }
 
-function image([name, alt, width, height], eager = false) {
-  return '<img src="/assets/trabajos/' + name + '.webp" alt="' + esc(alt) + '" width="' + width
+function image([name, alt, width, height, extension = 'webp'], eager = false) {
+  return '<img src="/assets/trabajos/' + name + '.' + extension + '" alt="' + esc(alt) + '" width="' + width
     + '" height="' + height + '"' + (eager ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"') + '>';
 }
 
@@ -248,7 +248,18 @@ const llodioPhoto = ["llodio-fermax-grupo-fonico", "Placa comunitaria Fermax en 
 const llodioCaseUrl = "/alava/llodio/#visita-portero-01036";
 const torrelavegaPhoto = ['torrelavega-golmar-estadio', 'Placa exterior Golmar Stadio de un portero automático en Torrelavega', 780, 1040];
 const torrelavegaCaseUrl = '/cantabria/torrelavega/#visita-portero-39087';
+const banezaPhoto = ['la-baneza-videoportero-ip-dahua', 'Placa exterior Dahua del videoportero IP instalado en La Bañeza', 1152, 1536, 'jpeg'];
+const banezaCaseUrl = towns.get('24010').url + '#videoportero-ip-dahua';
 function porteroVisit(code, name) {
+ if (code === '24010') return '<section class="section surface" id="videoportero-ip-dahua"><div class="wrap split">'
+  + '<div class="prose"><p class="kicker">Trabajo real · La Bañeza, León</p><h2>Instalación de videoportero IP Dahua con monitor Wi-Fi</h2>'
+  + '<p class="intro">Instalamos un videoportero IP Dahua en La Bañeza con un monitor interior IP con conexión Wi-Fi. En el montaje utilizamos cable UTP y un switch PoE.</p>'
+  + '<h3>Equipos y cableado del montaje</h3><ul><li>Placa exterior de videoportero Dahua.</li><li>Monitor interior IP con Wi-Fi.</li><li>Cableado UTP y switch PoE para la instalación.</li></ul>'
+  + '<h3>Para preparar una instalación similar</h3><p>Indica cuántos accesos y monitores necesitas, dónde está el router y si existe un recorrido para el cable. Una foto de la entrada y del equipo interior ayuda a preparar la valoración.</p>'
+  + '<div class="actions">' + link('/servicios/porteros-videoporteros/', 'Consultar instalación de videoporteros', 'text-link')
+  + link(wa(name, 'quiero consultar la instalación de un videoportero IP'), 'Consultar por WhatsApp', 'btn whatsapp') + '</div></div>'
+  + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + banezaPhoto[0] + '.jpeg">' + image(banezaPhoto)
+  + '</a><figcaption>Placa exterior Dahua instalada en La Bañeza. La instalación incluye monitor IP Wi-Fi, cable UTP y switch PoE.</figcaption></figure></div></section>';
  if (code === '39087') return '<section class="section surface" id="visita-portero-39087"><div class="wrap split">'
   + '<div><p class="kicker">Trabajo real en Torrelavega</p><h2>Reparación del grupo fónico de un portero Golmar Stadio</h2>'
   + '<p class="intro">Reparamos el grupo fónico de la placa exterior Golmar Stadio de un portero automático comunitario en Torrelavega. El grupo fónico permite hablar y escuchar entre la entrada y los telefonillos.</p>'
@@ -266,6 +277,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['24','La Bañeza · Videoporteros','Instalación de videoportero IP Dahua con monitor Wi-Fi, UTP y switch PoE',banezaPhoto,banezaCaseUrl],
   ['48','Lekeitio · Antenas','Antena TDT nueva por problemas de recepción de canales locales',lekeitioLocalPhoto,lekeitioLocalCaseUrl],
   ['09','Salas de los Infantes · Antenas','Instalación de una Televes Ellipse en la avenida Castrillo',salasPhoto,salasCaseUrl],
   ['20','Arrasate / Mondragón · Udala','Dos antenas TDT y amplificador multibanda para recuperar canales',udalaPhoto,udalaCaseUrl],
@@ -431,6 +443,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(banezaPhoto)}<p class="kicker">La Bañeza · Videoportero IP</p><h3>Dahua con monitor IP Wi-Fi</h3>
+      <p>Instalamos un videoportero IP con monitor interior Wi-Fi, cable UTP y switch PoE.</p>
+      ${link(banezaCaseUrl, 'Ver la instalación de La Bañeza', 'text-link')}</article>
     <article class="card">${image(lekeitioLocalPhoto)}<p class="kicker">Lekeitio · TDT</p><h3>Antena nueva para los canales locales</h3>
       <p>En la vivienda se veían mal los canales locales. Instalamos una antena TDT nueva en la cubierta.</p>
       ${link(lekeitioLocalCaseUrl, 'Ver el trabajo de Lekeitio', 'text-link')}</article>
@@ -737,7 +752,7 @@ for (const [code, area] of areaMap) {
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
       + (place.code === '48020' ? bilbaoFaultLinks : '')
       + porteroVisit(place.code, place.name)
-      + (place.code !== '48027' && place.code !== '39087' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
+      + (place.code !== '48027' && place.code !== '39087' && place.code !== '24010' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48003' ? 'Instalación de una parabólica para Astra 19,2° Este en Amorebieta-Etxano</h2>'
           + '<p class="intro">El pabellón no tenía parabólica. Instalamos una antena Fte en la cubierta y la orientamos a Astra 19,2° Este. Las fotos muestran el montaje exterior y el detalle del LNB, donde se conecta el cable coaxial que lleva la señal al interior.</p>'
           + photoGrid(amorebietaPhotos, 'photo-grid photo-grid--equipos photo-grid--mediciones')
@@ -878,9 +893,9 @@ add('/ayuda-antenas/', 'Resintonizar la TDT: La Séptima y canales UHD | Antenis
   + '</div>' + callout(),
   { trail: [homeTrail, ['Ayuda con la TDT', '/ayuda-antenas/']] });
 
-add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
-  'Galería de trabajos reales de Antenista Fuentes. Antenas en cubierta, mástiles, cabeceras de televisión y equipos de distribución.',
-  smallHero('Galería de obra', 'Trabajos reales de antenas', 'Fotografías de antenas de televisión, equipos de medida y distribución de señal.', '', false)
+add('/trabajos/', 'Trabajos reales de antenas y videoporteros | Antenista Fuentes',
+  'Galería de trabajos reales de Antenista Fuentes. Antenas TDT, porteros automáticos, videoporteros y equipos de distribución.',
+  smallHero('Galería de obra', 'Trabajos reales de antenas y videoporteros', 'Fotografías y descripción de intervenciones en antenas de televisión, porteros y videoporteros, organizadas por provincia.', '', false)
   + '<section class="section wrap"><h2>Trabajos y avisos por provincia</h2>'
   + '<div class="cards case-previews gallery-provinces">' + [...areaMap].map(([code,area]) => {
     const cases = documentedCases.filter(item => item[0] === code);
@@ -948,10 +963,11 @@ add(mobileAntennaPath, 'Instalación de antenas 4G y 5G para cobertura móvil | 
 const porteroPath = '/servicios/porteros-videoporteros/';
 const porteroWhatsApp = 'https://wa.me/34641490536?text='+encodeURIComponent('Hola, necesito consultar una reparación de portero automático o un cambio a videoportero.');
 add(porteroPath, 'Reparación de porteros y cambio a videoportero | Antenista Fuentes',
- 'Reparación de porteros automáticos, grupos fónicos y renovación a videoportero. Trabajos reales de David C. G. en Hondarribia y Hernani.',
+ 'Reparación de porteros automáticos e instalación de videoporteros. Casos reales en Hondarribia, Hernani y La Bañeza, con montaje IP Dahua.',
  '<section class="hero door-hero"><div class="wrap door-layout"><div><p class="kicker">Viviendas y comunidades</p><h1>Tu portero, reparado.<br><em>O listo para renovarlo.</em></h1><p>Reparación de audio y valoración del cambio a videoportero, partiendo del equipo que ya tiene tu comunidad.</p><div class="actions">'+link(tel,'Llamar: '+phone,'btn')+link(porteroWhatsApp,'Consultar por WhatsApp','btn whatsapp')+'</div><a class="door-jump" href="#trabajos-porteros">Ver trabajos reales de David C. G. ↓</a></div><figure class="door-photo">'+image(porteroVisits['20036'][0],true)+'<figcaption>Hondarribia · Placa existente durante la visita técnica</figcaption></figure></div></section>'
  +'<section class="section wrap door-section"><div class="door-heading"><p class="kicker">01 · Reparar</p><h2>¿No suena, no se oye<br>o no abre?</h2><p>Primero localizamos el fallo. No todas las averías requieren cambiar el portero completo.</p></div><div class="cards door-cards"><article class="card"><h3>Revisar el sistema actual</h3><p>Indica si afecta a una vivienda o a toda la comunidad. Según el síntoma, revisamos telefonillo, pulsadores, grupo fónico, alimentación, cableado o abrepuertas.</p></article><article class="card"><h3>Cambiar el grupo fónico</h3><p>Si hay recambio compatible, se puede valorar la sustitución del módulo de audio. Identificamos la marca y el modelo antes de elegir la referencia. David C. G. ha realizado estos trabajos en Hondarribia y Hernani.</p></article></div></section>'
  +'<section class="surface"><div class="section wrap door-layout door-renew"><figure class="door-photo">'+image(porteroVisits['20040'][0])+'<figcaption>Hernani · Medición de una placa Tegui para valorar la renovación</figcaption></figure><div><p class="kicker">02 · Renovar</p><h2>Del portero de audio<br>al videoportero</h2><p>Medimos la placa y el marco, contamos viviendas y escaleras e identificamos el sistema existente. Así podemos estudiar qué placa y monitores necesita la comunidad.</p><h3>El cableado también cuenta</h3><p>Un sistema de dos hilos puede ser una opción. Aprovechar los cables depende de su estado y de la compatibilidad con el equipo elegido; se comprueba antes de presupuestar.</p><h3>Una placa que encaje en tu portal</h3><p>La anchura y la altura del conjunto permiten valorar si hace falta adaptar el hueco o el marco. El presupuesto debe indicar equipos, remates y cableado que se conserva o sustituye.</p></div></div></section>'
+ +'<section class="section wrap split" id="instalacion-videoportero-ip"><div class="prose"><p class="kicker">Instalación realizada · León</p><h2>Videoportero IP Dahua en La Bañeza</h2><p>Montaje de videoportero IP con monitor interior Wi-Fi, cable UTP y switch PoE. La fotografía muestra la placa exterior de esta instalación.</p><div class="actions">'+link(banezaCaseUrl,'Ver el trabajo completo de La Bañeza','btn dark')+'</div></div><figure class="service-photo service-photo--satelite">'+image(banezaPhoto)+'<figcaption>Placa exterior Dahua instalada en La Bañeza.</figcaption></figure></section>'
  +'<section class="section wrap door-section" id="trabajos-porteros"><div class="door-heading"><p class="kicker">Fotografías propias · Trabajo real</p><h2>Reparaciones y mediciones<br>de David C. G.</h2><p>Cambio de grupos fónicos con recambio vigente y toma de medidas para un posible cambio a videoportero. La renovación con cámara es una actuación que se está valorando.</p></div>'+photoGrid([porteroVisits['20036'][1],porteroVisits['20036'][2],porteroVisits['20036'][3],porteroVisits['20040'][1]],'photo-grid photo-grid--mediciones')+'<div class="actions">'+link('/gipuzkoa/hondarribia/#visita-portero-20036','Ver la intervención en Hondarribia','text-link')+link('/gipuzkoa/hernani/#visita-portero-20040','Ver la intervención en Hernani','text-link')+link(llodioCaseUrl,'Reparación urgente Fermax en Llodio / Laudio','text-link')+link(torrelavegaCaseUrl,'Reparación Golmar Stadio en Torrelavega','text-link')+'</div></section>'
  +'<section class="surface"><div class="section wrap door-section"><div class="door-heading"><p class="kicker">Preparar la visita</p><h2>Cuéntanos qué necesita tu entrada</h2></div><ol class="door-steps"><li><strong>Municipio y edificio</strong><span>Indica dónde está la instalación y si es una casa o comunidad.</span></li><li><strong>Fotos del equipo</strong><span>Envía la placa exterior y el telefonillo o monitor interior.</span></li><li><strong>Fallo o renovación</strong><span>Explica qué ocurre y cuántas viviendas están afectadas.</span></li></ol><div class="door-contact"><div><h3>¿Necesitas atención urgente?</h3><p>Consulta la disponibilidad de desplazamiento para tu localidad.</p></div><div class="actions">'+link(tel,'Llamar','btn dark')+link(porteroWhatsApp,'WhatsApp','btn whatsapp')+'</div></div></div></section>',
  {trail:[homeTrail,serviceTrail,['Porteros y videoporteros',porteroPath]],type:'Reparación de porteros automáticos y renovación a videoportero'});

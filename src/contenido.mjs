@@ -9,6 +9,7 @@ export const provincias = [
 ];
 
 export const trabajos = [
+  '24010',
   '48057',
   '09330',
   '20055',
