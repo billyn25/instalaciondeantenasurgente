@@ -426,6 +426,7 @@ ${indexed ? '<link rel="canonical" href="' + esc(url) + '">' : '<meta name="robo
 <meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${base}/assets/trabajos/${sharePhoto[0]}.webp">
 <meta property="og:image:alt" content="${esc(sharePhoto[1])}">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg"><link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/visor-fotos.js" defer></script>
 ${searchEnabled ? '<script src="/assets/buscar.js" defer></script>' : ''}
 <script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@graph':data}).replaceAll('<', '\\u003c')}</script>
 </head><body><a class="skip" href="#contenido">Saltar al contenido</a>
