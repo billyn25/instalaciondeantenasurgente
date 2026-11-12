@@ -609,7 +609,7 @@ for (const [code, area] of areaMap) {
           + photoGrid(corralesPhotos)
           : place.code === '39020' ? 'Renovación de antena TDT en Castro Urdiales</h2>'
           + '<div class="case-photo-guide">' + photoGrid([castroPhoto], 'photo-grid photo-grid--mediciones')
-          + '<div class="prose"><p class="intro">La televisión se veía mal con la antena y los amplificadores antiguos. Renovamos la instalación con una antena TDT en la cubierta, un amplificador de mástil y su fuente de alimentación.</p>'
+          + '<div class="prose"><p class="intro">En una vivienda de la avenida Primero de Mayo, la televisión se veía mal con la antena y los amplificadores antiguos. Renovamos la instalación con una antena TDT en la cubierta, un amplificador de mástil y su fuente de alimentación.</p>'
           + '<p>El amplificador va cerca de la antena y eleva el nivel de señal antes de que recorra la bajante. La fuente suministra al amplificador la corriente que necesita a través del cable coaxial.</p>'
           + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div></div></div>'
           : place.code === '48902' ? 'Renovación de antena UHF para TDT en Erandio</h2>'
