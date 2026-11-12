@@ -43,6 +43,10 @@ const gernikaSecondPhoto = photosByName.get('gernika-lumo-dos-antenas');
 const gernikaPhoto = photosByName.get('gernika-lumo-antena-tdt');
 const gernikaCaseUrl = '/bizkaia/gernika-lumo/#trabajos-locales';
 const durangoPhoto = photosByName.get('durango-antena-caida-reparada');
+const ribadesellaPhoto = ['ribadesella-antena-tdt-caida', 'Antena TDT caída en el suelo tras una tormenta en Ribadesella', 900, 1200];
+const ribadesellaTitle = 'Antena TDT caída tras una tormenta en Ribadesella';
+const ribadesellaSummary = 'La antena cayó al suelo después de la tormenta. Está prevista una intervención urgente para sustituir por completo la instalación de antena.';
+const ribadesellaCaseUrl = '/trabajos/#ribadesella-antena-caida';
 const getxoPhoto = ['getxo-antena-uhf-filtro-5g', 'Antena UHF del trabajo de Getxo, sujeta a la fachada de piedra junto a la escalera de acceso', 675, 1200];
 const getxoCaseUrl = '/bizkaia/getxo/#trabajos-locales';
 const tolosaPhoto = ['tolosa-mastil-antenas-caidas', 'Mástil doblado y antenas caídas por el viento en Tolosa antes de la reparación', 900, 1200];
@@ -391,6 +395,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(ribadesellaPhoto)}<p class="kicker">Ribadesella · Aviso urgente</p><h3>${esc(ribadesellaTitle)}</h3>
+      <p>${esc(ribadesellaSummary)}</p>
+      ${link(ribadesellaCaseUrl, 'Ver el aviso de Ribadesella', 'text-link')}</article>
     <article class="card">${image(getxoPhoto)}<p class="kicker">Getxo · TDT</p><h3>Canales que no se veían por interferencias 5G</h3>
       <p>Sustituimos la antena por una UHF con filtro 5G, la ajustamos con el medidor de campo y revisamos todas las tomas de la vivienda.</p>
       ${link(getxoCaseUrl, 'Ver el cambio de antena en Getxo', 'text-link')}</article>
@@ -636,6 +643,9 @@ add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista 
 add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   'Galería de trabajos reales de Antenista Fuentes. Antenas en cubierta, mástiles, cabeceras de televisión y equipos de distribución.',
   smallHero('Galería de obra', 'Trabajos reales de antenas', 'Fotografías de antenas de televisión, equipos de medida y distribución de señal.', '', false)
+  + '<section class="section wrap split" id="ribadesella-antena-caida"><div><p class="kicker">Asturias · Aviso urgente</p><h2>' + esc(ribadesellaTitle) + '</h2>'
+  + '<p class="intro">' + esc(ribadesellaSummary) + '</p></div>'
+  + '<figure class="service-photo"><a href="/assets/trabajos/' + ribadesellaPhoto[0] + '.webp">' + image(ribadesellaPhoto) + '</a><figcaption>Estado de la antena antes de la intervención.</figcaption></figure></section>'
   + '<section class="section wrap"><h2>Trabajos documentados por provincia</h2>'
   + '<div class="cards case-previews">' + [...areaMap].map(([code,area]) => {
     const cases = documentedCases.filter(item => item[0] === code);
