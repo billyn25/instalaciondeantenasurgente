@@ -20,7 +20,7 @@ Los casos contabilizados tienen foto y descripción en el registro de trabajos d
 | Álava | 11 | 2 | Añadir detalles y fotos de intervenciones propias en Vitoria-Gasteiz u otros municipios atendidos. Amurrio y Laudio ya tienen casos identificados. |
 | Gipuzkoa | 13 | 6 | Conservar los casos de Udala, Tolosa, Azpeitia, Deba, Hondarribia y Hernani. Donostia, Irun y Errenteria necesitan más evidencia propia si se dispone de ella. |
 | Burgos | 12 | 1 | Salas de los Infantes tiene el caso fotografiado. Priorizar información real de Burgos capital, Miranda, Aranda y Lerma antes de crear más fichas. |
-| León | 12 | 0 | Prioridad alta: documentar trabajos confirmados de esta web. La mención de Bembibre en la lista de lugares no incluye un caso desarrollado con foto. |
+| León | 12 | 0 | Prioridad alta: documentar trabajos confirmados de esta web. La mención de Boñar en la lista de lugares no incluye un caso desarrollado con foto. |
 | Cantabria | 14 | 3 | Mantener Castro Urdiales, Los Corrales de Buelna y Torrelavega. Santander y otras fichas se beneficiarían de intervenciones propias bien explicadas. |
 | La Rioja | 13 | 0 | Prioridad alta: obtener detalles y fotos de trabajos autorizados para esta web, empezando por los municipios atendidos. |
 | Asturias | 1 | 0 terminados; 1 aviso con foto | Ribadesella está documentada como aviso pendiente. Actualizar actuación y resultado solo cuando el titular confirme la finalización. |
