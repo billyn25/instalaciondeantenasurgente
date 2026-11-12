@@ -47,7 +47,9 @@ const ribadesellaPhoto = ['ribadesella-antena-tdt-caida', 'Antena TDT caída en 
 const ribadesellaTitle = 'Antena TDT caída tras una tormenta en Ribadesella';
 const ribadesellaSummary = 'La antena cayó al suelo después de la tormenta. Está prevista una intervención urgente para sustituir por completo la instalación de antena.';
 const asturiasUrl = '/asturias/';
-const ribadesellaCaseUrl = asturiasUrl + '#ribadesella-antena-caida';
+const ribadesella = { name: 'Ribadesella', url: asturiasUrl + 'ribadesella/' };
+const asturias = { name: 'Asturias', url: asturiasUrl, centers: [ribadesella] };
+const ribadesellaCaseUrl = ribadesella.url + '#ribadesella-antena-caida';
 const getxoPhoto = ['getxo-antena-uhf-filtro-5g', 'Antena UHF del trabajo de Getxo, sujeta a la fachada de piedra junto a la escalera de acceso', 675, 1200];
 const getxoCaseUrl = '/bizkaia/getxo/#trabajos-locales';
 const tolosaPhoto = ['tolosa-mastil-antenas-caidas', 'Mástil doblado y antenas caídas por el viento en Tolosa antes de la reparación', 900, 1200];
@@ -284,7 +286,7 @@ function search() {
   <p>Busca por nombre o consulta el <a href="#zonas">listado de provincias</a>.</p></div>
   <div><form role="search" data-search aria-labelledby="buscar-municipio"><div class="search-controls">
   <label>Municipio<input type="search" placeholder="Ej. Zalla o Lerma" autocomplete="off" aria-controls="resultados-municipios"></label>
-  <label>Provincia<select><option value="">Todas las provincias</option>${areaNames.map((name) => '<option>' + esc(name) + '</option>').join('')}</select></label>
+  <label>Provincia<select><option value="">Todas las provincias</option>${[...areaNames, asturias.name].map((name) => '<option>' + esc(name) + '</option>').join('')}</select></label>
   </div></form><p id="estado-busqueda" aria-live="polite"></p><ul id="resultados-municipios" class="search-results"></ul>
   <noscript>Consulta los municipios en el listado por provincia.</noscript></div></div></section>`;
 }
@@ -310,7 +312,7 @@ function diagnosticCards() {
 }
 
 function directory(showAll = false) {
-  return '<div class="zones">' + [...areaMap.values()].map((area) => {
+  return '<div class="zones">' + [...areaMap.values(), asturias].map((area) => {
     const featuredPlaces = area.centers.slice(0, showAll ? 12 : 6);
     const highlights = featuredPlaces.map((place) =>
       '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
@@ -368,7 +370,7 @@ ${footer}
 const homeTrail = ['Inicio', '/'];
 
 add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
-  'Antenista Fuentes. Instalación y reparación de antenas TDT, parabólicas y antenas de comunidades. Busca tu municipio en siete provincias.',
+  'Antenista Fuentes. Instalación y reparación de antenas TDT, parabólicas y antenas de comunidades. Busca tu municipio por provincia.',
   `<section class="hero"><div class="wrap hero-grid"><div><p class="kicker dot">Instalación y reparación de antenas</p>
   <h1>Antenista urgente.<br><em>TDT y satélite.</em></h1>
   <p>Instalamos antenas y reparamos fallos de señal en viviendas y comunidades. Cuéntanos en qué pueblo estás y qué falla en tu televisión.</p>
@@ -444,9 +446,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <div class="actions">${link('/trabajos/', 'Ver todos los trabajos', 'btn dark')}</div></div></section>
   <section class="section wrap"><p class="kicker">Viviendas y comunidades</p><h2>Antenas, porteros automáticos y videoporteros</h2>
   <p class="intro">Si solo falla una habitación, empezamos por su toma. Si varios vecinos pierden los mismos canales, revisamos qué parte de la instalación comparten.</p>${serviceCards()}</section>
-  <section class="section wrap" id="zonas"><p class="kicker">Siete provincias</p><h2>Antenas en tu municipio</h2>
+  <section class="section wrap" id="zonas"><h2>Antenas en tu municipio</h2>
   <h3>Bilbao y alrededores</h3>
-  <p class="intro">Nuestro equipo sale de Bilbao y se desplaza a todos los municipios que figuran en esta zona de cobertura, tanto para visitas programadas como para averías urgentes. Busca tu pueblo o abre el listado de tu provincia. Al contactar, te confirmamos cuándo podemos llegar.</p>${workTowns(['48020', '48013', '48082', '48078', '48084', '48044', '48054', '48015'].map(code => towns.get(code)))}
+  <p class="intro">El equipo se desplaza desde Bilbao para visitas programadas y averías urgentes. Busca tu municipio o consulta tu provincia. Al contactar, te confirmamos la disponibilidad para tu dirección.</p>${workTowns(['48020', '48013', '48082', '48078', '48084', '48044', '48054', '48015'].map(code => towns.get(code)))}
   ${directory(true)}</section>
   <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p><p>${link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar la TDT y comprobar los canales UHD', 'text-link')}</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
@@ -662,14 +664,25 @@ add('/trabajos/', 'Trabajos reales de antenas y TDT | Antenista Fuentes',
   + '</section>' + porteroVisit('20036','Hondarribia') + porteroVisit('20040','Hernani') + porteroVisit('01036','Llodio / Laudio') + callout(),
   { trail: [homeTrail, ['Trabajos reales', '/trabajos/']] });
 
-add(asturiasUrl, 'Trabajos de antenas en Asturias | Antenista Fuentes',
-  'Aviso urgente en Ribadesella por la caída de una antena TDT tras una tormenta. Fotografía del estado de la instalación y sustitución prevista.',
-  smallHero('Asturias', 'Trabajos de antenas en Asturias', 'Aviso de reparación urgente de una antena TDT en Ribadesella.', '', false)
+add(asturiasUrl, 'Antenista en Asturias | Instalación y reparación de antenas',
+  'Consulta el servicio de antenas TDT en Ribadesella y el aviso urgente por la caída de una antena tras una tormenta.',
+  smallHero('Cobertura provincial', 'Antenas en Asturias', 'Instalación y reparación de antenas TDT en Ribadesella. Consulta la disponibilidad para tu dirección.', 'Asturias')
+  + '<section class="section wrap" id="municipios"><h2>Servicio de antenista por municipio</h2><ul class="places"><li>'
+  + link(ribadesella.url, 'Antenista en Ribadesella', 'text-link') + '</li></ul></section>'
+  + '<section class="surface" id="ribadesella-antena-caida"><div class="wrap section split"><div><p class="kicker">Aviso urgente en Ribadesella</p><h2>' + esc(ribadesellaTitle) + '</h2>'
+  + '<p class="intro">La reparación y la sustitución de la instalación están previstas.</p>'
+  + '<div class="actions">' + link(ribadesellaCaseUrl, 'Ver el aviso de Ribadesella', 'text-link') + '</div></div>'
+  + '<figure class="service-photo service-photo--satelite">' + image(ribadesellaPhoto) + '</figure></div></section>',
+  { trail: [homeTrail, ['Asturias', asturiasUrl]] });
+
+add(ribadesella.url, 'Antenista en Ribadesella | Reparación e instalación de TDT',
+  'Instalación y reparación de antenas TDT en Ribadesella. Aviso urgente por una antena caída tras una tormenta, con foto y sustitución prevista.',
+  smallHero('Asturias · Servicio de antenista', 'Antenista en Ribadesella', 'Instalación y reparación de antenas TDT. Consúltanos si has perdido la señal o si el viento ha dañado la instalación exterior.', ribadesella.name)
   + '<section class="section wrap split" id="ribadesella-antena-caida"><div><p class="kicker">Aviso urgente</p><h2>' + esc(ribadesellaTitle) + '</h2>'
   + '<p class="intro">' + esc(ribadesellaSummary) + '</p>'
-  + '<div class="actions">' + link('/trabajos/', 'Ver la galería de trabajos', 'text-link') + '</div></div>'
+  + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación de antenas', 'text-link') + '</div></div>'
   + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + ribadesellaPhoto[0] + '.webp">' + image(ribadesellaPhoto) + '</a><figcaption>Estado de la antena antes de la intervención.</figcaption></figure></section>',
-  { trail: [homeTrail, ['Asturias', asturiasUrl]] });
+  { trail: [homeTrail, ['Asturias', asturiasUrl], ['Ribadesella', ribadesella.url]], area: ribadesella.name, type: 'Instalación y reparación de antenas TDT' });
 
 const serviceTrail = ['Servicios', '/servicios/'];
 add('/servicios/', 'Antenas TDT, 4G y 5G, porteros y videoporteros | Antenista Fuentes',
@@ -742,10 +755,12 @@ for (const [path, { html }] of pages) {
   writeFileSync(file, html);
 }
 
-const searchRows = [...towns.values()].sort(byName).map((place) => [
+const searchRows = [...towns.values()].map((place) => [
   place.name, place.province.name, place.url, place.center?.name ?? '',
   normalize([place.name, place.official, place.capital, place.alias].join(' ')),
 ]);
+searchRows.push([ribadesella.name, asturias.name, ribadesella.url, '', normalize(ribadesella.name + ' Ribeseya')]);
+searchRows.sort(([a], [b]) => collator.compare(a, b));
 writeFileSync(join(dist, 'assets/municipios.json'), JSON.stringify(searchRows));
 
 const urls = [...pages].filter(([, page]) => page.indexed).map(([path]) => '  <url><loc>' + esc(base + path) + '</loc></url>');
