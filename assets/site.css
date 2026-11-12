@@ -105,6 +105,8 @@ p+p{margin-top:.8em}
 .places{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}
 .places a,.nearby li{display:block;padding:.55rem .7rem;border:1px solid var(--line);border-radius:7px;background:#fff;overflow-wrap:anywhere}
 .places a:hover,.nearby li:target{background:#fff0e5;border-color:#d28c61}
+#pueblos-cercanos h3{margin-top:clamp(1.35rem,3vw,2rem)}
+#pueblos-cercanos .places{gap:.75rem;margin:.85rem 0 1.15rem}
 .nearby li{scroll-margin-top:1rem}
 .nearby li a{text-decoration:none;display:block}
 .nearby li a:hover{text-decoration:underline}
