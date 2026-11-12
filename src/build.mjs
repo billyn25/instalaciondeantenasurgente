@@ -477,7 +477,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <h3>Bilbao y alrededores</h3>
   <p class="intro">El equipo se desplaza desde Bilbao para visitas programadas y averías urgentes. Busca tu municipio o consulta tu provincia. Al contactar, te confirmamos la disponibilidad para tu dirección.</p>${workTowns(['48020', '48013', '48082', '48078', '48084', '48044', '48054', '48015'].map(code => towns.get(code)))}
   ${directory(true)}</section>
-  <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p><p>${link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar la TDT y comprobar los canales UHD', 'text-link')}</p>${diagnosticCards()}</div></section>
+  <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p><p>${link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar la TDT y comprobar los canales UHD', 'text-link')}</p><p>${link('/ayuda-antenas/#la-septima', 'Cómo sintonizar La Séptima en la TDT', 'text-link')}</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
 
 const septimaHelp = '<p>¿Buscas La Séptima? Revisa toda la lista de canales y, si no aparece, haz una búsqueda automática en modo Antena o TDT. ' + link('/ayuda-antenas/#la-septima', 'Cómo encontrar La Séptima y qué hacer si falta', 'text-link') + '</p>';
@@ -717,7 +717,7 @@ const tdtGuide = '<section class="section wrap tdt-guide"><div class="split tdt-
   + '<p>Al pedir visita, indica tu municipio, el modelo del televisor o receptor y los canales que faltan. Dinos también si ya has hecho la búsqueda y si el problema afecta a algún vecino.</p>'
   + '<div class="actions">' + link(wa('', 'necesito resintonizar los canales TDT'), 'Pedir ayuda por WhatsApp', 'btn dark') + '</div></div></div></section>';
 
-add('/ayuda-antenas/', 'Resintonizar la TDT y comprobar canales UHD | Antenista Fuentes',
+add('/ayuda-antenas/', 'Resintonizar la TDT: La Séptima y canales UHD | Antenista Fuentes',
   'Cómo buscar los canales tras los cambios de noviembre de 2026, comprobar la compatibilidad UHD y pedir ayuda con la resintonización o la señal de antena.',
   smallHero('Ayuda con la televisión', 'Resintonización de la TDT y canales UHD', 'Busca los canales que han cambiado, comprueba qué admite tu televisor y averigua cuándo conviene revisar la antena.', '', false)
   + tdtGuide
