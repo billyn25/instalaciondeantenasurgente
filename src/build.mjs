@@ -387,28 +387,26 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
     <article class="card">${image(amorebietaPhotos[0])}<p class="kicker">Amorebieta-Etxano</p><h3>Primera instalación de parabólica para Astra</h3>
       <p>El pabellón no tenía parabólica. Montamos una antena Fte y la orientamos a Astra 19,2° Este para recibir televisión por satélite.</p>
       ${link(amorebietaCaseUrl, 'Ver las fotos de Amorebieta-Etxano', 'text-link')}</article>
-    <article class="card"><p class="kicker">Sondika</p><h3>La imagen se pixelaba en laSexta y Antena 3</h3>
-      <p>Sustituimos la antena antigua por una nueva.</p>
-      ${link(sondikaCaseUrl, 'Ver el cambio de antena en Sondika', 'text-link')}</article>
-    <article class="card"><p class="kicker">Zierbena</p><h3>Antena Televes con dipolo activo</h3>
+    <article class="card">${image(zierbenaPhoto)}<p class="kicker">Zierbena</p><h3>Antena Televes con dipolo activo</h3>
       <p>Montamos una antena con amplificación en el dipolo para reforzar la señal de TDT.</p>
       ${link(zierbenaCaseUrl, 'Ver la instalación de Zierbena', 'text-link')}</article>
-    <article class="card"><p class="kicker">Amurrio</p><h3>Reparación urgente de una antena caída</h3>
+    <article class="card">${image(amurrioPhoto)}<p class="kicker">Amurrio</p><h3>Reparación urgente de una antena caída</h3>
       <p>Atendimos el aviso tras perderse la señal de televisión y reparamos la instalación.</p>
       ${link(amurrioCaseUrl, 'Ver la reparación de Amurrio', 'text-link')}</article>
-    <article class="card"><p class="kicker">Balmaseda</p><h3>TDT y parabólica en un mismo mástil</h3>
+    <article class="card">${image(balmasedaPhoto)}<p class="kicker">Balmaseda</p><h3>TDT y parabólica en un mismo mástil</h3>
       <p>Montamos las dos antenas y usamos un diplexor para llevar ambas señales por un solo cable coaxial.</p>
       ${link(balmasedaCaseUrl, 'Ver la instalación de Balmaseda', 'text-link')}</article>
-    <article class="card"><p class="kicker">Gizaburuaga</p><h3>Torreta nueva tras la caída de la anterior</h3>
+    <article class="card">${image(gizaburuagaPhoto)}<p class="kicker">Gizaburuaga</p><h3>Torreta nueva tras la caída de la anterior</h3>
       <p>Instalamos una antena UHF con previo de mástil y fuente de alimentación para amplificar la señal.</p>
       ${link(gizaburuagaCaseUrl, 'Ver el montaje de Gizaburuaga', 'text-link')}</article>
-    <article class="card"><p class="kicker">Los Corrales de Buelna</p><h3>Dos antenas para captar todos los canales</h3>
+    <article class="card">${image(corralesPhotos[0])}<p class="kicker">Los Corrales de Buelna</p><h3>Dos antenas para captar todos los canales</h3>
       <p>Sustituimos las antenas y montamos dos antenas TDT en cubierta.</p>
       ${link(corralesCaseUrl, 'Ver el cambio de antenas en Los Corrales de Buelna', 'text-link')}</article>
-    <article class="card"><p class="kicker">Azpeitia</p><h3>Cambio de antenas UHF y FM</h3>
+    <article class="card">${image(azpeitiaPhoto)}<p class="kicker">Azpeitia</p><h3>Cambio de antenas UHF y FM</h3>
       <p>Sustituimos las antenas del mástil que reciben la televisión terrestre y la radio FM.</p>
       ${link(azpeitiaCaseUrl, 'Ver el trabajo de Azpeitia', 'text-link')}</article>
   </div>
+  <p>${link(sondikaCaseUrl, 'Cambio de antena en Sondika por pixelación en laSexta y Antena 3', 'text-link')}</p>
   <h3 class="home-portero-cases-heading">Trabajos de porteros automáticos</h3>
   <div class="cards case-previews">
     <article class="card">${image(llodioPhoto)}<p class="kicker">Llodio / Laudio · Porteros</p><h3>Reparación urgente de grupo fónico Fermax</h3><p>Trabajo real de reparación del grupo fónico Fermax PVT9696 en un portero comunitario.</p>${link(llodioCaseUrl,'Ver el caso real en Llodio / Laudio','text-link')}</article>
