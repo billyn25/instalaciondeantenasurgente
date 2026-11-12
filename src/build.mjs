@@ -43,6 +43,8 @@ const gernikaSecondPhoto = photosByName.get('gernika-lumo-dos-antenas');
 const gernikaPhoto = photosByName.get('gernika-lumo-antena-tdt');
 const gernikaCaseUrl = '/bizkaia/gernika-lumo/#trabajos-locales';
 const durangoPhoto = photosByName.get('durango-antena-caida-reparada');
+const tolosaPhoto = ['tolosa-mastil-antenas-caidas', 'Mástil doblado y antenas caídas por el viento en Tolosa antes de la reparación', 900, 1200];
+const tolosaCaseUrl = '/gipuzkoa/tolosa/#trabajos-locales';
 const azpeitiaPhoto = ['azpeitia-antenas-uhf-fm', 'Antenas UHF y FM montadas en un mástil en Azpeitia', 676, 1200];
 const azpeitiaCaseUrl = '/gipuzkoa/azpeitia/#trabajos-locales';
 const amurrioPhoto = ['amurrio-antena-caida', 'Antena de televisión caída sobre un tejado de Amurrio antes de la reparación', 675, 1200];
@@ -228,6 +230,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['20','Tolosa · Antenas','Sustitución urgente de mástil y antenas tras fuertes vientos',tolosaPhoto,tolosaCaseUrl],
   ['48','Amorebieta-Etxano · Antenas','Instalación de parabólica para Astra 19,2° Este en un pabellón',amorebietaPhotos[0],amorebietaCaseUrl],
   ['48','Sondika · Antenas','Cambio de antena por pixelación en laSexta y Antena 3',sondikaPhoto,sondikaCaseUrl],
   ['39','Los Corrales de Buelna · Antenas','Cambio de antenas para recuperar todos los canales',null,corralesCaseUrl],
@@ -385,6 +388,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(tolosaPhoto)}<p class="kicker">Tolosa · Reparación urgente</p><h3>Mástil y antenas caídas tras fuertes vientos</h3>
+      <p>Sustituimos el mástil, las antenas y todo el material de la instalación dañada.</p>
+      ${link(tolosaCaseUrl, 'Ver la reparación de antenas en Tolosa', 'text-link')}</article>
     <article class="card">${image(amorebietaPhotos[0])}<p class="kicker">Amorebieta-Etxano</p><h3>Primera instalación de parabólica para Astra</h3>
       <p>El pabellón no tenía parabólica. Montamos una antena Fte y la orientamos a Astra 19,2° Este para recibir televisión por satélite.</p>
       ${link(amorebietaCaseUrl, 'Ver las fotos de Amorebieta-Etxano', 'text-link')}</article>
@@ -529,6 +535,10 @@ for (const [code, area] of areaMap) {
           : place.code === '39025' ? 'Cambio de antenas TDT en Los Corrales de Buelna</h2>'
           + '<p class="intro">Sustituimos las antenas de televisión terrestre y montamos dos antenas TDT en cubierta para captar todos los canales.</p>'
           + photoGrid(corralesPhotos)
+          : place.code === '20071' ? 'Reparación urgente de mástil y antenas caídas en Tolosa</h2>'
+          + '<p class="intro">Los fuertes vientos tumbaron el conjunto de antenas y dejaron el mástil doblado. Atendimos el aviso de urgencia y sustituimos el mástil, las antenas y todo el material de la instalación dañada. La foto muestra cómo quedó el conjunto tras el viento, antes de la reparación.</p>'
+          + photoGrid([tolosaPhoto], 'photo-grid photo-grid--mediciones')
+          + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación de antenas', 'text-link') + '</div>'
           : place.code === '20018' ? 'Cambio de antenas UHF y FM en Azpeitia</h2>'
           + '<div class="split local-extra"><div><p class="intro">Sustituimos las antenas UHF y FM de una instalación en Azpeitia. La UHF se usa para recibir la TDT y la FM para la radio. En la foto se ve el conjunto exterior montado en el mástil.</p>'
           + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div></div>'
