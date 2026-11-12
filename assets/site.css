@@ -176,6 +176,7 @@ details{margin-top:.8rem}
 }
 .local-extra > .kicker + h3, .local-extra .split .kicker + h3{margin-top:.35rem}
 .local-extra h2,.guide h2{font-size:clamp(1.35rem,2.5vw,2.05rem)}
+.burgos-advice h2 + h3{margin-top:1.4rem}
 .guide section+section{margin-top:2rem}
 .nearby small{display:block;color:var(--muted)}
 .nearby small a{display:inline-block;text-decoration:underline}

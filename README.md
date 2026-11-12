@@ -9,10 +9,25 @@ Ejecuta `node src/build.mjs` con Node.js 22. El resultado se escribe en `dist/`.
 ## Cobertura y contenido
 
 - `src/contenido.mjs` contiene los municipios con página propia, su contenido, los servicios y los municipios con trabajos confirmados.
-- Se incluyen como mínimo los ocho municipios más poblados de cada provincia, junto con otros municipios de referencia por ubicación o trabajos reales.
+- Las páginas municipales existentes cubren poblaciones principales y lugares con trabajos confirmados. Una nueva ficha necesita información útil propia; la población del municipio no basta para justificar otra página.
 - `data/municipios.json` registra el código INE, el nombre, la población a 1 de enero de 2025, latitud, longitud y capital municipal cuando tiene otro nombre.
 - El resto de municipios se enlaza a su apartado dentro de la página principal más cercana en línea recta en la misma provincia. Se confirma cada desplazamiento al contactar.
-- Las fotografías de los trabajos se muestran como galería general. Los pies describen lo que aparece en la foto. La lista de lugares donde se han realizado trabajos va por separado.
+- Los casos documentados enlazan la foto y la descripción de la intervención con su municipio. La galería general de equipos no acredita por sí sola un trabajo en un municipio concreto.
+
+## Criterios para futuras actualizaciones
+
+- Este repositorio corresponde solo a instalaciondeantenasurgente.com. No incorporar trabajos ni fotos de Antenas Rapid u otras webs sin confirmación expresa para este proyecto.
+- En cada caso publicado conservar la ubicación y el alcance comunicados por el titular. Distinguir avería, actuación y resultado conocido; no inventar mediciones, fechas, resultados, direcciones, reseñas ni certificaciones. Un aviso pendiente no es una reparación terminada.
+- Las orientaciones de servicio se presentan como consejos o posibilidades, no como experiencias realizadas en ese municipio. `src/burgos.mjs` reúne cuatro orientaciones prácticas de Burgos.
+- Actualizar las guías sobre canales con fuentes oficiales y fechas comprobadas. No multiplicar una noticia por todos los municipios ni cambiar fechas solo para aparentar actualidad.
+- Priorizar información que ayude a decidir o preparar una visita. Reescribir sinónimos, añadir nombres de pueblos o alcanzar una cantidad de palabras no convierte una ficha en contenido propio.
+- Mantener las URL existentes. Antes de eliminar o consolidar una página, revisar sus enlaces y sus datos de Search Console para preparar la redirección que corresponda.
+
+## Validación de publicación
+
+`node src/build.mjs` ejecuta `src/validar-sitio.mjs` antes de escribir `dist/`. El despliegue se detiene si detecta páginas sin H1 único, títulos o descripciones duplicados, canonical incorrecto, bloqueos de indexación en páginas indexables, JSON-LD no válido, identificadores duplicados, destinos internos o imágenes ausentes, anclas rotas o páginas indexables sin ruta de enlaces desde la portada.
+
+Esta comprobación técnica no determina la calidad editorial ni garantiza indexación o posiciones. La evolución real se comprueba en Search Console: rendimiento, indexación, acciones manuales y seguridad.
 
 ## Fuentes
 

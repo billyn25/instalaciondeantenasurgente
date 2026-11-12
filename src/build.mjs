@@ -1,3 +1,5 @@
+import { ayudaBurgos } from './burgos.mjs';
+import { validarSitio } from './validar-sitio.mjs';
 import { guiasServicio } from './guias-servicio.mjs';
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -625,12 +627,22 @@ const burgosHelp = '<section class="section wrap local-extra" id="diagnostico-td
   + '<article class="card"><h3>Necesitas una antena nueva en una casa</h3><p>Indica el pueblo exacto, qué cadenas quieres recibir y cuántas tomas vas a usar. Si ya hay cableado o un soporte, cuéntanos dónde está.</p>'
   + link(salasCaseUrl, 'Ver la instalación real en Salas de los Infantes', 'text-link') + '</article></div></section>';
 
+function burgosAdvice(place) {
+  const guide = ayudaBurgos[place.code];
+  if (!guide) return '';
+  const notice = wa(place.name, guide.request) + encodeURIComponent('\n\n' + guide.fields.map((field) => field + ': ').join('\n'));
+  return '<section class="wrap section local-extra burgos-advice" id="preparar-visita"><div class="prose guide"><h2>' + esc(guide.title) + '</h2>'
+    + guide.blocks.map(([title, copy]) => '<h3>' + esc(title) + '</h3><p>' + esc(copy) + '</p>').join('')
+    + '<p>' + link(...guide.related, 'text-link') + '</p>'
+    + '<div class="actions">' + link(notice, 'Enviar los datos de la avería o instalación', 'btn whatsapp') + '</div></div></section>';
+}
+
 for (const [code, area] of areaMap) {
   const heading = 'Antenista en ' + area.name;
   const centerLinks = area.centers.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
   const covered = area.centers.filter((place) => place.nearby.length).map((center) =>
     '<section><h3>' + link(center.url + '#pueblos-cercanos', 'Entorno de ' + center.name) + '</h3><ul class="places">'
-    + center.nearby.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('') + '</ul></section>').join('');
+    + center.nearby.map((place) => '<li>' + link(place.url, place.name) + '</li>').join('') + '</ul></section>').join('');
   const localWorks = featured.filter((place) => place.province === area);
   const [serviceHeading, serviceText, serviceKey, photoKey] = servicioProvincial[code];
   const servicePhoto = photosByName.get(photoKey === 'antena-en-cubierta' ? 'mastil-varias-antenas' : photoKey);
@@ -670,7 +682,7 @@ for (const [code, area] of areaMap) {
       : service === 'comunidades' ? 'TDT y antenas colectivas' : 'Instalación y reparación TDT';
     const otherServices = Object.entries(servicios).filter(([key]) => key !== service).map(([key, [name]]) =>
       '<li>' + link('/servicios/' + key + '/', name) + '</li>').join('');
-    const near = place.nearby.map((item) => '<li id="pueblo-' + item.code + '"><strong>Antenista en ' + esc(item.name)
+    const near = place.nearby.map((item) => '<li id="pueblo-' + item.code + '"><strong>' + esc(item.name)
       + '</strong>' + (item.capital ? '<small class="nucleus"> · ' + esc(item.capital) + '</small>' : '')
       + ' <small>' + link(wa(item.name), 'Consultar visita') + '</small>'
       + '</li>').join('');
@@ -776,6 +788,7 @@ for (const [code, area] of areaMap) {
           : place.code === '20029' ? 'Trabajos de antena en varias viviendas de Deba</h2>'
             + '<p class="intro">Una de las intervenciones se realizó en la Calle de Galtzada, 5, en Deba. Las fotos muestran antenas terrestres y parabólica, una central Rover Polar con sus repartidores y una medición de TDT con Promax. Medir el nivel y la calidad de la señal ayuda a decidir si conviene intervenir en la antena o revisar el equipo y el cable que llevan la televisión a las tomas.</p>'
             + photoGrid(debaPhotos)
+          : code === '09' ? 'Un trabajo documentado en la provincia de Burgos</h2><p class="intro">En Salas de los Infantes instalamos una antena Televes Ellipse con dipolo activo en la avenida Castrillo.</p><p>' + link(salasCaseUrl, 'Ver la foto y el montaje de Salas de los Infantes', 'text-link') + '</p>'
           : 'Hemos trabajado en ' + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p>')
         + '<div class="actions' + (caseGuide ? ' case-links' : '') + '">'
         + (caseGuide ? link('/servicios/' + caseGuide.service + '/', servicios[caseGuide.service][0], 'text-link') : '')
@@ -790,10 +803,11 @@ for (const [code, area] of areaMap) {
       + '<div class="actions">' + link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar y comprobar UHD', 'text-link')
       + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></div>' + tdtTuningFigure + '</section>'
       + (place.code === '20036' ? hondarribiaAdvice : '')
-      + (extra ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
+      + burgosAdvice(place)
+      + (extra && !ayudaBurgos[place.code] ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
         + (extra[2] ? '<p>' + link(...extra[2], 'text-link') + '</p>' : '') + '</section>' : '')
       + '<section class="section surface" id="pueblos-cercanos"><div class="wrap"><p class="kicker">Zona de servicio</p><h2>'
-      + (near ? 'Antenista en pueblos cercanos a ' : 'Cobertura desde ') + esc(place.name) + '</h2>'
+      + (near ? 'Municipios cercanos a ' : 'Servicio en ') + esc(place.name) + '</h2>'
       + (near ? '<p class="intro">Si estás en alguno de estos municipios, puedes enviar el aviso indicando dónde está la vivienda.</p><ul class="places nearby">' + near + '</ul>' : '')
       + (place.code === '48047' ? '<ul class="places">' + ['48049', '48057', '48063', '48073'].map((code) => {
         const town = towns.get(code);
@@ -948,6 +962,9 @@ add('/privacidad/', 'Privacidad | Antenista Fuentes', 'Información sobre el uso
 add('/404.html', 'Página no encontrada | Antenista Fuentes', 'Accede a la portada de Antenista Fuentes para encontrar servicios y municipios.',
   '<section class="section wrap"><h1>Página no encontrada</h1><p class="intro">Consulta el buscador de municipios o los servicios de antenista desde la portada.</p><div class="actions">'
   + link('/', 'Volver a la portada', 'btn dark') + '</div></section>', { indexed: false });
+
+const validation = validarSitio(pages, base, new URL('../assets/', import.meta.url).pathname);
+console.log('Control técnico superado: ' + validation.pages + ' páginas y enlaces revisados.');
 
 const dist = decodeURIComponent(output.pathname);
 rmSync(dist, { force: true, recursive: true });
