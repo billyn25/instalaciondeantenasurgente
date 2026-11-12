@@ -65,10 +65,6 @@ const asturias = { name: 'Asturias', url: asturiasUrl, centers: [ribadesella] };
 const ribadesellaCaseUrl = ribadesella.url + '#ribadesella-antena-caida';
 const salasPhoto = ['salas-infantes-ellipse-avenida-castrillo', 'Antena Televes Ellipse montada en un poste de la avenida Castrillo, en Salas de los Infantes', 675, 1200];
 const salasCaseUrl = '/burgos/salas-de-los-infantes/#trabajos-locales';
-const lekeitioPhoto = ['antenas-tdt-parabolica-astra-lekeitio', 'Dos antenas TDT y una parabólica para Astra en la instalación de Lekeitio', 810, 1440];
-const lekeitioCaseUrl = '/bizkaia/lekeitio/#trabajos-locales';
-const mungiaPhoto = ['cambio-antena-tdt-televes-mungia', 'Antena Televes instalada en Mungia para recuperar la recepción de TDT', 810, 1440];
-const mungiaCaseUrl = '/bizkaia/mungia/#trabajos-locales';
 const udalaPhoto = ['udala-arrasate-dos-antenas-tdt', 'Dos antenas de TDT en el mástil de una vivienda del barrio de Udala, en Arrasate', 675, 1200];
 const udalaCaseUrl = '/gipuzkoa/arrasate-mondragon/#trabajos-locales';
 const castroPhoto = ['castro-urdiales-antena-tdt-amplificador', 'Antena TDT y amplificador fijados al mástil sobre un tejado en Castro Urdiales', 675, 1200];
@@ -266,8 +262,6 @@ function porteroVisit(code, name) {
 }
 const documentedCases = [
   ['09','Salas de los Infantes · Antenas','Instalación de una Televes Ellipse en la avenida Castrillo',salasPhoto,salasCaseUrl],
-  ['48','Lekeitio · Antenas','Instalación de dos antenas TDT y una parabólica para Astra',lekeitioPhoto,lekeitioCaseUrl],
-  ['48','Mungia · Antenas','Sustitución de antena TDT por pixelación',mungiaPhoto,mungiaCaseUrl],
   ['20','Arrasate / Mondragón · Udala','Dos antenas TDT y amplificador multibanda para recuperar canales',udalaPhoto,udalaCaseUrl],
   ['39','Castro Urdiales · Antenas','Renovación de antena TDT con amplificador de mástil y fuente',castroPhoto,castroCaseUrl],
   ['48','Erandio · Antenas','Renovación de antena UHF, cableado y tomas de TV',erandioPhoto,erandioCaseUrl],
@@ -434,12 +428,6 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
     <article class="card">${image(salasPhoto)}<p class="kicker">Salas de los Infantes · TDT</p><h3>Antena Televes Ellipse en la avenida Castrillo</h3>
       <p>Montamos una antena TDT con dipolo activo en un poste de alumbrado.</p>
       ${link(salasCaseUrl, 'Ver la instalación de Salas de los Infantes', 'text-link')}</article>
-    <article class="card">${image(lekeitioPhoto)}<p class="kicker">Lekeitio · TDT y satélite</p><h3>Dos antenas TDT y parabólica para Astra</h3>
-      <p>Instalamos dos antenas Televes con dipolo activo para TDT y una parabólica para recibir Astra.</p>
-      ${link(lekeitioCaseUrl, 'Ver la instalación de Lekeitio', 'text-link')}</article>
-    <article class="card">${image(mungiaPhoto)}<p class="kicker">Mungia · TDT</p><h3>Canales pixelados con la antena antigua</h3>
-      <p>Sustituimos la antena por una Televes con dipolo activo y todos los canales volvieron a verse bien.</p>
-      ${link(mungiaCaseUrl, 'Ver el cambio de antena en Mungia', 'text-link')}</article>
     <article class="card">${image(udalaPhoto)}<p class="kicker">Udala · Arrasate / Mondragón</p><h3>Dos antenas para captar todos los canales</h3>
       <p>En esta vivienda faltaban cadenas de TDT. Instalamos dos antenas y ajustamos el amplificador multibanda para recuperar la recepción.</p>
       ${link(udalaCaseUrl, 'Ver la instalación de Udala', 'text-link')}</article>
@@ -516,26 +504,6 @@ const localCaseGuides = {
     ],
     request: 'quiero valorar una instalación de TDT en Salas de los Infantes',
     service: 'instalacion',
-  },
-  '48057': {
-    title: '¿Qué conviene indicar si quieres TDT y Astra?',
-    checks: [
-      'Dinos qué servicio o canales de satélite quieres recibir y en qué habitaciones quieres verlos.',
-      'Indica si las tomas están marcadas TV, SAT o ambas. Una foto de la toma ayuda a identificarla.',
-      'Si ya hay un receptor de satélite, comparte el modelo. Así se puede valorar qué equipo o cableado es aprovechable.',
-    ],
-    request: 'quiero instalar TDT y satélite en Lekeitio',
-    service: 'satelite',
-  },
-  '48069': {
-    title: '¿Cuándo merece la pena revisar la antena antigua?',
-    checks: [
-      'Anota si se pixelan todas las cadenas o solo algunas y si el fallo también aparece en otra toma.',
-      'Indica si la imagen empeora con lluvia o viento. Si ocurre a ciertas horas, apunta cuándo.',
-      'Dinos si ya se cambió algún cable o equipo. En este caso de Mungia, la sustitución de la antena recuperó la recepción de todos los canales.',
-    ],
-    request: 'se pixela la TDT en Mungia',
-    service: 'reparacion',
   },
   '20055': {
     title: '¿Cuándo puede hacer falta una segunda antena?',
@@ -735,12 +703,6 @@ for (const [code, area] of areaMap) {
           : place.code === '09330' ? 'Instalación de una antena TDT en la avenida Castrillo</h2>'
           + '<p class="intro">En la avenida Castrillo, en Salas de los Infantes, montamos una antena Televes Ellipse con dipolo activo para la TDT. La foto muestra la antena instalada en un poste de alumbrado.</p>'
           + casePhotoAndGuide(salasPhoto, caseGuide, place.name)
-          : place.code === '48057' ? 'Instalación de tres antenas en Lekeitio</h2>'
-          + '<p class="intro">Montamos dos antenas Televes con dipolo activo para la TDT y una parabólica para Astra. El conjunto permite recibir televisión terrestre y por satélite en la misma instalación.</p>'
-          + casePhotoAndGuide(lekeitioPhoto, caseGuide, place.name)
-          : place.code === '48069' ? 'Cambio de antena TDT por pixelación en Mungia</h2>'
-          + '<p class="intro">Con la antena antigua, la imagen de varios canales se pixelaba. La sustituimos por una Televes con dipolo activo y, tras el cambio, todos los canales volvieron a verse bien.</p>'
-          + casePhotoAndGuide(mungiaPhoto, caseGuide, place.name)
           : place.code === '20055' ? 'Instalación de dos antenas TDT en Udala, Arrasate</h2>'
           + '<p class="intro">En esta vivienda del barrio de Udala faltaban varias cadenas de TDT. Instalamos dos antenas para completar la captación y ajustamos el amplificador multibanda para que se recibieran bien todos los canales.</p>'
           + casePhotoAndGuide(udalaPhoto, caseGuide, place.name)
