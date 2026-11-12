@@ -12,13 +12,13 @@ Esto confirma accesibilidad técnica, no indexación efectiva, ausencia de accio
 
 ## Contenido por provincia
 
-Los casos contabilizados tienen foto y descripción en el registro de trabajos documentados. Incluyen antenas y porteros; un caso puede agrupar más de una visita. No equivalen al total de trabajos realizados por la empresa.
+Los casos contabilizados tienen foto y descripción en el registro de trabajos documentados. Incluyen antenas, porteros y videovigilancia; un caso puede agrupar más de una visita. No equivalen al total de trabajos realizados por la empresa.
 
 | Provincia | Fichas municipales | Casos documentados con foto | Prioridad editorial |
 | --- | ---: | ---: | --- |
 | Bizkaia | 21 | 14 | Conservar el detalle de cada caso. Desarrollar Zalla, Barakaldo, Portugalete, Sestao, Leioa, Basauri o Mungia cuando haya información propia confirmada para esta web. |
 | Álava | 11 | 2 | Añadir detalles y fotos de intervenciones propias en Vitoria-Gasteiz u otros municipios atendidos. Amurrio y Laudio ya tienen casos identificados. |
-| Gipuzkoa | 13 | 6 | Conservar los casos de Udala, Tolosa, Azpeitia, Deba, Hondarribia y Hernani. Donostia, Irun y Errenteria necesitan más evidencia propia si se dispone de ella. |
+| Gipuzkoa | 13 | 7 | Zarautz añade una cámara 4G solar solicitada por un cliente sin suministro eléctrico ni internet fijo. Conservar los casos de Udala, Tolosa, Azpeitia, Deba, Hondarribia y Hernani. Donostia, Irun y Errenteria necesitan más evidencia propia si se dispone de ella. |
 | Burgos | 12 | 1 | Salas de los Infantes tiene el caso fotografiado. Priorizar información real de Burgos capital, Miranda, Aranda y Lerma antes de crear más fichas. |
 | León | 12 | 2 | La Bañeza incorpora un videoportero IP Dahua con monitor IP Wi-Fi, UTP y switch PoE. Villablino añade TDT, tres parabólicas para Astra, Hot Bird y TDT por satélite y central amplificadora de TV y SAT. Boñar todavía no tiene un caso desarrollado con foto. |
 | Cantabria | 14 | 3 | Mantener Castro Urdiales, Los Corrales de Buelna y Torrelavega. Santander y otras fichas se beneficiarían de intervenciones propias bien explicadas. |

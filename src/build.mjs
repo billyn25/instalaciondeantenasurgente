@@ -254,6 +254,17 @@ const banezaPhoto = ['la-baneza-videoportero-ip-dahua', 'Placa exterior Dahua de
 const banezaCaseUrl = towns.get('24010').url + '#videoportero-ip-dahua';
 const najeraPhoto = ['najera-videoportero-tegui-antes', 'Videoportero Tegui convencional en Nájera, antes de la renovación prevista', 864, 1536, 'jpeg'];
 const najeraCaseUrl = towns.get('26102').url + '#renovacion-videoportero-tegui';
+const zarautzCameraPhoto = ['zarautz-camara-videovigilancia-4g-solar', 'Cámara de videovigilancia y panel solar montados en un poste en Zarautz', 864, 1536, 'jpeg'];
+const zarautzCameraCaseUrl = towns.get('20079').url + '#camara-4g-solar';
+const zarautzCameraCase = '<section class="section surface" id="camara-4g-solar"><div class="wrap split">'
+  + '<div class="prose"><p class="kicker">Trabajo real en Zarautz · Videovigilancia</p><h2>Instalación de cámara 4G solar sin suministro eléctrico ni internet fijo</h2>'
+  + '<p class="intro">Instalamos una cámara de videovigilancia 4G con panel solar en Zarautz, a petición de un cliente que no disponía de suministro eléctrico ni de conexión fija a internet en el lugar.</p>'
+  + '<h3>La necesidad del cliente y el montaje realizado</h3><p>Para esta ubicación se eligió una cámara con alimentación solar y conexión móvil 4G. La fotografía muestra la cámara y su panel solar sujetos a un poste exterior.</p>'
+  + '<h3>Qué indicar para valorar una instalación similar</h3><p>Cuéntanos qué zona necesitas vigilar, si hay cobertura móvil en el emplazamiento y dónde se podría colocar el panel solar. Una fotografía general del lugar ayuda a preparar la valoración.</p>'
+  + '<div class="actions">' + link(wa('Zarautz', 'quiero consultar una cámara de videovigilancia 4G solar'), 'Consultar una cámara 4G solar', 'btn whatsapp')
+  + link('/trabajos/', 'Ver otros trabajos', 'text-link') + '</div></div>'
+  + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + zarautzCameraPhoto[0] + '.jpeg">' + image(zarautzCameraPhoto)
+  + '</a><figcaption>Cámara 4G con panel solar instalada en Zarautz.</figcaption></figure></div></section>';
 function porteroVisit(code, name) {
  if (code === '26102') return '<section class="section surface" id="renovacion-videoportero-tegui"><div class="wrap split">'
   + '<div class="prose"><p class="kicker">Nájera, La Rioja · Renovación prevista</p><h2>Cambio de videoportero convencional a Tegui Serie 8 con monitor Classe 100</h2>'
@@ -290,6 +301,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['20','Zarautz · Videovigilancia','Cámara 4G solar para una ubicación sin luz ni internet fijo',zarautzCameraPhoto,zarautzCameraCaseUrl],
   ['26','Nájera · Renovación prevista','Cambio a Tegui Serie 8 con monitor Classe 100: equipo antiguo',najeraPhoto,najeraCaseUrl],
   ['24','Villablino · TDT y satélite','Antena TDT, tres parabólicas y central amplificadora de TV y SAT',villablinoPhoto,villablinoCaseUrl],
   ['24','La Bañeza · Videoporteros','Instalación de videoportero IP Dahua con monitor Wi-Fi, UTP y switch PoE',banezaPhoto,banezaCaseUrl],
@@ -436,7 +448,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <p>Instalamos antenas y reparamos fallos de señal en viviendas y comunidades. Cuéntanos en qué pueblo estás y qué falla en tu televisión.</p>
   ${buttons()}</div><figure class="hero-photo">${image(homeHeroPhoto, true)}<figcaption>Antenista Fuentes durante una instalación</figcaption></figure>
   </div></section>${search()}
-  <section class="section surface" id="trabajos-destacados"><div class="wrap"><h2>Trabajos reales de instalación y reparación de antenas</h2>
+  <section class="section surface" id="trabajos-destacados"><div class="wrap"><h2>Trabajos reales de instalación y reparación</h2>
   <div class="cards case-previews">
     <article class="card">${image(bilbaoCasePhoto)}<p class="kicker">Bilbao centro · Reparación</p>
       <h3>Canales que desaparecían a ciertas horas</h3>
@@ -458,6 +470,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(zarautzCameraPhoto)}<p class="kicker">Zarautz · Videovigilancia</p><h3>Cámara 4G solar sin luz ni internet fijo</h3>
+      <p>A petición del cliente, instalamos una cámara con panel solar y conexión móvil 4G en una ubicación sin suministro eléctrico ni internet fijo.</p>
+      ${link(zarautzCameraCaseUrl, 'Ver la instalación de Zarautz', 'text-link')}</article>
     <article class="card">${image(najeraPhoto)}<p class="kicker">Nájera · Renovación prevista</p><h3>Cambio a Tegui Serie 8 y Classe 100</h3>
       <p>El videoportero convencional se va a sustituir. La foto muestra el equipo antiguo antes del cambio.</p>
       ${link(najeraCaseUrl, 'Ver la renovación prevista en Nájera', 'text-link')}</article>
@@ -783,7 +798,8 @@ for (const [code, area] of areaMap) {
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
       + (place.code === '48020' ? bilbaoFaultLinks : '')
       + porteroVisit(place.code, place.name)
-      + (place.code !== '48027' && place.code !== '39087' && place.code !== '24010' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
+      + (place.code === '20079' ? zarautzCameraCase : '')
+      + (place.code !== '48027' && place.code !== '39087' && place.code !== '24010' && place.code !== '20079' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48003' ? 'Instalación de una parabólica para Astra 19,2° Este en Amorebieta-Etxano</h2>'
           + '<p class="intro">El pabellón no tenía parabólica. Instalamos una antena Fte en la cubierta y la orientamos a Astra 19,2° Este. Las fotos muestran el montaje exterior y el detalle del LNB, donde se conecta el cable coaxial que lleva la señal al interior.</p>'
           + photoGrid(amorebietaPhotos, 'photo-grid photo-grid--equipos photo-grid--mediciones')
@@ -928,9 +944,9 @@ add('/ayuda-antenas/', 'Resintonizar la TDT: La Séptima y canales UHD | Antenis
   + '</div>' + callout(),
   { trail: [homeTrail, ['Ayuda con la TDT', '/ayuda-antenas/']] });
 
-add('/trabajos/', 'Trabajos reales de antenas y videoporteros | Antenista Fuentes',
-  'Galería de trabajos reales de Antenista Fuentes. Antenas TDT, porteros automáticos, videoporteros y equipos de distribución.',
-  smallHero('Galería de obra', 'Trabajos reales de antenas y videoporteros', 'Fotografías y descripción de intervenciones en antenas de televisión, porteros y videoporteros, organizadas por provincia.', '', false)
+add('/trabajos/', 'Trabajos reales de instalación | Antenista Fuentes',
+  'Galería de trabajos reales de Antenista Fuentes. Antenas TDT, porteros, videoporteros y cámaras de videovigilancia, con fotos y descripción.',
+  smallHero('Galería de obra', 'Trabajos reales de instalación y reparación', 'Fotografías y descripción de intervenciones en antenas, porteros, videoporteros y cámaras de videovigilancia, organizadas por provincia.', '', false)
   + '<section class="section wrap"><h2>Trabajos y avisos por provincia</h2>'
   + '<div class="cards case-previews gallery-provinces">' + [...areaMap].map(([code,area]) => {
     const cases = documentedCases.filter(item => item[0] === code);
