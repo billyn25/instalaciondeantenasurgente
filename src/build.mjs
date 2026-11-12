@@ -1,3 +1,4 @@
+import { orientacionProvincial, ayudaMunicipal } from './orientacion-provincial.mjs';
 import { ayudaBurgos } from './burgos.mjs';
 import { validarSitio } from './validar-sitio.mjs';
 import { guiasServicio } from './guias-servicio.mjs';
@@ -75,7 +76,7 @@ const castroPhoto = ['castro-urdiales-antena-tdt-amplificador', 'Antena TDT y am
 const castroCaseUrl = '/cantabria/castro-urdiales/#trabajos-locales';
 const erandioPhoto = ['erandio-renovacion-antena-tdt', 'Antena UHF de TDT y parabólica sobre la cubierta de la instalación de Erandio', 904, 1200];
 const erandioCaseUrl = '/bizkaia/erandio/#trabajos-locales';
-const getxoPhoto = ['getxo-antena-uhf-filtro-5g', 'Antena UHF del trabajo de Getxo, sujeta a la fachada de piedra junto a la escalera de acceso', 675, 1200];
+const getxoPhoto = ['getxo-antena-uhf-filtro-5g', 'Antena UHF del trabajo de Getxo, sujeta a la fachada de piedra', 675, 1200];
 const getxoCaseUrl = '/bizkaia/getxo/#trabajos-locales';
 const tolosaPhoto = ['tolosa-mastil-antenas-caidas', 'Mástil doblado y antenas caídas por el viento en Tolosa antes de la reparación', 900, 1200];
 const tolosaCaseUrl = '/gipuzkoa/tolosa/#trabajos-locales';
@@ -161,7 +162,7 @@ const organization = {
   url: base + '/',
   logo: base + '/assets/logo.svg',
   telephone: phone,
-  areaServed: areaNames,
+  areaServed: [...areaNames, ribadesella.name],
 };
 
 function link(href, label, className = '') {
@@ -185,7 +186,7 @@ const mapAreas = ['24089', '39075', '48020', '20069', '01059', '09059', '26089']
 const footer = `<footer class="footer" id="mapa-cobertura"><div class="wrap">
 <div class="footer-coverage">
   <div class="footer-intro"><p class="kicker dot">Zonas de servicio</p>
-<h2>¿Hasta dónde llegamos?</h2><p>Desde nuestra base en Bilbao nos desplazamos para instalar y reparar antenas en los municipios de las siete provincias del mapa. Toca una provincia para consultar la cobertura.</p></div>
+<h2>¿Hasta dónde llegamos?</h2><p>Desde nuestra base en Bilbao organizamos visitas en las provincias del mapa y en Ribadesella, Asturias. Consulta la cobertura y la disponibilidad para la dirección del aviso.</p></div>
   <div class="footer-map" role="group" aria-label="Mapa de zonas de servicio">
     <img src="/assets/mapa-cobertura.svg" alt="" width="${mapWidth}" height="${mapHeight}" loading="lazy">
     <span class="footer-map-north" aria-hidden="true">↑ N</span>
@@ -194,7 +195,7 @@ const footer = `<footer class="footer" id="mapa-cobertura"><div class="wrap">
   </div>
   <nav class="footer-zones" aria-label="Provincias con servicio de antenista">
     <ul>${mapAreas.map(({ url, name, number }) =>
-      `<li><a href="${esc(url)}"><span aria-hidden="true">${number}</span>${esc(name)}</a></li>`).join('')}</ul>
+      `<li><a href="${esc(url)}"><span aria-hidden="true">${number}</span>${esc(name)}</a></li>`).join('')}<li><a href="/asturias/">Asturias · Ribadesella</a></li></ul>
     <a class="footer-search" href="/#zonas">Ver todos los municipios <span aria-hidden="true">↗</span></a>
   </nav>
 </div>
@@ -311,13 +312,13 @@ function workTowns(selection = featured) {
     '<li>' + link(place.url, place.name) + '</li>').join('') + '</ul>';
 }
 
-function search() {
+function search(area) {
   return `<section class="search-panel" aria-labelledby="buscar-municipio"><div class="wrap search-grid">
-  <div><p class="kicker">Cobertura por municipio</p><h2 id="buscar-municipio">Encuentra tu pueblo</h2>
-  <p>Busca por nombre o consulta el <a href="#zonas">listado de provincias</a>.</p></div>
+  <div><p class="kicker">Cobertura por municipio</p><h2 id="buscar-municipio">${area ? 'Busca tu municipio en ' + esc(area.name) : 'Encuentra tu pueblo'}</h2>
+  <p>Busca por nombre o consulta el <a href="${area ? '#municipios' : '#zonas'}">${area ? 'listado de municipios' : 'listado de provincias'}</a>.</p></div>
   <div><form role="search" data-search aria-labelledby="buscar-municipio"><div class="search-controls">
   <label>Municipio<input type="search" placeholder="Ej. Zalla o Lerma" autocomplete="off" aria-controls="resultados-municipios"></label>
-  <label>Provincia<select><option value="">Todas las provincias</option>${[...areaNames, asturias.name].map((name) => '<option>' + esc(name) + '</option>').join('')}</select></label>
+  <label>Provincia<select><option value="">Todas las provincias</option>${[...areaNames, asturias.name].map((name) => '<option' + (name === area?.name ? ' selected' : '') + '>' + esc(name) + '</option>').join('')}</select></label>
   </div></form><p id="estado-busqueda" aria-live="polite"></p><ul id="resultados-municipios" class="search-results"></ul>
   <noscript>Consulta los municipios en el listado por provincia.</noscript></div></div></section>`;
 }
@@ -372,7 +373,7 @@ function add(path, title, description, content, options = {}) {
   });
   if (type) data.push({
     '@type': 'Service', '@id': url + '#servicio', name: type, description, url,
-    provider: { '@id': organization['@id'] }, areaServed: area ?? areaNames,
+    provider: { '@id': organization['@id'] }, areaServed: area ?? [...areaNames, ribadesella.name],
   });
   if (path === '/') data.push({ '@type': 'WebSite', '@id': base + '/#web', name: brand, url, inLanguage: 'es' });
 
@@ -627,14 +628,33 @@ const burgosHelp = '<section class="section wrap local-extra" id="diagnostico-td
   + '<article class="card"><h3>Necesitas una antena nueva en una casa</h3><p>Indica el pueblo exacto, qué cadenas quieres recibir y cuántas tomas vas a usar. Si ya hay cableado o un soporte, cuéntanos dónde está.</p>'
   + link(salasCaseUrl, 'Ver la instalación real en Salas de los Infantes', 'text-link') + '</article></div></section>';
 
-function burgosAdvice(place) {
-  const guide = ayudaBurgos[place.code];
+function municipalAdvice(place) {
+  const guide = ayudaBurgos[place.code] ?? ayudaMunicipal[place.code];
   if (!guide) return '';
   const notice = wa(place.name, guide.request) + encodeURIComponent('\n\n' + guide.fields.map((field) => field + ': ').join('\n'));
-  return '<section class="wrap section local-extra burgos-advice" id="preparar-visita"><div class="prose guide"><h2>' + esc(guide.title) + '</h2>'
+  return '<section class="wrap section local-extra visit-advice" id="preparar-visita"><div class="prose guide"><h2>' + esc(guide.title) + '</h2>'
     + guide.blocks.map(([title, copy]) => '<h3>' + esc(title) + '</h3><p>' + esc(copy) + '</p>').join('')
     + '<p>' + link(...guide.related, 'text-link') + '</p>'
     + '<div class="actions">' + link(notice, 'Enviar los datos de la avería o instalación', 'btn whatsapp') + '</div></div></section>';
+}
+
+function provincialAdvice(code, area) {
+  const guide = orientacionProvincial[code];
+  if (!guide) return '';
+  const notice = wa(area.name, 'quiero consultar una visita de antenista')
+    + encodeURIComponent('\n\n' + guide.fields.map((field) => field + ': ').join('\n'));
+  return '<section class="section wrap local-extra" id="orientar-visita"><h2>' + esc(guide.title) + '</h2>'
+    + '<div class="cards diagnostic-cards">' + guide.cards.map(([title, copy, url, label]) =>
+      '<article class="card"><h3>' + esc(title) + '</h3><p>' + esc(copy) + '</p>' + link(url, label, 'text-link') + '</article>').join('') + '</div>'
+    + '<div class="actions">' + link(notice, 'Preparar mi consulta por WhatsApp', 'btn whatsapp') + '</div></section>';
+}
+
+function relatedProvincialWork(code, area) {
+  const cases = documentedCases.filter((item) => item[0] === code).slice(0, 2);
+  if (!cases.length) return 'Servicio de antena en ' + esc(area.name) + '</h2><p>'
+    + link(area.url, 'Consultar cómo preparar la visita en ' + area.name, 'text-link') + '</p>';
+  return 'Trabajos documentados en ' + esc(area.name) + '</h2><ul class="places">'
+    + cases.map(([, place, title, , url]) => '<li>' + link(url, place.split(' · ')[0] + ': ' + title) + '</li>').join('') + '</ul>';
 }
 
 for (const [code, area] of areaMap) {
@@ -649,6 +669,7 @@ for (const [code, area] of areaMap) {
   add(area.url, heading + ' | Antenas TDT y parabólicas',
     'Instalación y reparación de antenas en ' + area.name + '. Consulta la cobertura de Antenista Fuentes por municipio y solicita una visita.',
     smallHero('Cobertura provincial', 'Cobertura de antenas en ' + area.name, area.intro, area.name)
+    + search(area)
     + '<section class="section wrap split"><div><p class="kicker">Instalación y reparación de antenas</p><h2>' + esc(serviceHeading)
     + '</h2><p class="intro">' + esc(serviceText) + '</p><div class="actions">'
     + link('/servicios/' + serviceKey + '/', servicios[serviceKey][0], 'text-link')
@@ -656,6 +677,7 @@ for (const [code, area] of areaMap) {
     + '<figure class="service-photo">' + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
     + (code === '48' ? bizkaiaHelp : '')
     + (code === '09' ? burgosHelp : '')
+    + provincialAdvice(code, area)
     + '<section class="section wrap" id="municipios"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
     + (localWorks.length ? '<section class="surface"><div class="wrap section"><h2>Trabajos en ' + esc(area.name)
       + '</h2>' + provinceCaseCards(code) + '<h3 class="province-work-towns">Municipios donde hemos trabajado</h3>'+workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
@@ -664,7 +686,7 @@ for (const [code, area] of areaMap) {
     + covered + '</section>'
     + (area.code === '20' || area.name === 'Gipuzkoa' ? '<section class="section wrap"><h2>Reparaciones y mediciones reales de porteros</h2><p class="intro">David C. G. realizó cambios de grupos fónicos con recambio vigente y tomó medidas para valorar un posible cambio a videoportero.</p><ul class="places"><li>'+link('/gipuzkoa/hondarribia/#visita-portero-20036','Mediciones en Hondarribia')+'</li><li>'+link('/gipuzkoa/hernani/#visita-portero-20040','Mediciones en Hernani')+'</li></ul></section>' : '')
     + callout(area.name),
-    { trail: [homeTrail, [area.name, area.url]], area: area.name, type: heading, contactPlace: area.name });
+    { trail: [homeTrail, [area.name, area.url]], area: area.name, type: heading, contactPlace: area.name, searchEnabled: true });
 
   for (const place of area.centers) {
     const [topic, advice, service] = fichas[place.code];
@@ -788,24 +810,20 @@ for (const [code, area] of areaMap) {
           : place.code === '20029' ? 'Trabajos de antena en varias viviendas de Deba</h2>'
             + '<p class="intro">Una de las intervenciones se realizó en la Calle de Galtzada, 5, en Deba. Las fotos muestran antenas terrestres y parabólica, una central Rover Polar con sus repartidores y una medición de TDT con Promax. Medir el nivel y la calidad de la señal ayuda a decidir si conviene intervenir en la antena o revisar el equipo y el cable que llevan la televisión a las tomas.</p>'
             + photoGrid(debaPhotos)
-          : code === '09' ? 'Un trabajo documentado en la provincia de Burgos</h2><p class="intro">En Salas de los Infantes instalamos una antena Televes Ellipse con dipolo activo en la avenida Castrillo.</p><p>' + link(salasCaseUrl, 'Ver la foto y el montaje de Salas de los Infantes', 'text-link') + '</p>'
-          : 'Hemos trabajado en ' + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p>')
+          : relatedProvincialWork(code, area))
         + '<div class="actions' + (caseGuide ? ' case-links' : '') + '">'
         + (caseGuide ? link('/servicios/' + caseGuide.service + '/', servicios[caseGuide.service][0], 'text-link') : '')
         + link('/trabajos/', 'Ver la galería', caseGuide ? 'text-link' : 'btn dark') + '</div></div></section>' : '')
-      + '<section class="wrap section local-extra split tdt-tuning" id="resintonizar-tdt"><div class="prose"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
-      + '<p class="intro">Si faltan canales tras los cambios de noviembre, prueba la búsqueda automática en el modo Antena del televisor o receptor. Si ves los canales HD y faltan los UHD, comprueba que tu equipo admite DVB-T2 y HEVC/H.265.</p>'
-      + '<p>' + (service === 'comunidades'
-        ? 'Si varios vecinos pierden los mismos canales después de la búsqueda, podemos comprobar la cabecera y medir en una toma afectada.'
-        : 'Hacemos la resintonización y ordenamos los canales a domicilio. Si tras la búsqueda sigue faltando señal, podemos medir en la toma.') + '</p>'
-      + (service === 'comunidades' ? '<p>También resintonizamos y ordenamos los canales del televisor o receptor a domicilio.</p>' : '')
-      + septimaHelp
-      + '<div class="actions">' + link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar y comprobar UHD', 'text-link')
-      + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></div>' + tdtTuningFigure + '</section>'
       + (place.code === '20036' ? hondarribiaAdvice : '')
-      + burgosAdvice(place)
-      + (extra && !ayudaBurgos[place.code] ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
+      + municipalAdvice(place)
+      + (extra && !ayudaBurgos[place.code] && !ayudaMunicipal[place.code] ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
         + (extra[2] ? '<p>' + link(...extra[2], 'text-link') + '</p>' : '') + '</section>' : '')
+      + '<section class="wrap section local-extra" id="resintonizar-tdt"><h2>Resintonización de TDT en ' + esc(place.name) + '</h2>'
+      + '<p class="intro">Si un canal no aparece en la lista, consulta cómo buscarlo en el televisor o receptor. Si la imagen se corta o faltan las mismas cadenas en varias tomas, indícalo al pedir la revisión.</p>'
+      + '<ul class="places"><li>' + link('/ayuda-antenas/#resintonizar', 'Pasos para resintonizar la TDT') + '</li><li>'
+      + link('/ayuda-antenas/#la-septima', 'Buscar La Séptima') + '</li><li>'
+      + link('/ayuda-antenas/#tdt-uhd', 'Comprobar compatibilidad UHD') + '</li></ul>'
+      + '<div class="actions">' + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Consultar una resintonización', 'btn dark') + '</div></section>'
       + '<section class="section surface" id="pueblos-cercanos"><div class="wrap"><p class="kicker">Zona de servicio</p><h2>'
       + (near ? 'Municipios cercanos a ' : 'Servicio en ') + esc(place.name) + '</h2>'
       + (near ? '<p class="intro">Si estás en alguno de estos municipios, puedes enviar el aviso indicando dónde está la vivienda.</p><ul class="places nearby">' + near + '</ul>' : '')
@@ -889,8 +907,11 @@ add(asturiasUrl, 'Antenista en Asturias | Instalación y reparación de antenas'
   + '<section class="surface" id="ribadesella-antena-caida"><div class="wrap section split"><div><p class="kicker">Aviso urgente en Ribadesella</p><h2>' + esc(ribadesellaTitle) + '</h2>'
   + '<p class="intro">La reparación y la sustitución de la instalación están previstas.</p>'
   + '<div class="actions">' + link(ribadesellaCaseUrl, 'Ver el aviso de Ribadesella', 'text-link') + '</div></div>'
-  + '<figure class="service-photo service-photo--satelite">' + image(ribadesellaPhoto) + '</figure></div></section>',
-  { trail: [homeTrail, ['Asturias', asturiasUrl]] });
+  + '<figure class="service-photo service-photo--satelite">' + image(ribadesellaPhoto) + '<figcaption>Antena caída antes de la intervención en Ribadesella.</figcaption></figure></div></section>'
+  + '<section class="section wrap local-extra" id="orientar-visita"><h2>Preparar un aviso de antena en Ribadesella</h2><p class="intro">Indica la dirección, cuándo se perdió la señal y si afecta a todas las tomas. Si el mástil ha caído, una foto tomada desde el suelo ayuda a describir el estado del montaje. Confirma quién podrá facilitar el acceso a la vivienda.</p><div class="actions">'
+  + link(ribadesella.url, 'Consultar la ficha de Ribadesella', 'text-link') + link(wa('Ribadesella', 'necesito revisar una antena dañada tras una tormenta'), 'Consultar disponibilidad', 'btn whatsapp') + '</div></section>'
+  + callout('Ribadesella'),
+  { trail: [homeTrail, ['Asturias', asturiasUrl]], contactPlace: 'Ribadesella' });
 
 add(ribadesella.url, 'Antenista en Ribadesella | Reparación e instalación de TDT',
   'Instalación y reparación de antenas TDT en Ribadesella. Aviso urgente por una antena caída tras una tormenta, con foto y sustitución prevista.',
@@ -899,8 +920,10 @@ add(ribadesella.url, 'Antenista en Ribadesella | Reparación e instalación de T
   + '<p class="intro">' + esc(ribadesellaSummary) + '</p>'
   + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación de antenas', 'text-link') + '</div></div>'
   + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + ribadesellaPhoto[0] + '.webp">' + image(ribadesellaPhoto) + '</a><figcaption>Estado de la antena antes de la intervención.</figcaption></figure></section>'
-  + '<section class="section wrap local-extra"><h2>Resintonización de la TDT en Ribadesella</h2>' + septimaHelp + '</section>',
-  { trail: [homeTrail, ['Asturias', asturiasUrl], ['Ribadesella', ribadesella.url]], area: ribadesella.name, type: 'Instalación y reparación de antenas TDT' });
+  + '<section class="section wrap local-extra"><h2>Qué indicar al pedir la reparación</h2><p class="intro">Dinos si el fallo apareció con la tormenta, si afecta a todas las tomas y si hay más elementos dañados. Una fotografía desde el suelo y la información de acceso permiten preparar la visita. La sustitución se valora según el estado de la antena, el soporte, el cableado y los equipos de alimentación.</p></section>'
+  + '<section class="section wrap local-extra"><h2>Resintonización de la TDT en Ribadesella</h2>' + septimaHelp + '</section>'
+  + callout(ribadesella.name),
+  { trail: [homeTrail, ['Asturias', asturiasUrl], ['Ribadesella', ribadesella.url]], area: ribadesella.name, type: 'Instalación y reparación de antenas TDT', contactPlace: ribadesella.name });
 
 const serviceTrail = ['Servicios', '/servicios/'];
 add('/servicios/', 'Antenas TDT, 4G y 5G, porteros y videoporteros | Antenista Fuentes',
@@ -988,5 +1011,7 @@ const urls = [...pages].filter(([, page]) => page.indexed).map(([path]) => '  <u
 writeFileSync(join(dist, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n'
   + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.join('\n') + '\n</urlset>\n');
 writeFileSync(join(dist, 'robots.txt'), 'User-agent: *\nAllow: /\nSitemap: ' + base + '/sitemap.xml\n');
-console.log(`${urls.length} URLs indexables · ${Object.keys(fichas).length} páginas municipales · ${towns.size} municipios cubiertos`);
+console.log(`${urls.length} URLs indexables · ${Object.keys(fichas).length + 1} páginas municipales · ${towns.size + 1} municipios en el directorio`);
 for (const area of areaMap.values()) console.log(`${area.name} · ${area.centers.length} páginas · ${area.places.length} municipios`);
+
+console.log('Asturias · 1 página municipal · Ribadesella');

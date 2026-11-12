@@ -19,6 +19,7 @@ Ejecuta `node src/build.mjs` con Node.js 22. El resultado se escribe en `dist/`.
 - Este repositorio corresponde solo a instalaciondeantenasurgente.com. No incorporar trabajos ni fotos de Antenas Rapid u otras webs sin confirmación expresa para este proyecto.
 - En cada caso publicado conservar la ubicación y el alcance comunicados por el titular. Distinguir avería, actuación y resultado conocido; no inventar mediciones, fechas, resultados, direcciones, reseñas ni certificaciones. Un aviso pendiente no es una reparación terminada.
 - Las orientaciones de servicio se presentan como consejos o posibilidades, no como experiencias realizadas en ese municipio. `src/burgos.mjs` reúne cuatro orientaciones prácticas de Burgos.
+- `src/orientacion-provincial.mjs` reúne las consultas provinciales y la ayuda ampliada de León, Ponferrada, Logroño y Haro. La guía de canales permanece centralizada en `/ayuda-antenas/`; las fichas enlazan sus apartados.
 - Actualizar las guías sobre canales con fuentes oficiales y fechas comprobadas. No multiplicar una noticia por todos los municipios ni cambiar fechas solo para aparentar actualidad.
 - Priorizar información que ayude a decidir o preparar una visita. Reescribir sinónimos, añadir nombres de pueblos o alcanzar una cantidad de palabras no convierte una ficha en contenido propio.
 - Mantener las URL existentes. Antes de eliminar o consolidar una página, revisar sus enlaces y sus datos de Search Console para preparar la redirección que corresponda.
@@ -28,6 +29,8 @@ Ejecuta `node src/build.mjs` con Node.js 22. El resultado se escribe en `dist/`.
 `node src/build.mjs` ejecuta `src/validar-sitio.mjs` antes de escribir `dist/`. El despliegue se detiene si detecta páginas sin H1 único, títulos o descripciones duplicados, canonical incorrecto, bloqueos de indexación en páginas indexables, JSON-LD no válido, identificadores duplicados, destinos internos o imágenes ausentes, anclas rotas o páginas indexables sin ruta de enlaces desde la portada.
 
 Esta comprobación técnica no determina la calidad editorial ni garantiza indexación o posiciones. La evolución real se comprueba en Search Console: rendimiento, indexación, acciones manuales y seguridad.
+
+Revisión de las ocho provincias y prioridades editoriales: [12 de noviembre de 2026](docs/revision-provincias-2026-11-12.md).
 
 ## Fuentes
 
