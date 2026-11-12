@@ -395,7 +395,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   `<section class="hero"><div class="wrap hero-grid"><div><p class="kicker dot">Instalación y reparación de antenas</p>
   <h1>Antenista urgente.<br><em>TDT y satélite.</em></h1>
   <p>Instalamos antenas y reparamos fallos de señal en viviendas y comunidades. Cuéntanos en qué pueblo estás y qué falla en tu televisión.</p>
-  ${buttons()}</div><figure class="hero-photo">${image(homeHeroPhoto, true)}<figcaption>Roberto Fuentes, antenista, ajustando dos antenas de TDT. Fotografía retocada para mejorar la nitidez.</figcaption></figure>
+  ${buttons()}</div><figure class="hero-photo">${image(homeHeroPhoto, true)}<figcaption>Roberto Fuentes, antenista, ajustando dos antenas de TDT.</figcaption></figure>
   </div></section>${search()}
   <section class="section surface" id="trabajos-destacados"><div class="wrap"><h2>Trabajos reales de instalación y reparación de antenas</h2>
   <div class="cards case-previews">
