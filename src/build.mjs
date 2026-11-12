@@ -480,6 +480,8 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p><p>${link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar la TDT y comprobar los canales UHD', 'text-link')}</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
 
+const septimaHelp = '<p>¿Buscas La Séptima? Revisa toda la lista de canales y, si no aparece, haz una búsqueda automática en modo Antena o TDT. ' + link('/ayuda-antenas/#la-septima', 'Cómo encontrar La Séptima y qué hacer si falta', 'text-link') + '</p>';
+
 const localCaseGuides = {
   '48044': {
     title: '¿Faltan solo algunos canales de TDT?',
@@ -675,6 +677,7 @@ for (const [code, area] of areaMap) {
         ? 'Si varios vecinos pierden los mismos canales después de la búsqueda, podemos comprobar la cabecera y medir en una toma afectada.'
         : 'Hacemos la resintonización y ordenamos los canales a domicilio. Si tras la búsqueda sigue faltando señal, podemos medir en la toma.') + '</p>'
       + (service === 'comunidades' ? '<p>También resintonizamos y ordenamos los canales del televisor o receptor a domicilio.</p>' : '')
+      + septimaHelp
       + '<div class="actions">' + link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar y comprobar UHD', 'text-link')
       + link(wa(place.name, 'necesito resintonizar los canales TDT'), 'Pedir una resintonización', 'btn dark') + '</div></div>' + tdtTuningFigure + '</section>'
       + (place.code === '20036' ? hondarribiaAdvice : '')
@@ -701,6 +704,12 @@ const tdtGuide = '<section class="section wrap tdt-guide"><div class="split tdt-
   + '<li>Deja que termine, guarda la lista y revisa también los últimos puestos. Si faltan tus favoritos, vuelve a ordenarlos.</li></ol>'
   + '<p>' + link(officialTdt, 'Consulta los cambios y las fechas en el portal oficial de Televisión Digital', 'text-link') + '.</p>'
   + '</div>' + tdtTuningFigure + '</div>'
+  + '<div class="prose guide local-extra" id="la-septima"><h2>Cómo encontrar La Séptima en la TDT</h2>'
+  + '<p>La Séptima emite en abierto y en HD desde el 5 de noviembre de 2026. Puedes verla con un equipo que reciba TDT en HD. El número 7 es una posición que puedes asignarle desde el menú de canales.</p>'
+  + '<ol><li>Busca La Séptima en toda la lista, incluidos los últimos puestos.</li>'
+  + '<li>Si no aparece, abre la sintonización del televisor o receptor conectado a la antena. Elige Antena, Terrestre o TDT, ejecuta la búsqueda automática y guarda la lista.</li>'
+  + '<li>Si sigue faltando, comprueba otra toma o televisor. Si hay antena colectiva, pregunta si otro vecino del mismo portal recibe el canal. Indica también si faltan otras cadenas o si la imagen se pixela.</li></ol>'
+  + '<p>' + link('https://sintoniza.laseptima.com/', 'Guía oficial de sintonización de La Séptima', 'text-link') + '</p></div>'
   + '<div class="split local-extra tdt-guide-details"><div class="prose guide"><h2 id="tdt-uhd">Qué necesitas para ver la TDT en UHD</h2>'
   + '<p>Busca DVB-T2 y HEVC/H.265 en la ficha de tu televisor o receptor. Para ver la imagen en 4K necesitas también una pantalla UHD. Si los canales HD funcionan pero faltan los UHD, comprueba primero el modelo exacto. Si el equipo es compatible, pregunta si otro vecino con un equipo compatible recibe esas emisiones.</p>'
   + '</div><div class="prose guide"><h2 id="servicio-resintonizacion">Servicio de resintonización de canales y comprobación UHD</h2>'
@@ -762,7 +771,8 @@ add(ribadesella.url, 'Antenista en Ribadesella | Reparación e instalación de T
   + '<section class="section wrap split" id="ribadesella-antena-caida"><div><p class="kicker">Aviso urgente</p><h2>' + esc(ribadesellaTitle) + '</h2>'
   + '<p class="intro">' + esc(ribadesellaSummary) + '</p>'
   + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación de antenas', 'text-link') + '</div></div>'
-  + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + ribadesellaPhoto[0] + '.webp">' + image(ribadesellaPhoto) + '</a><figcaption>Estado de la antena antes de la intervención.</figcaption></figure></section>',
+  + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + ribadesellaPhoto[0] + '.webp">' + image(ribadesellaPhoto) + '</a><figcaption>Estado de la antena antes de la intervención.</figcaption></figure></section>'
+  + '<section class="section wrap local-extra"><h2>Resintonización de la TDT en Ribadesella</h2>' + septimaHelp + '</section>',
   { trail: [homeTrail, ['Asturias', asturiasUrl], ['Ribadesella', ribadesella.url]], area: ribadesella.name, type: 'Instalación y reparación de antenas TDT' });
 
 const serviceTrail = ['Servicios', '/servicios/'];
