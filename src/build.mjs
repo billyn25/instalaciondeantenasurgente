@@ -575,6 +575,15 @@ function casePhotoAndGuide(photo, guide, placeName) {
     + caseVisitGuide(guide, placeName) + '</div>';
 }
 
+const bizkaiaHelp = '<section class="section wrap local-extra" id="averias-en-bizkaia"><h2>Cómo orientar una avería de antena en Bizkaia</h2>'
+  + '<div class="cards diagnostic-cards">'
+  + '<article class="card"><h3>Varios vecinos pierden los mismos canales</h3><p>Apunta los portales y plantas afectados y quién puede abrir el cuarto de telecomunicaciones. En Bilbao hay un aviso de WhatsApp preparado para comunidades.</p>'
+  + link('/bizkaia/bilbao/#aviso-comunidad', 'Ver cómo avisar de un fallo comunitario', 'text-link') + '</article>'
+  + '<article class="card"><h3>Faltan algunas cadenas en varias tomas</h3><p>Anota qué cadenas se ven y cuáles faltan. En Getxo, una medición y la revisión de todas las tomas acompañaron el cambio a una antena UHF con filtro 5G.</p>'
+  + link(getxoCaseUrl, 'Ver el caso de recepción en Getxo', 'text-link') + '</article>'
+  + '<article class="card"><h3>Quieres TDT y satélite con un solo cable</h3><p>Indica qué tomas quieres usar y si ya hay parabólica. En Balmaseda se montaron las dos antenas en un mástil y se combinaron sus señales en una bajante.</p>'
+  + link(balmasedaCaseUrl, 'Ver el montaje de Balmaseda', 'text-link') + '</article></div></section>';
+
 for (const [code, area] of areaMap) {
   const heading = 'Antenista en ' + area.name;
   const centerLinks = area.centers.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
@@ -592,6 +601,7 @@ for (const [code, area] of areaMap) {
     + link('/servicios/' + serviceKey + '/', servicios[serviceKey][0], 'text-link')
     + link('#municipios', 'Consultar mi municipio', 'text-link') + '</div></div>'
     + '<figure class="service-photo">' + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
+    + (code === '48' ? bizkaiaHelp : '')
     + '<section class="section wrap" id="municipios"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
     + (localWorks.length ? '<section class="surface"><div class="wrap section"><h2>Trabajos en ' + esc(area.name)
       + '</h2>' + provinceCaseCards(code) + '<h3 class="province-work-towns">Municipios donde hemos trabajado</h3>'+workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
