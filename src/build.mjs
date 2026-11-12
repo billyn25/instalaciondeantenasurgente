@@ -101,6 +101,7 @@ const santurtziPhoto = ['santurtzi-antena-tdt', 'Antena TDT sobre un mástil ext
 const santurtziCaseUrl = '/bizkaia/santurtzi/#trabajos-locales';
 const debaPhotos = photos.filter(([name]) => name.startsWith('deba-'));
 const galleryPhoto = photosByName.get('tdt-en-tejado');
+const homeHeroPhoto = ['antenista-ajustando-dos-antenas-tdt', 'Antenista con casco ajustando dos antenas de TDT en un tejado', 1152, 1536];
 const servicePhotos = {
   instalacion: ['antenas-mastil-cubierta-teja', 'tdt-en-tejado', 'mastil-varias-antenas'],
   reparacion: ['mastil-varias-antenas', 'amplificador-de-senal'],
@@ -364,14 +365,15 @@ function add(path, title, description, content, options = {}) {
   });
   if (path === '/') data.push({ '@type': 'WebSite', '@id': base + '/#web', name: brand, url, inLanguage: 'es' });
 
+  const sharePhoto = path === '/' ? homeHeroPhoto : galleryPhoto;
   const html = `<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(seoDescription)}">
 ${indexed ? '<link rel="canonical" href="' + esc(url) + '">' : '<meta name="robots" content="noindex,follow">'}
 <meta property="og:type" content="website"><meta property="og:site_name" content="${brand}">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(seoDescription)}">
-<meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${base}/assets/trabajos/tdt-en-tejado.webp">
-<meta property="og:image:alt" content="${esc(galleryPhoto[1])}">
+<meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${base}/assets/trabajos/${sharePhoto[0]}.webp">
+<meta property="og:image:alt" content="${esc(sharePhoto[1])}">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg"><link rel="stylesheet" href="/assets/site.css">
 ${searchEnabled ? '<script src="/assets/buscar.js" defer></script>' : ''}
 <script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@graph':data}).replaceAll('<', '\\u003c')}</script>
@@ -393,7 +395,7 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   `<section class="hero"><div class="wrap hero-grid"><div><p class="kicker dot">Instalación y reparación de antenas</p>
   <h1>Antenista urgente.<br><em>TDT y satélite.</em></h1>
   <p>Instalamos antenas y reparamos fallos de señal en viviendas y comunidades. Cuéntanos en qué pueblo estás y qué falla en tu televisión.</p>
-  ${buttons()}</div><figure class="hero-photo">${image(galleryPhoto, true)}<figcaption><span>01 / TRABAJOS REALES</span> Antena TDT sobre cubierta de teja</figcaption></figure>
+  ${buttons()}</div><figure class="hero-photo">${image(homeHeroPhoto, true)}<figcaption>Ajuste de dos antenas TDT en una instalación de Antenista Fuentes</figcaption></figure>
   </div></section>${search()}
   <section class="section surface" id="trabajos-destacados"><div class="wrap"><h2>Trabajos reales de instalación y reparación de antenas</h2>
   <div class="cards case-previews">
