@@ -459,6 +459,36 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
   <section class="section surface"><div class="wrap"><p class="kicker">Antes de llamar</p><h2>¿Qué le pasa a tu televisión?</h2><p class="intro">Comprueba si el fallo está en una toma o si afecta a todo el edificio. Estas son las pruebas que puedes hacer desde casa.</p><p>${link('/ayuda-antenas/#resintonizar', 'Cómo resintonizar la TDT y comprobar los canales UHD', 'text-link')}</p>${diagnosticCards()}</div></section>
   ${callout()}`, { searchEnabled: true, type: 'Instalación y reparación de antenas' });
 
+const localCaseGuides = {
+  '48044': {
+    title: '¿Faltan solo algunos canales de TDT?',
+    checks: [
+      'Anota qué cadenas faltan y si muestran «sin señal» o si la imagen se pixela.',
+      'Prueba otra toma o televisor y apunta si fallan las mismas cadenas en ambos.',
+      'Indica cuándo empezó el problema y si ocurre siempre o a ciertas horas.',
+    ],
+    request: 'me faltan algunos canales de TDT',
+  },
+  '20071': {
+    title: '¿Qué indicar si la antena se ha movido tras el viento?',
+    checks: [
+      'Indica si el mástil se ve inclinado desde la calle o si se ha desprendido alguna pieza.',
+      'Dinos si la televisión dejó de verse durante el temporal o si la imagen se corta desde entonces.',
+      'Si ya tienes una foto tomada desde el suelo, adjúntala al aviso para que podamos ver el estado del montaje.',
+    ],
+    request: 'tengo la antena dañada tras el viento',
+  },
+  '48902': {
+    title: '¿La televisión falla solo en una habitación?',
+    checks: [
+      'Anota en qué tomas funciona la televisión y en cuáles falla.',
+      'Si en casa usas TDT y satélite, indica si falla uno de los dos o ambos en la misma toma.',
+      'Si puedes, prueba el mismo televisor y su cable en una toma que funcione. Cuéntanos si el fallo cambia de habitación con el equipo.',
+    ],
+    request: 'tengo problemas de señal en una toma de televisión',
+  },
+};
+
 for (const [code, area] of areaMap) {
   const heading = 'Antenista en ' + area.name;
   const centerLinks = area.centers.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
@@ -496,6 +526,7 @@ for (const [code, area] of areaMap) {
     const extra = ampliaciones[place.code];
     const guideKey = service === 'comunidades' ? 'colectiva' : service === 'reparacion' ? 'pixelacion' : 'sin-senal';
     const guide = link('/ayuda-antenas/#' + guideKey, diagnosticos[guideKey][0], 'text-link');
+    const caseGuide = localCaseGuides[place.code];
     const heading = 'Antenista en ' + place.name;
     const localService = service === 'satelite' ? 'TDT y parabólicas'
       : service === 'comunidades' ? 'TDT y antenas colectivas' : 'Instalación y reparación TDT';
@@ -599,6 +630,11 @@ for (const [code, area] of areaMap) {
           : 'Hemos trabajado en ' + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p>')
         + '<div class="actions">'
         + link('/trabajos/', 'Ver la galería', 'btn dark') + '</div></div></section>' : '')
+      + (caseGuide ? '<section class="section wrap local-extra" id="antes-de-pedir-visita"><div class="prose">'
+        + '<h2>' + esc(caseGuide.title) + '</h2><ul>'
+        + caseGuide.checks.map((check) => '<li>' + esc(check) + '</li>').join('') + '</ul>'
+        + '<div class="actions">' + link(wa(place.name, caseGuide.request), 'Enviar el aviso por WhatsApp', 'btn whatsapp')
+        + '</div></div></section>' : '')
       + '<section class="wrap section local-extra split tdt-tuning" id="resintonizar-tdt"><div class="prose"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
       + '<p class="intro">Si faltan canales tras los cambios de noviembre, prueba la búsqueda automática en el modo Antena del televisor o receptor. Si ves los canales HD y faltan los UHD, comprueba que tu equipo admite DVB-T2 y HEVC/H.265.</p>'
       + '<p>' + (service === 'comunidades'
