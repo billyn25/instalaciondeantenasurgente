@@ -43,6 +43,8 @@ const gernikaSecondPhoto = photosByName.get('gernika-lumo-dos-antenas');
 const gernikaPhoto = photosByName.get('gernika-lumo-antena-tdt');
 const gernikaCaseUrl = '/bizkaia/gernika-lumo/#trabajos-locales';
 const durangoPhoto = photosByName.get('durango-antena-caida-reparada');
+const getxoPhoto = ['getxo-antena-uhf-filtro-5g', 'Antena UHF del trabajo de Getxo, sujeta a la fachada de piedra junto a la escalera de acceso', 675, 1200];
+const getxoCaseUrl = '/bizkaia/getxo/#trabajos-locales';
 const tolosaPhoto = ['tolosa-mastil-antenas-caidas', 'Mástil doblado y antenas caídas por el viento en Tolosa antes de la reparación', 900, 1200];
 const tolosaCaseUrl = '/gipuzkoa/tolosa/#trabajos-locales';
 const azpeitiaPhoto = ['azpeitia-antenas-uhf-fm', 'Antenas UHF y FM montadas en un mástil en Azpeitia', 676, 1200];
@@ -230,6 +232,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['48','Getxo · Antenas','Cambio de antena UHF con filtro 5G y revisión de tomas',getxoPhoto,getxoCaseUrl],
   ['20','Tolosa · Antenas','Sustitución urgente de mástil y antenas tras fuertes vientos',tolosaPhoto,tolosaCaseUrl],
   ['48','Amorebieta-Etxano · Antenas','Instalación de parabólica para Astra 19,2° Este en un pabellón',amorebietaPhotos[0],amorebietaCaseUrl],
   ['48','Sondika · Antenas','Cambio de antena por pixelación en laSexta y Antena 3',sondikaPhoto,sondikaCaseUrl],
@@ -388,6 +391,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(getxoPhoto)}<p class="kicker">Getxo · TDT</p><h3>Canales que no se veían por interferencias 5G</h3>
+      <p>Sustituimos la antena por una UHF con filtro 5G, la ajustamos con el medidor de campo y revisamos todas las tomas de la vivienda.</p>
+      ${link(getxoCaseUrl, 'Ver el cambio de antena en Getxo', 'text-link')}</article>
     <article class="card">${image(tolosaPhoto)}<p class="kicker">Tolosa · Reparación urgente</p><h3>Mástil y antenas caídas tras fuertes vientos</h3>
       <p>Sustituimos el mástil, las antenas y todo el material de la instalación dañada.</p>
       ${link(tolosaCaseUrl, 'Ver la reparación de antenas en Tolosa', 'text-link')}</article>
@@ -535,6 +541,11 @@ for (const [code, area] of areaMap) {
           : place.code === '39025' ? 'Cambio de antenas TDT en Los Corrales de Buelna</h2>'
           + '<p class="intro">Sustituimos las antenas de televisión terrestre y montamos dos antenas TDT en cubierta para captar todos los canales.</p>'
           + photoGrid(corralesPhotos)
+          : place.code === '48044' ? 'Cambio de antena UHF con filtro 5G en Getxo</h2>'
+          + '<p class="intro">En esta vivienda de Getxo habían dejado de verse algunas cadenas de TDT por interferencias de la señal móvil 5G. Sustituimos la antena por una UHF con filtro 5G. El soporte estaba a gran altura en la fachada y usamos una escalera para acceder a él.</p>'
+          + '<p>Ajustamos la antena con un medidor de campo y revisamos todas las tomas de televisión de la vivienda para comprobar cómo llegaba la señal a cada punto.</p>'
+          + photoGrid([getxoPhoto], 'photo-grid photo-grid--mediciones')
+          + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación de antenas', 'text-link') + '</div>'
           : place.code === '20071' ? 'Reparación urgente de mástil y antenas caídas en Tolosa</h2>'
           + '<p class="intro">Los fuertes vientos tumbaron el conjunto de antenas y dejaron el mástil doblado. Atendimos el aviso de urgencia y sustituimos el mástil, las antenas y todo el material de la instalación dañada. La foto muestra cómo quedó el conjunto tras el viento, antes de la reparación.</p>'
           + photoGrid([tolosaPhoto], 'photo-grid photo-grid--mediciones')
