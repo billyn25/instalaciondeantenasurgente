@@ -9,6 +9,7 @@ export const provincias = [
 ];
 
 export const trabajos = [
+  '48057', '48069',
   '20055',
   '39020', '48044', '20071', '48003', '48904',
   '48082', '48027', '39087', '01002', '20018', '39025', '48090', '48047',
@@ -124,6 +125,7 @@ Object.assign(fichas, {
 Object.assign(fichas, {
   '48902': ['Cuando falla la televisión en dos portales', 'En edificios con una cabecera compartida, conviene apuntar qué portales tienen el problema y cuáles conservan la señal. Esa diferencia indica qué distribuidores y derivaciones conviene medir primero.', 'comunidades'],
   '48003': ['Dejar lista la antena al reformar la cubierta', 'Antes de recolocar una antena, podemos revisar dónde quedará su soporte y por dónde saldrá el cable. Si el mástil se mueve a otra posición, se comprueba la recepción antes de fijarlo definitivamente.', 'instalacion'],
+  '48057': ['Instalar TDT y satélite en Lekeitio', 'Si quieres TDT y Astra, indica qué televisores usarás, si hay tomas SAT y si la antena es individual o comunitaria. Con esos datos podemos valorar cómo distribuir las dos señales.', 'instalacion'],
   '48069': ['Antena para casas del entorno de Mungia', 'Para valorar la captación, dinos si la vivienda está en el casco o en un núcleo cercano. En una casa rodeada de árboles interesa medir en varios puntos de la cubierta antes de elegir soporte.', 'instalacion'],
   '48046': ['Tomas que pierden señal solo en ciertas habitaciones', 'Si falla una estancia al conectar otro televisor en casa, indica si se añadió un repartidor recientemente. Revisamos el reparto y las conexiones antes de decidir si se necesita amplificación.', 'reparacion'],
   '01063': ['Revisión de la instalación en los pueblos de Zuia', 'Indica el concejo y si puedes acceder al punto donde entra el cable a la vivienda. Cuando la TDT falla tras lluvia, revisamos el exterior y la toma para acotar por dónde se pierde señal.', 'reparacion'],
