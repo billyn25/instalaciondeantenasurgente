@@ -16,7 +16,7 @@ Los casos contabilizados tienen foto y descripción en el registro de trabajos d
 
 | Provincia | Fichas municipales | Casos documentados con foto | Prioridad editorial |
 | --- | ---: | ---: | --- |
-| Bizkaia | 21 | 14 | Conservar el detalle de cada caso. Desarrollar Zalla, Barakaldo, Portugalete, Sestao, Leioa, Basauri o Mungia cuando haya información propia confirmada para esta web. |
+| Bizkaia | 21 | 15 | Sestao incorpora una reparación de videoportero Comelit en una comunidad de vecinos, con su foto original. Desarrollar Zalla, Barakaldo, Portugalete, Leioa, Basauri o Mungia cuando haya información propia confirmada para esta web. |
 | Álava | 11 | 2 | Añadir detalles y fotos de intervenciones propias en Vitoria-Gasteiz u otros municipios atendidos. Amurrio y Laudio ya tienen casos identificados. |
 | Gipuzkoa | 13 | 7 | Zarautz añade una cámara 4G solar solicitada por un cliente sin suministro eléctrico ni internet fijo. Conservar los casos de Udala, Tolosa, Azpeitia, Deba, Hondarribia y Hernani. Donostia, Irun y Errenteria necesitan más evidencia propia si se dispone de ella. |
 | Burgos | 12 | 1 | Salas de los Infantes tiene el caso fotografiado. Priorizar información real de Burgos capital, Miranda, Aranda y Lerma antes de crear más fichas. |
@@ -26,6 +26,12 @@ Los casos contabilizados tienen foto y descripción en el registro de trabajos d
 | Asturias | 1 | 0 terminados; 1 aviso con foto | Ribadesella está documentada como aviso pendiente. Actualizar actuación y resultado solo cuando el titular confirme la finalización. |
 
 La prioridad es editorial y se basa en el contenido disponible, no en datos de ranking o una supuesta penalización.
+
+## Incorporación de Sestao y servicio para comunidades
+
+El titular confirma una reparación de videoportero Comelit en una comunidad de vecinos de Sestao y aporta la foto de la placa. El caso se añade a la ficha municipal, la portada, Bizkaia y la galería. No se atribuye una avería concreta ni un recambio que el titular no haya indicado.
+
+A petición del titular, se incorpora `/servicios/videoporteros-comunidades/`, con preparación del aviso comunitario, coordinación de accesos, datos para valorar una renovación y enlaces a los trabajos reales de Sestao, Llodio / Laudio, Torrelavega y Hondarribia. Está enlazada desde los servicios, la portada, Bizkaia y Sestao. El sitio pasa a 119 HTML y 116 URL indexables; se conservan las 97 fichas municipales. No se crean copias de esta página por municipio.
 
 ## Correcciones realizadas
 

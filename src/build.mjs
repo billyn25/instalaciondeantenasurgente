@@ -252,6 +252,9 @@ const torrelavegaPhoto = ['torrelavega-golmar-estadio', 'Placa exterior Golmar S
 const torrelavegaCaseUrl = '/cantabria/torrelavega/#visita-portero-39087';
 const banezaPhoto = ['la-baneza-videoportero-ip-dahua', 'Placa exterior Dahua del videoportero IP instalado en La Bañeza', 1152, 1536, 'jpeg'];
 const banezaCaseUrl = towns.get('24010').url + '#videoportero-ip-dahua';
+const sestaoPhoto = ['sestao-videoportero-comelit-comunidad', 'Placa Comelit del videoportero reparado en una comunidad de vecinos de Sestao', 1152, 1536, 'jpeg'];
+const sestaoCaseUrl = towns.get('48084').url + '#reparacion-videoportero-comelit';
+const communityDoorPath = '/servicios/videoporteros-comunidades/';
 const najeraPhoto = ['najera-videoportero-tegui-antes', 'Videoportero Tegui convencional en Nájera, antes de la renovación prevista', 864, 1536, 'jpeg'];
 const najeraCaseUrl = towns.get('26102').url + '#renovacion-videoportero-tegui';
 const zarautzCameraPhoto = ['zarautz-camara-videovigilancia-4g-solar', 'Cámara de videovigilancia y panel solar montados en un poste en Zarautz', 864, 1536, 'jpeg'];
@@ -266,6 +269,15 @@ const zarautzCameraCase = '<section class="section surface" id="camara-4g-solar"
   + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + zarautzCameraPhoto[0] + '.jpeg">' + image(zarautzCameraPhoto)
   + '</a><figcaption>Cámara 4G con panel solar instalada en Zarautz.</figcaption></figure></div></section>';
 function porteroVisit(code, name) {
+ if (code === '48084') return '<section class="section surface" id="reparacion-videoportero-comelit"><div class="wrap split">'
+  + '<div class="prose"><p class="kicker">Trabajo real · Comunidad de vecinos · Sestao</p><h2>Reparación de videoportero Comelit en una comunidad</h2>'
+  + '<p class="intro">Reparamos el videoportero Comelit de una comunidad de vecinos en Sestao. La fotografía corresponde a la placa de la instalación comunitaria.</p>'
+  + '<h3>La placa de esta comunidad</h3><p>El conjunto fotografiado incorpora cámara, pantalla, teclado de llamada y lector de llaves. El trabajo realizado fue la reparación del videoportero existente.</p>'
+  + '<h3>Cómo comunicar una avería en un videoportero comunitario</h3><p>Indica si falla la llamada, el sonido, la imagen o la apertura, y si ocurre en una vivienda o en varias. Si el edificio tiene más de una entrada, dinos qué placa presenta el problema. Una foto de la placa y del monitor ayuda a preparar la visita.</p>'
+  + '<div class="actions">' + link(communityDoorPath, 'Servicio para comunidades de vecinos', 'text-link')
+  + link(wa(name, 'necesito reparar el videoportero de una comunidad de vecinos'), 'Consultar reparación de la comunidad', 'btn whatsapp') + '</div></div>'
+  + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + sestaoPhoto[0] + '.jpeg">' + image(sestaoPhoto)
+  + '</a><figcaption>Videoportero Comelit reparado en una comunidad de vecinos de Sestao.</figcaption></figure></div></section>';
  if (code === '26102') return '<section class="section surface" id="renovacion-videoportero-tegui"><div class="wrap split">'
   + '<div class="prose"><p class="kicker">Nájera, La Rioja · Renovación prevista</p><h2>Cambio de videoportero convencional a Tegui Serie 8 con monitor Classe 100</h2>'
   + '<p class="intro">Está previsto sustituir el videoportero convencional existente en Nájera por un conjunto Tegui Serie 8 con monitor Classe 100. La fotografía corresponde al equipo antiguo, antes del cambio.</p>'
@@ -301,6 +313,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['48','Sestao · Comunidad de vecinos','Reparación de videoportero Comelit comunitario',sestaoPhoto,sestaoCaseUrl],
   ['20','Zarautz · Videovigilancia','Cámara 4G solar para una ubicación sin luz ni internet fijo',zarautzCameraPhoto,zarautzCameraCaseUrl],
   ['26','Nájera · Renovación prevista','Cambio a Tegui Serie 8 con monitor Classe 100: equipo antiguo',najeraPhoto,najeraCaseUrl],
   ['24','Villablino · TDT y satélite','Antena TDT, tres parabólicas y central amplificadora de TV y SAT',villablinoPhoto,villablinoCaseUrl],
@@ -369,6 +382,7 @@ function serviceCards() {
   const cards = Object.entries(servicios).map(([key, [name, intro]]) => ['/servicios/' + key + '/', name, intro]);
   cards.push(
     ['/servicios/porteros-videoporteros/', 'Porteros automáticos y videoporteros', 'Reparación de audio, cambio de grupos fónicos y valoración del paso de portero convencional a videoportero.'],
+    [communityDoorPath, 'Porteros y videoporteros para comunidades', 'Avisos de vecinos, reparación del equipo común y preparación de la renovación del portal. Casos reales de comunidades.'],
     ['/ayuda-antenas/#servicio-resintonizacion', 'Resintonización de TDT y UHD', 'Buscamos y ordenamos los canales y comprobamos la compatibilidad del televisor con UHD.'],
     [mobileAntennaPath, mobileAntennaName, 'Medimos la señal de tu operador e instalamos antenas exteriores para routers compatibles. Valoramos opciones para las llamadas dentro del edificio.']
   );
@@ -532,8 +546,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       <p>Sustituimos las antenas del mástil que reciben la televisión terrestre y la radio FM.</p>
       ${link(azpeitiaCaseUrl, 'Ver el trabajo de Azpeitia', 'text-link')}</article>
   </div>
-  <h3 class="home-portero-cases-heading">Trabajos de porteros automáticos</h3>
+  <h3 class="home-portero-cases-heading">Porteros y videoporteros en comunidades de vecinos</h3>
   <div class="cards case-previews">
+    <article class="card">${image(sestaoPhoto)}<p class="kicker">Sestao · Comunidad de vecinos</p><h3>Videoportero Comelit reparado</h3><p>Reparación del videoportero existente en una comunidad de Sestao. La foto muestra la placa con cámara, pantalla, teclado y lector de llaves.</p>${link(sestaoCaseUrl,'Ver la reparación de Comelit en Sestao','text-link')}</article>
     <article class="card">${image(llodioPhoto)}<p class="kicker">Llodio / Laudio · Porteros</p><h3>Reparación urgente de grupo fónico Fermax</h3><p>Trabajo real de reparación del grupo fónico Fermax PVT9696 en un portero comunitario.</p>${link(llodioCaseUrl,'Ver el caso real en Llodio / Laudio','text-link')}</article>
     <article class="card">${image(porteroVisits['20036'][1])}<p class="kicker">Hondarribia · Porteros comunitarios</p>
       <h3>Reparación de audio y medición para renovar</h3><p>David C. G. realizó cambios de grupos fónicos con recambio vigente y tomó medidas de las placas para valorar un posible cambio a videoportero.</p>
@@ -738,6 +753,7 @@ for (const [code, area] of areaMap) {
     + link('#municipios', 'Consultar mi municipio', 'text-link') + '</div></div>'
     + '<figure class="service-photo">' + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
     + (code === '48' ? bizkaiaHelp : '')
+    + (code === '48' ? '<section class="section wrap prose"><h2>Porteros y videoporteros de comunidades en Bizkaia</h2><p>Si el aviso afecta a varios vecinos, indica qué viviendas y accesos comparten el fallo. Para preparar una renovación, necesitamos conocer las entradas del edificio y los equipos interiores.</p><div class="actions">' + link(sestaoCaseUrl, 'Reparación real de Comelit en Sestao', 'text-link') + link(communityDoorPath, 'Consultar el servicio para comunidades', 'btn dark') + '</div></section>' : '')
     + (code === '09' ? burgosHelp : '')
     + provincialAdvice(code, area)
     + '<section class="section wrap" id="municipios"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
@@ -783,9 +799,10 @@ for (const [code, area] of areaMap) {
       + '<figure class="service-photo durango-photo"><a href="/assets/trabajos/durango-antena-caida-reparada.webp">'
       + image(durangoPhoto) + '</a><figcaption>' + esc(durangoPhoto[1]) + '</figcaption></figure></div></section>';
     add(place.url, heading + ' | ' + localService,
-      heading + '. ' + topic.replace(/[?¿]/g, '') + '. Visitas para viviendas y comunidades.',
+      place.code === '48084' ? 'Antenas y videoporteros en Sestao. Reparación real de un Comelit en una comunidad de vecinos, con foto de la placa y consulta de averías.' : heading + '. ' + topic.replace(/[?¿]/g, '') + '. Visitas para viviendas y comunidades.',
       smallHero(area.name + ' · Servicio de antenista', heading,
-        'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.', place.name)
+        place.code === '48084' ? 'Antenas TDT, parabólicas y reparación de porteros y videoporteros para viviendas y comunidades de vecinos en Sestao.' : 'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.', place.name)
+      + (place.code === '48084' ? porteroVisit(place.code, place.name) : '')
       + (place.code === '48027' ? durangoCase
         : '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
       + '</h2><p class="intro">' + esc(advice) + '</p>' + signalCheck
@@ -798,9 +815,9 @@ for (const [code, area] of areaMap) {
         : '<figure class="service-photo service-photo--' + service + '">' + image(servicePhoto)
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
       + (place.code === '48020' ? bilbaoFaultLinks : '')
-      + porteroVisit(place.code, place.name)
+      + (place.code !== '48084' ? porteroVisit(place.code, place.name) : '')
       + (place.code === '20079' ? zarautzCameraCase : '')
-      + (place.code !== '48027' && place.code !== '39087' && place.code !== '24010' && place.code !== '20079' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
+      + (place.code !== '48027' && place.code !== '39087' && place.code !== '24010' && place.code !== '20079' && place.code !== '48084' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48003' ? 'Instalación de una parabólica para Astra 19,2° Este en Amorebieta-Etxano</h2>'
           + '<p class="intro">El pabellón no tenía parabólica. Instalamos una antena Fte en la cubierta y la orientamos a Astra 19,2° Este. Las fotos muestran el montaje exterior y el detalle del LNB, donde se conecta el cable coaxial que lleva la señal al interior.</p>'
           + photoGrid(amorebietaPhotos, 'photo-grid photo-grid--equipos photo-grid--mediciones')
@@ -1014,11 +1031,24 @@ add(mobileAntennaPath, 'Instalación de antenas 4G y 5G para cobertura móvil | 
 
 const porteroPath = '/servicios/porteros-videoporteros/';
 const porteroWhatsApp = 'https://wa.me/34641490536?text='+encodeURIComponent('Hola, necesito consultar una reparación de portero automático o un cambio a videoportero.');
+const communityDoorNotice = wa('', 'quiero consultar el portero o videoportero de una comunidad de vecinos')
+  + encodeURIComponent('\n\nMunicipio y portal: \nQué falla o qué queremos renovar: \nViviendas afectadas: \nNúmero de accesos y escaleras: \nMarca y modelo, si se conocen: \nDisponibilidad para la visita: ');
+add(communityDoorPath, 'Porteros y videoporteros para comunidades de vecinos | Antenista Fuentes',
+  'Reparación y renovación de porteros y videoporteros comunitarios. Cómo preparar el aviso o presupuesto, con casos reales en Sestao, Laudio y Torrelavega.',
+  smallHero('Comunidades de vecinos', 'Porteros y videoporteros para comunidades', 'Reparación del equipo existente y valoración de la renovación del portal. Información para vecinos, presidentes y administradores de fincas.', '', false)
+  + '<section class="section wrap split"><div class="prose"><p class="kicker">Reparación realizada · Sestao</p><h2>Un videoportero Comelit reparado en una comunidad</h2><p>Este trabajo corresponde a la reparación del videoportero de una comunidad de vecinos de Sestao. La placa fotografiada tiene cámara, pantalla, teclado y lector de llaves.</p><div class="actions">' + link(sestaoCaseUrl, 'Ver la ficha y la foto del trabajo', 'btn dark') + '</div></div>'
+  + '<figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/' + sestaoPhoto[0] + '.jpeg">' + image(sestaoPhoto) + '</a><figcaption>Placa Comelit de la comunidad de Sestao.</figcaption></figure></section>'
+  + '<section class="section surface"><div class="wrap"><h2>Preparar el aviso de la comunidad</h2><ol class="door-steps"><li><strong>Concretar qué falla</strong><span>Indica si no llama, no se oye, no aparece la imagen o no abre la puerta. Anota si sucede siempre o a ratos.</span></li><li><strong>Identificar a quién afecta</strong><span>Comprueba si ocurre en una vivienda, una escalera o varios pisos. En edificios con distintas entradas, indica desde cuál se reproduce el fallo.</span></li><li><strong>Organizar el acceso</strong><span>Facilita la disponibilidad de quien pueda abrir el portal y coordinar una prueba en las viviendas afectadas. Envía fotos de la placa y de un equipo interior.</span></li></ol><div class="actions">' + link(communityDoorNotice, 'Preparar el aviso de la comunidad', 'btn whatsapp') + link(tel, 'Llamar', 'btn dark') + '</div></div></section>'
+  + '<section class="section wrap split"><div class="prose"><h2>Si la comunidad quiere conservar el equipo</h2><p>La visita permite localizar la avería y valorar la reparación según el estado del sistema y la disponibilidad de recambios compatibles. El aviso debe distinguir el problema observado de la solución que todavía hay que comprobar.</p><p>Dos ejemplos documentados son la ' + link(llodioCaseUrl, 'reparación del grupo fónico Fermax PVT9696 en Llodio / Laudio') + ' y la ' + link(torrelavegaCaseUrl, 'reparación del grupo fónico Golmar Stadio en Torrelavega') + '.</p></div>'
+  + '<div class="prose"><h2>Si se plantea renovar el portal</h2><p>Para preparar una propuesta hacen falta el número de viviendas, las entradas y escaleras, los monitores o telefonillos que se quieren cambiar y las medidas de la placa. El cableado que se pueda aprovechar se valora en la instalación.</p><p>El presupuesto debe concretar qué equipos se incluyen, los trabajos en el portal, los remates y el alcance dentro de las viviendas. También conviene acordar cómo se coordinarán los accesos a los pisos.</p><p>' + link('/gipuzkoa/hondarribia/#visita-portero-20036', 'Ver una visita con medición de la placa en Hondarribia') + '.</p></div></section>'
+  + '<section class="section surface"><div class="wrap prose"><h2>Qué datos ayudan a valorar el coste</h2><p>La marca y el modelo, el número de accesos y viviendas, el estado del cableado y el alcance de la reparación o renovación condicionan la valoración. Una foto por sí sola no permite fijar el precio de todo el trabajo.</p><h3>¿El problema es la antena colectiva?</h3><p>Si varios vecinos han perdido canales de televisión, consulta el ' + link('/servicios/comunidades/', 'servicio de antenas para comunidades') + '.</p><div class="actions">' + link(communityDoorNotice, 'Consultar mi comunidad', 'btn whatsapp') + '</div></div></section>',
+  { trail: [homeTrail, serviceTrail, ['Comunidades de vecinos', communityDoorPath]], type: 'Reparación y renovación de porteros y videoporteros para comunidades de vecinos' });
 add(porteroPath, 'Reparación de porteros y cambio a videoportero | Antenista Fuentes',
- 'Reparación de porteros automáticos e instalación de videoporteros. Casos reales en Hondarribia, Hernani y La Bañeza, con montaje IP Dahua.',
+ 'Reparación de porteros e instalación de videoporteros. Casos reales: Comelit en una comunidad de Sestao, audio comunitario y montaje IP Dahua en La Bañeza.',
  '<section class="hero door-hero"><div class="wrap door-layout"><div><p class="kicker">Viviendas y comunidades</p><h1>Tu portero, reparado.<br><em>O listo para renovarlo.</em></h1><p>Reparación de audio y valoración del cambio a videoportero, partiendo del equipo que ya tiene tu comunidad.</p><div class="actions">'+link(tel,'Llamar: '+phone,'btn')+link(porteroWhatsApp,'Consultar por WhatsApp','btn whatsapp')+'</div><a class="door-jump" href="#trabajos-porteros">Ver trabajos reales de David C. G. ↓</a></div><figure class="door-photo">'+image(porteroVisits['20036'][0],true)+'<figcaption>Hondarribia · Placa existente durante la visita técnica</figcaption></figure></div></section>'
  +'<section class="section wrap door-section"><div class="door-heading"><p class="kicker">01 · Reparar</p><h2>¿No suena, no se oye<br>o no abre?</h2><p>Primero localizamos el fallo. No todas las averías requieren cambiar el portero completo.</p></div><div class="cards door-cards"><article class="card"><h3>Revisar el sistema actual</h3><p>Indica si afecta a una vivienda o a toda la comunidad. Según el síntoma, revisamos telefonillo, pulsadores, grupo fónico, alimentación, cableado o abrepuertas.</p></article><article class="card"><h3>Cambiar el grupo fónico</h3><p>Si hay recambio compatible, se puede valorar la sustitución del módulo de audio. Identificamos la marca y el modelo antes de elegir la referencia. David C. G. ha realizado estos trabajos en Hondarribia y Hernani.</p></article></div></section>'
  +'<section class="surface"><div class="section wrap door-layout door-renew"><figure class="door-photo">'+image(porteroVisits['20040'][0])+'<figcaption>Hernani · Medición de una placa Tegui para valorar la renovación</figcaption></figure><div><p class="kicker">02 · Renovar</p><h2>Del portero de audio<br>al videoportero</h2><p>Medimos la placa y el marco, contamos viviendas y escaleras e identificamos el sistema existente. Así podemos estudiar qué placa y monitores necesita la comunidad.</p><h3>El cableado también cuenta</h3><p>Un sistema de dos hilos puede ser una opción. Aprovechar los cables depende de su estado y de la compatibilidad con el equipo elegido; se comprueba antes de presupuestar.</p><h3>Una placa que encaje en tu portal</h3><p>La anchura y la altura del conjunto permiten valorar si hace falta adaptar el hueco o el marco. El presupuesto debe indicar equipos, remates y cableado que se conserva o sustituye.</p></div></div></section>'
+ +'<section class="section wrap prose"><h2>Porteros y videoporteros en comunidades de vecinos</h2><p>La reparación de un Comelit en Sestao es uno de los trabajos comunitarios documentados. Si el aviso corresponde a varios pisos o la comunidad está valorando renovar el portal, consulta qué datos preparar para organizar la visita.</p><div class="actions">'+link(sestaoCaseUrl,'Ver la reparación de Comelit en Sestao','text-link')+link(communityDoorPath,'Servicio para comunidades de vecinos','btn dark')+'</div></section>'
  +'<section class="section wrap split" id="instalacion-videoportero-ip"><div class="prose"><p class="kicker">Instalación realizada · León</p><h2>Videoportero IP Dahua en La Bañeza</h2><p>Montaje de videoportero IP con monitor interior Wi-Fi, cable UTP y switch PoE. La fotografía muestra la placa exterior de esta instalación.</p><div class="actions">'+link(banezaCaseUrl,'Ver el trabajo completo de La Bañeza','btn dark')+'</div></div><figure class="service-photo service-photo--satelite">'+image(banezaPhoto)+'<figcaption>Placa exterior Dahua instalada en La Bañeza.</figcaption></figure></section>'
  +'<section class="section wrap split" id="renovacion-prevista-najera"><div class="prose"><p class="kicker">Nájera · La Rioja · Renovación prevista</p><h2>Del videoportero convencional a Tegui Serie 8</h2><p>Está previsto renovar el equipo antiguo con Tegui Serie 8 y monitor Classe 100. La fotografía documenta el estado anterior al cambio.</p><div class="actions">'+link(najeraCaseUrl,'Ver el caso de Nájera','btn dark')+'</div></div><figure class="service-photo service-photo--satelite">'+image(najeraPhoto)+'<figcaption>Videoportero antiguo de Nájera antes de su sustitución.</figcaption></figure></section>'
  +'<section class="section wrap door-section" id="trabajos-porteros"><div class="door-heading"><p class="kicker">Fotografías propias · Trabajo real</p><h2>Reparaciones y mediciones<br>de David C. G.</h2><p>Cambio de grupos fónicos con recambio vigente y toma de medidas para un posible cambio a videoportero. La renovación con cámara es una actuación que se está valorando.</p></div>'+photoGrid([porteroVisits['20036'][1],porteroVisits['20036'][2],porteroVisits['20036'][3],porteroVisits['20040'][1]],'photo-grid photo-grid--mediciones')+'<div class="actions">'+link('/gipuzkoa/hondarribia/#visita-portero-20036','Ver la intervención en Hondarribia','text-link')+link('/gipuzkoa/hernani/#visita-portero-20040','Ver la intervención en Hernani','text-link')+link(llodioCaseUrl,'Reparación urgente Fermax en Llodio / Laudio','text-link')+link(torrelavegaCaseUrl,'Reparación Golmar Stadio en Torrelavega','text-link')+'</div></section>'
