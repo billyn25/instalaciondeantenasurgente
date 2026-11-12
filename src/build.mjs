@@ -63,6 +63,8 @@ const asturiasUrl = '/asturias/';
 const ribadesella = { name: 'Ribadesella', url: asturiasUrl + 'ribadesella/' };
 const asturias = { name: 'Asturias', url: asturiasUrl, centers: [ribadesella] };
 const ribadesellaCaseUrl = ribadesella.url + '#ribadesella-antena-caida';
+const udalaPhoto = ['udala-arrasate-dos-antenas-tdt', 'Dos antenas de TDT en el mástil de una vivienda del barrio de Udala, en Arrasate', 675, 1200];
+const udalaCaseUrl = '/gipuzkoa/arrasate-mondragon/#trabajos-locales';
 const castroPhoto = ['castro-urdiales-antena-tdt-amplificador', 'Antena TDT y amplificador fijados al mástil sobre un tejado en Castro Urdiales', 675, 1200];
 const castroCaseUrl = '/cantabria/castro-urdiales/#trabajos-locales';
 const erandioPhoto = ['erandio-renovacion-antena-tdt', 'Antena UHF de TDT y parabólica sobre la cubierta de la instalación de Erandio', 904, 1200];
@@ -257,6 +259,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['20','Arrasate / Mondragón · Udala','Dos antenas TDT y amplificador multibanda para recuperar canales',udalaPhoto,udalaCaseUrl],
   ['39','Castro Urdiales · Antenas','Renovación de antena TDT con amplificador de mástil y fuente',castroPhoto,castroCaseUrl],
   ['48','Erandio · Antenas','Renovación de antena UHF, cableado y tomas de TV',erandioPhoto,erandioCaseUrl],
   ['48','Getxo · Antenas','Cambio de antena UHF con filtro 5G y revisión de tomas',getxoPhoto,getxoCaseUrl],
@@ -419,6 +422,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(udalaPhoto)}<p class="kicker">Udala · Arrasate / Mondragón</p><h3>Dos antenas para captar todos los canales</h3>
+      <p>En esta vivienda faltaban cadenas de TDT. Instalamos dos antenas y ajustamos el amplificador multibanda para recuperar la recepción.</p>
+      ${link(udalaCaseUrl, 'Ver la instalación de Udala', 'text-link')}</article>
     <article class="card">${image(castroPhoto)}<p class="kicker">Castro Urdiales · TDT</p><h3>Renovación de antena TDT por mala recepción</h3>
       <p>La televisión se veía mal con la antena y los amplificadores antiguos. Montamos una antena nueva, un amplificador de mástil y su fuente.</p>
       ${link(castroCaseUrl, 'Ver la instalación de Castro Urdiales', 'text-link')}</article>
@@ -483,6 +489,16 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
 const septimaHelp = '<p>¿Buscas La Séptima? Revisa toda la lista de canales y, si no aparece, haz una búsqueda automática en modo Antena o TDT. ' + link('/ayuda-antenas/#la-septima', 'Cómo encontrar La Séptima y qué hacer si falta', 'text-link') + '</p>';
 
 const localCaseGuides = {
+  '20055': {
+    title: '¿Cuándo puede hacer falta una segunda antena?',
+    checks: [
+      'Apunta qué cadenas faltan y cuáles se ven bien. Si puedes, comprueba si ocurre lo mismo en otra toma.',
+      'Antes de decidir el montaje, conviene medir qué grupos de canales capta bien la antena. En esta vivienda de Udala hicieron falta dos antenas para completar la recepción.',
+      'Si ya tienes un amplificador, indica el modelo si lo conoces. Así se puede valorar si admite las señales que hay que combinar y ajustar.',
+    ],
+    request: 'me faltan canales de TDT en Udala',
+    service: 'instalacion',
+  },
   '39020': {
     title: '¿Falla la TDT en todas las tomas?',
     checks: [
@@ -658,6 +674,9 @@ for (const [code, area] of areaMap) {
           : place.code === '39025' ? 'Cambio de antenas TDT en Los Corrales de Buelna</h2>'
           + '<p class="intro">Sustituimos las antenas de televisión terrestre y montamos dos antenas TDT en cubierta para captar todos los canales.</p>'
           + photoGrid(corralesPhotos)
+          : place.code === '20055' ? 'Instalación de dos antenas TDT en Udala, Arrasate</h2>'
+          + '<p class="intro">En esta vivienda del barrio de Udala faltaban varias cadenas de TDT. Instalamos dos antenas para completar la captación y ajustamos el amplificador multibanda para que se recibieran bien todos los canales.</p>'
+          + casePhotoAndGuide(udalaPhoto, caseGuide, place.name)
           : place.code === '39020' ? 'Renovación de antena TDT en Castro Urdiales</h2>'
           + '<p class="intro">En una vivienda de la avenida Primero de Mayo, la televisión se veía mal con la antena y los amplificadores antiguos. Renovamos la instalación con una antena TDT en la cubierta, un amplificador de mástil y su fuente de alimentación.</p>'
           + '<p>El amplificador va cerca de la antena y eleva el nivel de señal antes de que recorra la bajante. La fuente suministra al amplificador la corriente que necesita a través del cable coaxial.</p>'
