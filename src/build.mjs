@@ -483,6 +483,36 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
 const septimaHelp = '<p>¿Buscas La Séptima? Revisa toda la lista de canales y, si no aparece, haz una búsqueda automática en modo Antena o TDT. ' + link('/ayuda-antenas/#la-septima', 'Cómo encontrar La Séptima y qué hacer si falta', 'text-link') + '</p>';
 
 const localCaseGuides = {
+  '39020': {
+    title: '¿Falla la TDT en todas las tomas?',
+    checks: [
+      'Prueba dos tomas de la vivienda y apunta si faltan los mismos canales o si falla toda la TDT.',
+      'Si hay una fuente de alimentación de antena accesible, dinos si tiene algún piloto y si está encendido. Esa información ayuda a preparar la revisión del amplificador.',
+      'Indica si la imagen fue empeorando con el tiempo o si el fallo apareció de golpe. En el aviso, menciona si la instalación ya tiene un amplificador de mástil.',
+    ],
+    request: 'tengo mala recepción de TDT y quiero revisar la antena y la amplificación',
+    service: 'instalacion',
+  },
+  '48904': {
+    title: '¿Se pixelan laSexta y Antena 3?',
+    checks: [
+      'Apunta si los dos canales se pixelan a la vez y si ocurre también con otras cadenas.',
+      'Si el fallo va y viene, anota a qué hora ocurre y cuánto dura. Un vídeo corto del televisor puede ayudar a mostrar un fallo intermitente.',
+      'Si compartes antena con otros vecinos, pregunta si ven bien esas mismas cadenas en ese momento.',
+    ],
+    request: 'se pixelan algunos canales de TDT',
+    service: 'reparacion',
+  },
+  '48003': {
+    title: '¿Qué necesitas para instalar una parabólica para Astra?',
+    checks: [
+      'Indica qué canales o servicio quieres recibir. Ese dato permite valorar la orientación y el equipo que necesitas.',
+      'Dinos si ya tienes una toma marcada SAT o un cable desde la cubierta y en cuántos puntos quieres ver la señal.',
+      'Si ya tienes un receptor de satélite o un televisor con entrada SAT, comparte el modelo para valorar si se puede aprovechar.',
+    ],
+    request: 'quiero instalar una parabólica para Astra 19,2° Este',
+    service: 'satelite',
+  },
   '48044': {
     title: '¿Faltan solo algunos canales de TDT?',
     checks: [
@@ -515,14 +545,18 @@ const localCaseGuides = {
   },
 };
 
-function casePhotoAndGuide(photo, guide, placeName) {
-  return '<div class="case-photo-guide">'
-    + photoGrid([photo], 'photo-grid photo-grid--mediciones')
-    + '<section class="note" id="antes-de-pedir-visita" aria-labelledby="titulo-guia-local">'
+function caseVisitGuide(guide, placeName) {
+  return '<section class="note" id="antes-de-pedir-visita" aria-labelledby="titulo-guia-local">'
     + '<h3 id="titulo-guia-local">' + esc(guide.title) + '</h3><ul>'
     + guide.checks.map((check) => '<li>' + esc(check) + '</li>').join('') + '</ul>'
     + '<div class="actions">' + link(wa(placeName, guide.request), 'Enviar el aviso por WhatsApp', 'btn whatsapp')
-    + '</div></section></div>';
+    + '</div></section>';
+}
+
+function casePhotoAndGuide(photo, guide, placeName) {
+  return '<div class="case-photo-guide">'
+    + photoGrid([photo], 'photo-grid photo-grid--mediciones')
+    + caseVisitGuide(guide, placeName) + '</div>';
 }
 
 for (const [code, area] of areaMap) {
@@ -605,11 +639,10 @@ for (const [code, area] of areaMap) {
         + (place.code === '48003' ? 'Instalación de una parabólica para Astra 19,2° Este en Amorebieta-Etxano</h2>'
           + '<p class="intro">El pabellón no tenía parabólica. Instalamos una antena Fte en la cubierta y la orientamos a Astra 19,2° Este. Las fotos muestran el montaje exterior y el detalle del LNB, donde se conecta el cable coaxial que lleva la señal al interior.</p>'
           + photoGrid(amorebietaPhotos, 'photo-grid photo-grid--equipos photo-grid--mediciones')
-          + '<div class="actions">' + link('/servicios/satelite/', 'Ver el servicio de instalación de parabólicas', 'text-link') + '</div>'
+          + '<div class="actions">' + caseVisitGuide(caseGuide, place.name) + '</div>'
           : place.code === '48904' ? 'Cambio de antena TDT en Sondika</h2>'
           + '<p class="intro">La imagen se pixelaba en canales como laSexta y Antena 3. La instalación tenía una antena antigua, así que la sustituimos por una nueva.</p>'
-          + photoGrid([sondikaPhoto], 'photo-grid photo-grid--mediciones')
-          + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación de antenas', 'text-link') + '</div>'
+          + casePhotoAndGuide(sondikaPhoto, caseGuide, place.name)
           : place.code === '48913' ? 'Antena TDT Televes con dipolo activo en Zierbena</h2>'
           + '<div class="split local-extra"><div><p class="intro">Montamos una antena Televes con dipolo activo para reforzar la señal de TDT. El dipolo activo amplifica la señal en la propia antena, antes de que recorra el cable coaxial.</p>'
           + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div></div>'
@@ -626,10 +659,9 @@ for (const [code, area] of areaMap) {
           + '<p class="intro">Sustituimos las antenas de televisión terrestre y montamos dos antenas TDT en cubierta para captar todos los canales.</p>'
           + photoGrid(corralesPhotos)
           : place.code === '39020' ? 'Renovación de antena TDT en Castro Urdiales</h2>'
-          + '<div class="case-photo-guide">' + photoGrid([castroPhoto], 'photo-grid photo-grid--mediciones')
-          + '<div class="prose"><p class="intro">En una vivienda de la avenida Primero de Mayo, la televisión se veía mal con la antena y los amplificadores antiguos. Renovamos la instalación con una antena TDT en la cubierta, un amplificador de mástil y su fuente de alimentación.</p>'
+          + '<p class="intro">En una vivienda de la avenida Primero de Mayo, la televisión se veía mal con la antena y los amplificadores antiguos. Renovamos la instalación con una antena TDT en la cubierta, un amplificador de mástil y su fuente de alimentación.</p>'
           + '<p>El amplificador va cerca de la antena y eleva el nivel de señal antes de que recorra la bajante. La fuente suministra al amplificador la corriente que necesita a través del cable coaxial.</p>'
-          + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div></div></div>'
+          + casePhotoAndGuide(castroPhoto, caseGuide, place.name)
           : place.code === '48902' ? 'Renovación de antena UHF para TDT en Erandio</h2>'
           + '<p class="intro">Renovamos la antena UHF de TDT y sustituimos el cable coaxial. La instalación también tenía una parabólica. Añadimos un diplexor para combinar las señales terrestre y de satélite en la misma bajante.</p>'
           + '<p>Montamos un amplificador de mástil y varias tomas de televisión. En la fotografía se ven la antena terrestre y la parabólica sobre la cubierta.</p>'
