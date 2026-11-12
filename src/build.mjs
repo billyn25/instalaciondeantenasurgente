@@ -482,7 +482,7 @@ for (const [code, area] of areaMap) {
     + '<section class="section wrap region-directory"><h2>Todos los municipios de ' + esc(area.name)
     + '</h2><p class="intro">Además de las poblaciones anteriores, puedes consultar estos municipios, organizados por la zona más cercana.</p>'
     + covered + '</section>'
-    + (area.code === '20' || area.name === 'Gipuzkoa' ? '<section class="section wrap"><h2>Reparaciones y mediciones reales de porteros</h2><p>David C. G. realizó cambios de grupos fónicos con recambio vigente y tomó medidas para valorar un posible cambio a videoportero.</p><ul><li>'+link('/gipuzkoa/hondarribia/#visita-portero-20036','Mediciones en Hondarribia')+'</li><li>'+link('/gipuzkoa/hernani/#visita-portero-20040','Mediciones en Hernani')+'</li></ul></section>' : '')
+    + (area.code === '20' || area.name === 'Gipuzkoa' ? '<section class="section wrap"><h2>Reparaciones y mediciones reales de porteros</h2><p class="intro">David C. G. realizó cambios de grupos fónicos con recambio vigente y tomó medidas para valorar un posible cambio a videoportero.</p><ul class="places"><li>'+link('/gipuzkoa/hondarribia/#visita-portero-20036','Mediciones en Hondarribia')+'</li><li>'+link('/gipuzkoa/hernani/#visita-portero-20040','Mediciones en Hernani')+'</li></ul></section>' : '')
     + callout(area.name),
     { trail: [homeTrail, [area.name, area.url]], area: area.name, type: heading, contactPlace: area.name });
 

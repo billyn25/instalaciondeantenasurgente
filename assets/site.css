@@ -13,6 +13,7 @@ h3{font-size:1.24rem}
 p+p{margin-top:.8em}
 .wrap{width:var(--wrap);margin-inline:auto}
 .section{padding-block:clamp(3.1rem,7vw,6rem)}
+:where(.section) > :where(h2,h3) + p{margin-top:1rem}
 .skip{position:fixed;z-index:9;top:0;left:1rem;transform:translateY(-110%);padding:.65rem;background:var(--accent)}
 .skip:focus{transform:none}
 .site-header{background:var(--paper);border-bottom:1px solid var(--line)}
@@ -103,6 +104,7 @@ p+p{margin-top:.8em}
 .zone li+li{margin-top:.3rem}
 .zone .text-link{display:inline-block;margin-top:.4rem}
 .places{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}
+.section > h2 + .places,.section > .intro + .places{margin-top:1.4rem;gap:.75rem}
 .places a,.nearby li{display:block;padding:.55rem .7rem;border:1px solid var(--line);border-radius:7px;background:#fff;overflow-wrap:anywhere}
 .places a:hover,.nearby li:target{background:#fff0e5;border-color:#d28c61}
 #pueblos-cercanos h3{margin-top:clamp(1.35rem,3vw,2rem)}
