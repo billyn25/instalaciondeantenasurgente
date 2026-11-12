@@ -39,6 +39,19 @@ const bilbaoPhotos = ['bilbao-cabecera-medidor', 'bilbao-cabecera-modular'].map(
 const bilbaoCasePhoto = photosByName.get('bilbao-centro-antena-tdt');
 const bilbaoCaseUrl = '/bizkaia/bilbao/#caso-pixelacion-bilbao';
 const bilbaoCommunityUrl = '/bizkaia/bilbao/#instalaciones-comunitarias';
+const bilbaoCommunityNotice = wa('Bilbao', 'quiero dar un aviso de antena comunitaria')
+  + encodeURIComponent('\n\nCalle y portal: \nPlantas o escaleras afectadas: \nCanales que fallan y desde cuándo: \nContacto para acceder a la cabecera: ');
+const bilbaoCommunityHelp = '<aside class="note" id="aviso-comunidad"><h3>Aviso de antena comunitaria en Bilbao</h3>'
+  + '<p>Si eres administrador de fincas, presidente o vecino, indica el portal, las plantas afectadas y qué canales fallan. Confirma quién puede abrir el cuarto de telecomunicaciones.</p>'
+  + '<p>Si el edificio tiene varias escaleras o cabeceras, dinos cuáles siguen recibiendo señal. Así podemos decidir dónde empezar a medir.</p>'
+  + '<div class="actions">' + link(bilbaoCommunityNotice, 'Dar aviso de antena comunitaria', 'btn whatsapp') + '</div>'
+  + '<p>' + link('#instalaciones-comunitarias', 'Ver los trabajos en Arbolantxa y Cortes', 'text-link') + '</p></aside>';
+const bilbaoFaultLinks = '<section class="section wrap local-extra" aria-labelledby="averias-bilbao"><h2 id="averias-bilbao">¿Qué problema tienes con la televisión?</h2>'
+  + '<ul class="places"><li>' + link('/servicios/reparacion/', 'Falla una toma de TV') + '</li><li>'
+  + link('/servicios/comunidades/', 'Varios vecinos han perdido canales') + '</li><li>'
+  + link('/servicios/satelite/', 'La parabólica ha dejado de recibir') + '</li></ul>'
+  + '<p>' + link('/ayuda-antenas/#colectiva', 'Qué comprobar si falla la antena colectiva', 'text-link') + '</p></section>';
+
 const gernikaSecondPhoto = photosByName.get('gernika-lumo-dos-antenas');
 const gernikaPhoto = photosByName.get('gernika-lumo-antena-tdt');
 const gernikaCaseUrl = '/bizkaia/gernika-lumo/#trabajos-locales';
@@ -574,14 +587,15 @@ for (const [code, area] of areaMap) {
       + (place.code === '48027' ? durangoCase
         : '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
       + '</h2><p class="intro">' + esc(advice) + '</p>' + signalCheck
-      + '<aside class="note"><h3>' + esc(serviceName)
-      + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
-      + '</p><p>' + guide + '</p></aside></div>'
+      + (place.code === '48020' ? bilbaoCommunityHelp : '<aside class="note"><h3>' + esc(serviceName)
+        + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
+        + '</p><p>' + guide + '</p></aside>') + '</div>'
       + (isSanturtzi ? '<figure class="service-photo service-photo--reparacion" id="trabajos-locales">'
         + '<a href="/assets/trabajos/' + santurtziPhoto[0] + '.webp">' + image(santurtziPhoto) + '</a>'
         + '<figcaption>Trabajo real en Santurtzi. La fotografía muestra la antena TDT, su abrazadera y el cable que baja por el mástil.</figcaption></figure>'
         : '<figure class="service-photo service-photo--' + service + '">' + image(servicePhoto)
           + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
+      + (place.code === '48020' ? bilbaoFaultLinks : '')
       + porteroVisit(place.code, place.name)
       + (place.code !== '48027' && place.code !== '39087' && !isSanturtzi && trabajos.includes(place.code) ? '<section class="surface" id="trabajos-locales"><div class="wrap section"><p class="kicker">Trabajos realizados</p><h2>'
         + (place.code === '48003' ? 'Instalación de una parabólica para Astra 19,2° Este en Amorebieta-Etxano</h2>'
@@ -640,7 +654,8 @@ for (const [code, area] of areaMap) {
           + '<div class="local-extra" id="instalaciones-comunitarias"><h3>Instalaciones de antena comunitaria en Bilbao</h3>'
           + '<p class="intro">Hemos realizado trabajos en las instalaciones comunitarias de estos dos portales de Bilbao.</p>'
           + '<ul class="work-towns"><li>Calle Arbolantxa, 5</li><li>Calle Cortes, 6</li></ul>'
-          + '<p class="intro">Cuando varios vecinos pierden los mismos canales, podemos comparar la señal en la cabecera común y en distintas tomas. Así se distingue un problema del equipo compartido de una pérdida en un ramal del edificio.</p></div>'
+          + '<p class="intro">Cuando varios vecinos pierden los mismos canales, podemos comparar la señal en la cabecera común y en distintas tomas. Así se distingue un problema del equipo compartido de una pérdida en un ramal del edificio.</p>'
+          + '<div class="actions">' + link('#aviso-comunidad', 'Qué datos enviar para dar un aviso', 'text-link') + '</div></div>'
           : place.code === '48046' ? 'Trabajo real de antena TDT en Gernika-Lumo</h2>'
             + '<div class="split local-extra"><div><h3>Antena y montaje sobre cubierta</h3><p>La fotografía principal de esta página corresponde al trabajo real en Gernika-Lumo: antena de televisión terrestre instalada sobre un mástil en cubierta, con su cableado y elementos de sujeción.</p><p>Al revisar un montaje de este tipo se comprueban tanto la recepción de señal como el estado del mástil, el cable y las conexiones.</p></div><figure class="service-photo service-photo--satelite"><a href="/assets/trabajos/gernika-lumo-dos-antenas.webp">'+image(gernikaSecondPhoto)+'</a><figcaption>'+esc(gernikaSecondPhoto[1])+'</figcaption></figure></div>'
           : place.code === '48017' ? 'Trabajo real de antena TDT en Bermeo</h2>'
