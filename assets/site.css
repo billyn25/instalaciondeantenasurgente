@@ -189,6 +189,17 @@ details{margin-top:.8rem}
 
 .photo-grid--mediciones img{aspect-ratio:3/4;object-fit:contain;object-position:center}
 @media(max-width:600px){.photo-grid--mediciones{grid-template-columns:minmax(0,1fr)}}
+.case-photo-guide{display:grid;grid-template-columns:minmax(0,22rem) minmax(0,1fr);gap:clamp(1.25rem,4vw,3rem);align-items:start;max-width:58rem;margin-top:1.6rem}
+.case-photo-guide .photo-grid{grid-template-columns:minmax(0,1fr);margin:0}
+.case-photo-guide .photo-grid img{max-height:25rem}
+.case-photo-guide .note{scroll-margin-top:1rem}
+.case-photo-guide ul{margin:1rem 0 0;padding-inline-start:1.25rem}
+.case-photo-guide li+li{margin-top:.65rem}
+.case-links{column-gap:1.5rem}
+@media(max-width:760px){
+  .case-photo-guide{grid-template-columns:minmax(0,1fr)}
+  .case-photo-guide .photo-grid{max-width:22rem}
+}
 
 /* Porteros: explicación visual del servicio y trabajos documentados. */
 .door-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(1.5rem,5vw,4rem);align-items:center}

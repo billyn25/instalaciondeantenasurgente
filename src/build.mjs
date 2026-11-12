@@ -468,6 +468,7 @@ const localCaseGuides = {
       'Indica cuándo empezó el problema y si ocurre siempre o a ciertas horas.',
     ],
     request: 'me faltan algunos canales de TDT',
+    service: 'reparacion',
   },
   '20071': {
     title: '¿Qué indicar si la antena se ha movido tras el viento?',
@@ -477,6 +478,7 @@ const localCaseGuides = {
       'Si ya tienes una foto tomada desde el suelo, adjúntala al aviso para que podamos ver el estado del montaje.',
     ],
     request: 'tengo la antena dañada tras el viento',
+    service: 'reparacion',
   },
   '48902': {
     title: '¿La televisión falla solo en una habitación?',
@@ -486,8 +488,19 @@ const localCaseGuides = {
       'Si puedes, prueba el mismo televisor y su cable en una toma que funcione. Cuéntanos si el fallo cambia de habitación con el equipo.',
     ],
     request: 'tengo problemas de señal en una toma de televisión',
+    service: 'instalacion',
   },
 };
+
+function casePhotoAndGuide(photo, guide, placeName) {
+  return '<div class="case-photo-guide">'
+    + photoGrid([photo], 'photo-grid photo-grid--mediciones')
+    + '<section class="note" id="antes-de-pedir-visita" aria-labelledby="titulo-guia-local">'
+    + '<h3 id="titulo-guia-local">' + esc(guide.title) + '</h3><ul>'
+    + guide.checks.map((check) => '<li>' + esc(check) + '</li>').join('') + '</ul>'
+    + '<div class="actions">' + link(wa(placeName, guide.request), 'Enviar el aviso por WhatsApp', 'btn whatsapp')
+    + '</div></section></div>';
+}
 
 for (const [code, area] of areaMap) {
   const heading = 'Antenista en ' + area.name;
@@ -591,17 +604,14 @@ for (const [code, area] of areaMap) {
           : place.code === '48902' ? 'Renovación de antena UHF para TDT en Erandio</h2>'
           + '<p class="intro">Renovamos la antena UHF de TDT y sustituimos el cable coaxial. La instalación también tenía una parabólica. Añadimos un diplexor para combinar las señales terrestre y de satélite en la misma bajante.</p>'
           + '<p>Montamos un amplificador de mástil y varias tomas de televisión. En la fotografía se ven la antena terrestre y la parabólica sobre la cubierta.</p>'
-          + photoGrid([erandioPhoto], 'photo-grid photo-grid--mediciones')
-          + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div>'
+          + casePhotoAndGuide(erandioPhoto, caseGuide, place.name)
           : place.code === '48044' ? 'Cambio de antena UHF con filtro 5G en Getxo</h2>'
           + '<p class="intro">En esta vivienda de Getxo habían dejado de verse algunas cadenas de TDT por interferencias de la señal móvil 5G. Sustituimos la antena por una UHF con filtro 5G. El soporte estaba a gran altura en la fachada y usamos una escalera para acceder a él.</p>'
           + '<p>Ajustamos la antena con un medidor de campo y revisamos todas las tomas de televisión de la vivienda para comprobar cómo llegaba la señal a cada punto.</p>'
-          + photoGrid([getxoPhoto], 'photo-grid photo-grid--mediciones')
-          + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación de antenas', 'text-link') + '</div>'
+          + casePhotoAndGuide(getxoPhoto, caseGuide, place.name)
           : place.code === '20071' ? 'Reparación urgente de mástil y antenas caídas en Tolosa</h2>'
           + '<p class="intro">Los fuertes vientos tumbaron el conjunto de antenas y dejaron el mástil doblado. Atendimos el aviso de urgencia y sustituimos el mástil, las antenas y todo el material de la instalación dañada. La foto muestra cómo quedó el conjunto tras el viento, antes de la reparación.</p>'
-          + photoGrid([tolosaPhoto], 'photo-grid photo-grid--mediciones')
-          + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación de antenas', 'text-link') + '</div>'
+          + casePhotoAndGuide(tolosaPhoto, caseGuide, place.name)
           : place.code === '20018' ? 'Cambio de antenas UHF y FM en Azpeitia</h2>'
           + '<div class="split local-extra"><div><p class="intro">Sustituimos las antenas UHF y FM de una instalación en Azpeitia. La UHF se usa para recibir la TDT y la FM para la radio. En la foto se ve el conjunto exterior montado en el mástil.</p>'
           + '<div class="actions">' + link('/servicios/instalacion/', 'Ver el servicio de instalación de antenas', 'text-link') + '</div></div>'
@@ -628,13 +638,9 @@ for (const [code, area] of areaMap) {
             + '<p class="intro">Una de las intervenciones se realizó en la Calle de Galtzada, 5, en Deba. Las fotos muestran antenas terrestres y parabólica, una central Rover Polar con sus repartidores y una medición de TDT con Promax. Medir el nivel y la calidad de la señal ayuda a decidir si conviene intervenir en la antena o revisar el equipo y el cable que llevan la televisión a las tomas.</p>'
             + photoGrid(debaPhotos)
           : 'Hemos trabajado en ' + esc(place.name) + '</h2><p class="intro">En la galería puedes ver fotografías de antenas y equipos de trabajos de Antenista Fuentes.</p>')
-        + '<div class="actions">'
-        + link('/trabajos/', 'Ver la galería', 'btn dark') + '</div></div></section>' : '')
-      + (caseGuide ? '<section class="section wrap local-extra" id="antes-de-pedir-visita"><div class="prose">'
-        + '<h2>' + esc(caseGuide.title) + '</h2><ul>'
-        + caseGuide.checks.map((check) => '<li>' + esc(check) + '</li>').join('') + '</ul>'
-        + '<div class="actions">' + link(wa(place.name, caseGuide.request), 'Enviar el aviso por WhatsApp', 'btn whatsapp')
-        + '</div></div></section>' : '')
+        + '<div class="actions' + (caseGuide ? ' case-links' : '') + '">'
+        + (caseGuide ? link('/servicios/' + caseGuide.service + '/', servicios[caseGuide.service][0], 'text-link') : '')
+        + link('/trabajos/', 'Ver la galería', caseGuide ? 'text-link' : 'btn dark') + '</div></div></section>' : '')
       + '<section class="wrap section local-extra split tdt-tuning" id="resintonizar-tdt"><div class="prose"><h2>Resintonización de canales TDT en ' + esc(place.name) + '</h2>'
       + '<p class="intro">Si faltan canales tras los cambios de noviembre, prueba la búsqueda automática en el modo Antena del televisor o receptor. Si ves los canales HD y faltan los UHD, comprueba que tu equipo admite DVB-T2 y HEVC/H.265.</p>'
       + '<p>' + (service === 'comunidades'
