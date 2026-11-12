@@ -63,6 +63,8 @@ const asturiasUrl = '/asturias/';
 const ribadesella = { name: 'Ribadesella', url: asturiasUrl + 'ribadesella/' };
 const asturias = { name: 'Asturias', url: asturiasUrl, centers: [ribadesella] };
 const ribadesellaCaseUrl = ribadesella.url + '#ribadesella-antena-caida';
+const menaPhoto = ['antena-rover-lambda-sx-valle-de-mena', 'Antena Rover Lambda SX montada sobre un tejado en Valle de Mena', 811, 1440];
+const menaCaseUrl = '/burgos/valle-de-mena/#trabajos-locales';
 const salasPhoto = ['salas-infantes-ellipse-avenida-castrillo', 'Antena Televes Ellipse montada en un poste de la avenida Castrillo, en Salas de los Infantes', 675, 1200];
 const salasCaseUrl = '/burgos/salas-de-los-infantes/#trabajos-locales';
 const lekeitioPhoto = ['antenas-tdt-parabolica-astra-lekeitio', 'Dos antenas TDT y una parabólica para Astra en la instalación de Lekeitio', 810, 1440];
@@ -265,6 +267,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['09','Valle de Mena · Antenas','Instalación de antena Rover Lambda SX con previo de mástil',menaPhoto,menaCaseUrl],
   ['09','Salas de los Infantes · Antenas','Instalación de una Televes Ellipse en la avenida Castrillo',salasPhoto,salasCaseUrl],
   ['48','Lekeitio · Antenas','Instalación de dos antenas TDT y una parabólica para Astra',lekeitioPhoto,lekeitioCaseUrl],
   ['48','Mungia · Antenas','Sustitución de antena TDT por pixelación',mungiaPhoto,mungiaCaseUrl],
@@ -431,6 +434,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(menaPhoto)}<p class="kicker">Valle de Mena · TDT</p><h3>Instalación de una Rover Lambda SX</h3>
+      <p>Montamos una antena TDT en el tejado, con previo de mástil y fuente Rover para satélite.</p>
+      ${link(menaCaseUrl, 'Ver la instalación de Valle de Mena', 'text-link')}</article>
     <article class="card">${image(salasPhoto)}<p class="kicker">Salas de los Infantes · TDT</p><h3>Antena Televes Ellipse en la avenida Castrillo</h3>
       <p>Montamos una antena TDT con dipolo activo en un poste de alumbrado.</p>
       ${link(salasCaseUrl, 'Ver la instalación de Salas de los Infantes', 'text-link')}</article>
@@ -507,6 +513,16 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
 const septimaHelp = '<p>¿Buscas La Séptima? Revisa toda la lista de canales y, si no aparece, haz una búsqueda automática en modo Antena o TDT. ' + link('/ayuda-antenas/#la-septima', 'Cómo encontrar La Séptima y qué hacer si falta', 'text-link') + '</p>';
 
 const localCaseGuides = {
+  '09410': {
+    title: '¿Qué datos ayudan a preparar una instalación de TDT?',
+    checks: [
+      'Indica la localidad del Valle de Mena y qué canales se ven con la instalación actual, si ya hay una.',
+      'Cuenta cuántas tomas quieres usar y si también necesitas señal de satélite en alguna de ellas.',
+      'Si tienes una foto del amplificador o de su fuente de alimentación, envíala para identificar los equipos que hay instalados.',
+    ],
+    request: 'quiero valorar la recepción de TDT en Valle de Mena',
+    service: 'instalacion',
+  },
   '09330': {
     title: '¿Qué conviene indicar si la antena va fuera de la vivienda?',
     checks: [
@@ -650,6 +666,10 @@ for (const [code, area] of areaMap) {
     + link('#municipios', 'Consultar mi municipio', 'text-link') + '</div></div>'
     + '<figure class="service-photo">' + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
     + (code === '48' ? bizkaiaHelp : '')
+    + (code === '09' ? '<section class="section wrap local-extra" id="instalaciones-tdt-burgos"><h2>Dos instalaciones de TDT en Burgos</h2>'
+      + '<p class="intro">Para valorar un montaje, indica dónde se puede colocar la antena y cómo entra el cable. Estos dos trabajos muestran montajes distintos: una antena con previo de mástil en un tejado y una antena con dipolo activo en un poste.</p>'
+      + '<ul class="places"><li>' + link(menaCaseUrl, 'Valle de Mena · Antena en cubierta con previo de mástil') + '</li>'
+      + '<li>' + link(salasCaseUrl, 'Salas de los Infantes · Antena en la avenida Castrillo') + '</li></ul></section>' : '')
     + '<section class="section wrap" id="municipios"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
     + (localWorks.length ? '<section class="surface"><div class="wrap section"><h2>Trabajos en ' + esc(area.name)
       + '</h2>' + provinceCaseCards(code) + '<h3 class="province-work-towns">Municipios donde hemos trabajado</h3>'+workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
@@ -732,6 +752,9 @@ for (const [code, area] of areaMap) {
           : place.code === '39025' ? 'Cambio de antenas TDT en Los Corrales de Buelna</h2>'
           + '<p class="intro">Sustituimos las antenas de televisión terrestre y montamos dos antenas TDT en cubierta para captar todos los canales.</p>'
           + photoGrid(corralesPhotos)
+          : place.code === '09410' ? 'Instalación de antena Rover Lambda SX en Valle de Mena</h2>'
+          + '<p class="intro">Instalamos una antena Rover Lambda SX para TDT, un previo de mástil y una fuente Rover para satélite. En la foto se aprecia la antena sobre la cubierta y el recorrido del cable exterior.</p>'
+          + casePhotoAndGuide(menaPhoto, caseGuide, place.name)
           : place.code === '09330' ? 'Instalación de una antena TDT en la avenida Castrillo</h2>'
           + '<p class="intro">En la avenida Castrillo, en Salas de los Infantes, montamos una antena Televes Ellipse con dipolo activo para la TDT. La foto muestra la antena instalada en un poste de alumbrado.</p>'
           + casePhotoAndGuide(salasPhoto, caseGuide, place.name)
