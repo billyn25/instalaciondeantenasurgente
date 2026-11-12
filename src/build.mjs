@@ -63,6 +63,8 @@ const asturiasUrl = '/asturias/';
 const ribadesella = { name: 'Ribadesella', url: asturiasUrl + 'ribadesella/' };
 const asturias = { name: 'Asturias', url: asturiasUrl, centers: [ribadesella] };
 const ribadesellaCaseUrl = ribadesella.url + '#ribadesella-antena-caida';
+const salasPhoto = ['salas-infantes-ellipse-avenida-castrillo', 'Antena Televes Ellipse montada en un poste de la avenida Castrillo, en Salas de los Infantes', 675, 1200];
+const salasCaseUrl = '/burgos/salas-de-los-infantes/#trabajos-locales';
 const lekeitioPhoto = ['antenas-tdt-parabolica-astra-lekeitio', 'Dos antenas TDT y una parabólica para Astra en la instalación de Lekeitio', 810, 1440];
 const lekeitioCaseUrl = '/bizkaia/lekeitio/#trabajos-locales';
 const mungiaPhoto = ['cambio-antena-tdt-televes-mungia', 'Antena Televes instalada en Mungia para recuperar la recepción de TDT', 810, 1440];
@@ -263,6 +265,7 @@ function porteroVisit(code, name) {
  +'<h3>Qué debe concretar la valoración</h3><p>Además del montaje exterior, al preparar el presupuesto se determina qué monitores se necesitan y se comprueba la compatibilidad del sistema con el cableado del edificio. La posibilidad de aprovechar los cables se valora en la instalación, antes de darla por hecha.</p><p>La reparación de audio ya realizada y la posible renovación a videoportero son actuaciones distintas. Disponer de recambio para el grupo fónico permite reparar el portero actual; las medidas sirven para preparar una alternativa de renovación si la comunidad decide cambiarlo.</p></div></div></section>';
 }
 const documentedCases = [
+  ['09','Salas de los Infantes · Antenas','Instalación de una Televes Ellipse en la avenida Castrillo',salasPhoto,salasCaseUrl],
   ['48','Lekeitio · Antenas','Instalación de dos antenas TDT y una parabólica para Astra',lekeitioPhoto,lekeitioCaseUrl],
   ['48','Mungia · Antenas','Sustitución de antena TDT por pixelación',mungiaPhoto,mungiaCaseUrl],
   ['20','Arrasate / Mondragón · Udala','Dos antenas TDT y amplificador multibanda para recuperar canales',udalaPhoto,udalaCaseUrl],
@@ -428,6 +431,9 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
       ${link(bermeoCaseUrl, 'Ver el trabajo real de antena en Bermeo', 'text-link')}</article>
   </div>
   <div class="cards home-antenna-cases">
+    <article class="card">${image(salasPhoto)}<p class="kicker">Salas de los Infantes · TDT</p><h3>Antena Televes Ellipse en la avenida Castrillo</h3>
+      <p>Montamos una antena TDT con dipolo activo en un poste de alumbrado.</p>
+      ${link(salasCaseUrl, 'Ver la instalación de Salas de los Infantes', 'text-link')}</article>
     <article class="card">${image(lekeitioPhoto)}<p class="kicker">Lekeitio · TDT y satélite</p><h3>Dos antenas TDT y parabólica para Astra</h3>
       <p>Instalamos dos antenas Televes con dipolo activo para TDT y una parabólica para recibir Astra.</p>
       ${link(lekeitioCaseUrl, 'Ver la instalación de Lekeitio', 'text-link')}</article>
@@ -501,6 +507,16 @@ add('/', 'Antenista urgente | Instalación y reparación de antenas TDT y SAT',
 const septimaHelp = '<p>¿Buscas La Séptima? Revisa toda la lista de canales y, si no aparece, haz una búsqueda automática en modo Antena o TDT. ' + link('/ayuda-antenas/#la-septima', 'Cómo encontrar La Séptima y qué hacer si falta', 'text-link') + '</p>';
 
 const localCaseGuides = {
+  '09330': {
+    title: '¿Qué conviene indicar si la antena va fuera de la vivienda?',
+    checks: [
+      'Dinos dónde está la antena actual o qué emplazamiento quieres valorar. Una foto general del entorno ayuda a ver el acceso y los obstáculos.',
+      'Indica por dónde entra el cable en la vivienda y si hay tomas de televisión que quieras aprovechar.',
+      'Si quieres mejorar una instalación existente, apunta qué canales recibes bien y cuáles fallan. Esa información orienta la comprobación de la señal.',
+    ],
+    request: 'quiero valorar una instalación de TDT en Salas de los Infantes',
+    service: 'instalacion',
+  },
   '48057': {
     title: '¿Qué conviene indicar si quieres TDT y Astra?',
     checks: [
@@ -716,6 +732,9 @@ for (const [code, area] of areaMap) {
           : place.code === '39025' ? 'Cambio de antenas TDT en Los Corrales de Buelna</h2>'
           + '<p class="intro">Sustituimos las antenas de televisión terrestre y montamos dos antenas TDT en cubierta para captar todos los canales.</p>'
           + photoGrid(corralesPhotos)
+          : place.code === '09330' ? 'Instalación de una antena TDT en la avenida Castrillo</h2>'
+          + '<p class="intro">En la avenida Castrillo, en Salas de los Infantes, montamos una antena Televes Ellipse con dipolo activo para la TDT. La foto muestra la antena instalada en un poste de alumbrado.</p>'
+          + casePhotoAndGuide(salasPhoto, caseGuide, place.name)
           : place.code === '48057' ? 'Instalación de tres antenas en Lekeitio</h2>'
           + '<p class="intro">Montamos dos antenas Televes con dipolo activo para la TDT y una parabólica para Astra. El conjunto permite recibir televisión terrestre y por satélite en la misma instalación.</p>'
           + casePhotoAndGuide(lekeitioPhoto, caseGuide, place.name)
