@@ -616,6 +616,15 @@ const bizkaiaHelp = '<section class="section wrap local-extra" id="averias-en-bi
   + '<article class="card"><h3>Quieres TDT y satélite con un solo cable</h3><p>Indica qué tomas quieres usar y si ya hay parabólica. En Balmaseda se montaron las dos antenas en un mástil y se combinaron sus señales en una bajante.</p>'
   + link(balmasedaCaseUrl, 'Ver el montaje de Balmaseda', 'text-link') + '</article></div></section>';
 
+const burgosHelp = '<section class="section wrap local-extra" id="diagnostico-tdt-burgos"><h2>Qué comprobar si falla la TDT en Burgos</h2>'
+  + '<div class="cards diagnostic-cards">'
+  + '<article class="card"><h3>Solo falla un televisor o una toma</h3><p>Si tienes otra toma que funciona, prueba allí el mismo televisor con su cable corto. Apunta si el fallo se queda en la habitación o sigue al equipo.</p>'
+  + link('/servicios/reparacion/', 'Ver cómo revisamos el cable y la toma', 'text-link') + '</article>'
+  + '<article class="card"><h3>Varios vecinos pierden los mismos canales</h3><p>Anota qué plantas o portales están afectados y quién puede abrir el cuarto de telecomunicaciones. Esa información ayuda a decidir dónde medir primero.</p>'
+  + link('/burgos/burgos/', 'Consultar averías de antena colectiva en Burgos capital', 'text-link') + '</article>'
+  + '<article class="card"><h3>Necesitas una antena nueva en una casa</h3><p>Indica el pueblo exacto, qué cadenas quieres recibir y cuántas tomas vas a usar. Si ya hay cableado o un soporte, cuéntanos dónde está.</p>'
+  + link(salasCaseUrl, 'Ver la instalación real en Salas de los Infantes', 'text-link') + '</article></div></section>';
+
 for (const [code, area] of areaMap) {
   const heading = 'Antenista en ' + area.name;
   const centerLinks = area.centers.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
@@ -634,6 +643,7 @@ for (const [code, area] of areaMap) {
     + link('#municipios', 'Consultar mi municipio', 'text-link') + '</div></div>'
     + '<figure class="service-photo">' + image(servicePhoto) + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure></section>'
     + (code === '48' ? bizkaiaHelp : '')
+    + (code === '09' ? burgosHelp : '')
     + '<section class="section wrap" id="municipios"><h2>Servicio de antenista por municipio</h2><ul class="places">' + centerLinks + '</ul></section>'
     + (localWorks.length ? '<section class="surface"><div class="wrap section"><h2>Trabajos en ' + esc(area.name)
       + '</h2>' + provinceCaseCards(code) + '<h3 class="province-work-towns">Municipios donde hemos trabajado</h3>'+workTowns(localWorks) + link('/trabajos/', 'Ver galería de trabajos', 'text-link') + '</div></section>' : '')
