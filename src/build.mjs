@@ -1,4 +1,5 @@
 import { orientacionProvincial, ayudaMunicipal } from './orientacion-provincial.mjs';
+import { fichasPrioritarias } from './fichas-prioritarias.mjs';
 import { ayudaBurgos } from './burgos.mjs';
 import { validarSitio } from './validar-sitio.mjs';
 import { guiasServicio } from './guias-servicio.mjs';
@@ -416,7 +417,7 @@ const pages = new Map();
 function add(path, title, description, content, options = {}) {
   if (pages.has(path)) throw new Error('URL duplicada: ' + path);
   const { trail = [], area, type, indexed = true, searchEnabled = false } = options;
-  const seoDescription = indexed ? 'Tel. ' + phone + '. ' + description : description;
+  const seoDescription = description;
   const url = base + path;
   const data = [organization];
   if (trail.length) data.push({
@@ -430,14 +431,20 @@ function add(path, title, description, content, options = {}) {
   });
   if (path === '/') data.push({ '@type': 'WebSite', '@id': base + '/#web', name: brand, url, inLanguage: 'es' });
 
-  const sharePhoto = path === '/' ? homeHeroPhoto : galleryPhoto;
+  const firstPhotoName = content.match(/<img\b[^>]*src="\/assets\/trabajos\/([^"/]+)\.(?:webp|jpe?g|png)"/)?.[1];
+  const sharePhoto = options.sharePhoto ?? photosByName.get(firstPhotoName) ?? (path === '/' ? homeHeroPhoto : galleryPhoto);
+  const shareImageUrl = base + '/assets/trabajos/' + sharePhoto[0] + '.' + (sharePhoto[4] || 'webp');
+  data.push({ '@type': 'WebPage', '@id': url + '#pagina', url, name: title, description,
+    inLanguage: 'es', isPartOf: { '@id': base + '/#web' },
+    publisher: { '@id': organization['@id'] },
+    ...(firstPhotoName ? { primaryImageOfPage: { '@type': 'ImageObject', url: shareImageUrl } } : {}) });
   const html = `<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(seoDescription)}">
 ${indexed ? '<link rel="canonical" href="' + esc(url) + '">' : '<meta name="robots" content="noindex,follow">'}
 <meta property="og:type" content="website"><meta property="og:site_name" content="${brand}">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(seoDescription)}">
-<meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${base}/assets/trabajos/${sharePhoto[0]}.webp">
+<meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${shareImageUrl}">
 <meta property="og:image:alt" content="${esc(sharePhoto[1])}">
 <link rel="icon" type="image/svg+xml" href="/assets/logo.svg"><link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/visor-fotos.js" defer></script>
@@ -726,6 +733,21 @@ function provincialAdvice(code, area) {
     + '<div class="actions">' + link(notice, 'Preparar mi consulta por WhatsApp', 'btn whatsapp') + '</div></section>';
 }
 
+function focusedLocalAdvice(place, focus) {
+  if (!focus) return '';
+  const notice = wa(place.name, 'quiero consultar una reparación o instalación de antena')
+    + encodeURIComponent('\n\n' + focus.fields.map(field => field + ': ').join('\n'));
+  return '<section class="section wrap" id="preparar-aviso"><h2>' + esc(focus.heading) + '</h2>'
+    + '<div class="cards case-previews">' + focus.blocks.map(([title, text]) => '<article class="card"><h3>'
+      + esc(title) + '</h3><p>' + esc(text) + '</p></article>').join('') + '</div>'
+    + (place.code === '48013' ? '<p class="intro">' + link(bilbaoCommunityUrl, 'Ver un trabajo documentado de antena comunitaria en Bilbao', 'text-link') + '.</p>' : '')
+    + '<div class="service-questions"><h3>Antes de pedir la visita</h3>'
+    + focus.questions.map(([question, answer]) => '<details><summary>' + esc(question) + '</summary><p>' + esc(answer) + '</p></details>').join('')
+    + '</div><p class="intro">Antenista Fuentes organiza las visitas desde Bilbao. Al contactar, concretamos la disponibilidad, el acceso y el alcance del trabajo para valorar el presupuesto.</p>'
+    + '<div class="actions">' + link(notice, 'Consultar mi instalación en ' + place.name, 'btn whatsapp')
+    + link(tel, 'Llamar al ' + phone, 'btn dark') + '</div></section>';
+}
+
 function relatedProvincialWork(code, area) {
   const cases = documentedCases.filter((item) => item[0] === code).slice(0, 2);
   if (!cases.length) return 'Servicio de antena en ' + esc(area.name) + '</h2><p>'
@@ -738,8 +760,8 @@ for (const [code, area] of areaMap) {
   const heading = 'Antenista en ' + area.name;
   const centerLinks = area.centers.map((place) => '<li>' + link(place.url, 'Antenista en ' + place.name) + '</li>').join('');
   const covered = area.centers.filter((place) => place.nearby.length).map((center) =>
-    '<section><h3>' + link(center.url + '#pueblos-cercanos', 'Entorno de ' + center.name) + '</h3><ul class="places">'
-    + center.nearby.map((place) => '<li>' + link(place.url, place.name) + '</li>').join('') + '</ul></section>').join('');
+    '<details class="coverage-group"><summary>Entorno de ' + esc(center.name) + '</summary><p>' + link(center.url, 'Consultar el servicio en ' + center.name) + '</p><ul class="places">'
+    + center.nearby.map((place) => '<li>' + link(place.url, place.name) + '</li>').join('') + '</ul></details>').join('');
   const localWorks = featured.filter((place) => place.province === area);
   const [serviceHeading, serviceText, serviceKey, photoKey] = servicioProvincial[code];
   const servicePhoto = photosByName.get(photoKey === 'antena-en-cubierta' ? 'mastil-varias-antenas' : photoKey);
@@ -767,6 +789,7 @@ for (const [code, area] of areaMap) {
     { trail: [homeTrail, [area.name, area.url]], area: area.name, type: heading, contactPlace: area.name, searchEnabled: true });
 
   for (const place of area.centers) {
+    const focus = fichasPrioritarias[place.code];
     const [topic, advice, service] = fichas[place.code];
     const [serviceName, serviceIntro] = servicios[service];
     const choices = servicePhotos[service];
@@ -798,13 +821,8 @@ for (const [code, area] of areaMap) {
       + '<div class="actions">' + link('/servicios/reparacion/', 'Ver el servicio de reparación', 'btn dark') + '</div></div>'
       + '<figure class="service-photo durango-photo"><a href="/assets/trabajos/durango-antena-caida-reparada.webp">'
       + image(durangoPhoto) + '</a><figcaption>' + esc(durangoPhoto[1]) + '</figcaption></figure></div></section>';
-    add(place.url, heading + ' | ' + localService,
-      place.code === '48084' ? 'Antenas y videoporteros en Sestao. Reparación real de un Comelit en una comunidad de vecinos, con foto de la placa y consulta de averías.' : heading + '. ' + topic.replace(/[?¿]/g, '') + '. Visitas para viviendas y comunidades.',
-      smallHero(area.name + ' · Servicio de antenista', heading,
-        place.code === '48084' ? 'Antenas TDT, parabólicas y reparación de porteros y videoporteros para viviendas y comunidades de vecinos en Sestao.' : 'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.', place.name)
-      + (place.code === '48084' ? porteroVisit(place.code, place.name) : '')
-      + (place.code === '48027' ? durangoCase
-        : '<section class="section wrap split"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
+    const diagnosisBlock = (focus ? '' : place.code === '48027' ? durangoCase
+        : '<section class="section wrap' + (isSanturtzi || place.code === '48046' ? ' split' : ' municipal-diagnosis') + '"><div><p class="kicker">Diagnóstico y reparación</p><h2>' + esc(topic)
       + '</h2><p class="intro">' + esc(advice) + '</p>' + signalCheck
       + (place.code === '48020' ? bilbaoCommunityHelp : '<aside class="note"><h3>' + esc(serviceName)
         + '</h3><p>' + esc(serviceIntro) + '</p><p>' + link('/servicios/' + service + '/', 'Ver cómo se realiza el servicio', 'text-link')
@@ -812,8 +830,14 @@ for (const [code, area] of areaMap) {
       + (isSanturtzi ? '<figure class="service-photo service-photo--reparacion" id="trabajos-locales">'
         + '<a href="/assets/trabajos/' + santurtziPhoto[0] + '.webp">' + image(santurtziPhoto) + '</a>'
         + '<figcaption>Trabajo real en Santurtzi. La fotografía muestra la antena TDT, su abrazadera y el cable que baja por el mástil.</figcaption></figure>'
-        : '<figure class="service-photo service-photo--' + service + '">' + image(servicePhoto)
-          + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>') + '</section>')
+        : place.code === '48046' ? '<figure class="service-photo service-photo--' + service + '">' + image(servicePhoto)
+          + '<figcaption>' + esc(servicePhoto[1]) + '</figcaption></figure>' : '') + '</section>');
+    add(place.url, focus?.title ?? (heading + ' | ' + localService),
+      focus?.description ?? (place.code === '48084' ? 'Antenas y videoporteros en Sestao. Reparación real de un Comelit en una comunidad de vecinos, con foto de la placa y consulta de averías.' : heading + '. ' + topic.replace(/[?¿]/g, '') + '. Visitas para viviendas y comunidades.'),
+      smallHero(area.name + ' · Servicio de antenista', heading,
+        focus?.intro ?? (place.code === '48084' ? 'Antenas TDT, parabólicas y reparación de porteros y videoporteros para viviendas y comunidades de vecinos en Sestao.' : 'Instalación y reparación de antenas en ' + place.name + '. TDT, parabólicas y señal de televisión para viviendas y comunidades.'), place.name)
+      + (place.code === '48084' ? porteroVisit(place.code, place.name) : '')
+      + (place.code === '48027' || isSanturtzi ? diagnosisBlock : '')
       + (place.code === '48020' ? bilbaoFaultLinks : '')
       + (place.code !== '48084' ? porteroVisit(place.code, place.name) : '')
       + (place.code === '20079' ? zarautzCameraCase : '')
@@ -899,8 +923,10 @@ for (const [code, area] of areaMap) {
         + (caseGuide ? link('/servicios/' + caseGuide.service + '/', servicios[caseGuide.service][0], 'text-link') : '')
         + link('/trabajos/', 'Ver la galería', caseGuide ? 'text-link' : 'btn dark') + '</div></div></section>' : '')
       + (place.code === '20036' ? hondarribiaAdvice : '')
+      + (place.code !== '48027' && !isSanturtzi ? diagnosisBlock : '')
+      + focusedLocalAdvice(place, focus)
       + municipalAdvice(place)
-      + (extra && !ayudaBurgos[place.code] && !ayudaMunicipal[place.code] ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
+      + (extra && !focus && !ayudaBurgos[place.code] && !ayudaMunicipal[place.code] ? '<section class="wrap section local-extra"><h2>' + esc(extra[0]) + '</h2><p class="intro">' + esc(extra[1]) + '</p>'
         + (extra[2] ? '<p>' + link(...extra[2], 'text-link') + '</p>' : '') + '</section>' : '')
       + '<section class="wrap section local-extra" id="resintonizar-tdt"><h2>Resintonización de TDT en ' + esc(place.name) + '</h2>'
       + '<p class="intro">Si un canal no aparece en la lista, consulta cómo buscarlo en el televisor o receptor. Si la imagen se corta o faltan las mismas cadenas en varias tomas, indícalo al pedir la revisión.</p>'
@@ -921,7 +947,8 @@ for (const [code, area] of areaMap) {
       + link(area.url, 'Ver todos los municipios de ' + area.name, 'text-link') + '</div></section>'
       + '<section class="section wrap"><h2>Otros servicios de antenista</h2><ul class="places">' + otherServices + '</ul></section>'
       + callout(place.name),
-      { trail: [homeTrail, [area.name, area.url], [place.name, place.url]], area: place.name, type: heading, contactPlace: place.name });
+      { trail: [homeTrail, [area.name, area.url], [place.name, place.url]], area: place.name, type: heading, contactPlace: place.name,
+        sharePhoto: ({ '48044': getxoPhoto, '48057': lekeitioLocalPhoto, '20029': photosByName.get('deba-medicion-promax') })[place.code] });
   }
 }
 

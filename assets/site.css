@@ -357,3 +357,22 @@ body.photo-viewer-open { position: fixed; width: 100%; overflow: hidden }
 .photo-viewer__stage { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 0 }
 .photo-viewer__stage img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain }
 .photo-viewer__caption { max-width: 80ch; max-height: 20dvh; margin: 0 auto; overflow: auto; text-align: center; font-size: .9rem; line-height: 1.5 }
+
+/* Ritmo común en provincias, servicios y fichas municipales. */
+.section > .wrap > h2 + :is(p,ul),
+.section > h2 + :is(p,ul),
+.section h2 + h3 { margin-top: 1.25rem }
+.section h3 { line-height: 1.3 }
+.section :is(ul,ol) > li + li { margin-top: .45rem }
+.section :is(.places,.work-towns) > li + li { margin-top: 0 }
+.cards { align-items: start }
+.municipal-diagnosis > div { max-width: 76ch }
+.coverage-group { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 1rem 1.25rem }
+.coverage-group summary { min-height: 28px; line-height: 1.5 }
+.coverage-group > p { margin-top: .8rem }
+.coverage-group .places { margin-top: 1rem }
+@media(max-width:660px) {
+ .cards:not(.home-antenna-cases) { grid-template-columns: minmax(0,1fr) }
+ .section { padding-block: 2.75rem }
+ .section.local-extra { padding-block: 1.75rem }
+}
